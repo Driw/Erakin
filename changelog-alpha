@@ -6,32 +6,35 @@
 //                                  | |____| | | (_| |   <| | | | |
 //                                  |______|_|  \__,_|_|\_\_|_| |_|
 //
-//== Descrição =====================================================================================
-// Registro de Mudanças
-//== Formatação ====================================================================================
-// {DATA} - (VERSÃO)
-// {DESCRIÇÃO}
+//== DescriÃ§Ã£o =====================================================================================
+// Registro de MudanÃ§as
+//== FormataÃ§Ã£o ====================================================================================
+// {DATA} - (VERSÃƒO)
+// {DESCRIÃ‡ÃƒO}
 //== Manual ========================================================================================
-// DATA: Dia em que foi feito a mudança no seguinte formato: {DIA}.{MÊS}.{ANO}
+// DATA: Dia em que foi feito a mudanÃ§a no seguinte formato: {DIA}.{MÃŠS}.{ANO}
 //
-// VERSÃO: Número da versão respectiva a mudança feita: {SEASON}.{EPISÓDIO}.{PATCH}.{REVISÃO}
-//			- SEASON: número da temporada em que o projeto está (anual).
-//			- EPISÓDIO: grande conjunto de mudanças contendo várias novidades (mensal).
-//			- PATCH: pequeno conjunto de mudanças completas pré-planejadas (semanal).
-//			- REVISÃO: quantidade de modificações feitas no projeto (revisão SVN).
+// VERSÃƒO: NÃºmero da versÃ£o respectiva a mudanÃ§a feita: {SEASON}.{EPISÃ“DIO}.{PATCH}.{REVISÃƒO}
+//			- SEASON: nÃºmero da temporada em que o projeto estÃ¡ (anual).
+//			- EPISÃ“DIO: grande conjunto de mudanÃ§as contendo vÃ¡rias novidades (mensal).
+//			- PATCH: pequeno conjunto de mudanÃ§as completas prÃ©-planejadas (semanal).
+//			- REVISÃƒO: quantidade de modificaÃ§Ãµes feitas no projeto (revisÃ£o SVN).
 //
-// DESCRIÇÃO: Deve conter todas as informações respectivas as mudanças ocorridas na revisão.
-//				Acompanhando o seguinte formato: {INDENTAÇÃO}- {MENSAGEM}
-//			- INDENTAÇÃO: Deve ser feito através de espaços largos (tabs).
-//			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
+// DESCRIÃ‡ÃƒO: Deve conter todas as informaÃ§Ãµes respectivas as mudanÃ§as ocorridas na revisÃ£o.
+//				Acompanhando o seguinte formato: {INDENTAÃ‡ÃƒO}- {MENSAGEM}
+//			- INDENTAÃ‡ÃƒO: Deve ser feito atravÃ©s de espaÃ§os largos (tabs).
+//			- MENSAGEM: Breve parÃ¡grafo para explicar as alteraÃ§Ãµes feitas.
 //==================================================================================================
 
+16.04.2017 - 0.0.0.3
+- Convertendo a codificaÃ§Ã£o de charset dos arquivos changelogs para UTF-8.
+
 16.04.2017 - 0.0.0.2
-- Subindo versão inicial do projeto:
+- Subindo versÃ£o inicial do projeto:
 	- Gerenciamento de texturas, modelagens e shaders.
-	- Sistema para detecção das ações realizadas no teclado.
-	- Base do sistema (core) para inicialização da Engine.
-	- Estrutura básica inicial para construir o mundo.
+	- Sistema para detecÃ§Ã£o das aÃ§Ãµes realizadas no teclado.
+	- Base do sistema (core) para inicializaÃ§Ã£o da Engine.
+	- Estrutura bÃ¡sica inicial para construir o mundo.
 
 15.04.2017 - 0.0.0.1
 - Initial commit
