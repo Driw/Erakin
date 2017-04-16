@@ -1,0 +1,281 @@
+//==================================================================================================
+//                                   ______           _    _       
+//                                  |  ____|         | |  (_)      
+//                                  | |__   _ __ __ _| | ___ _ __  
+//                                  |  __| | '__/ _` | |/ / | '_ \ 
+//                                  | |____| | | (_| |   <| | | | |
+//                                  |______|_|  \__,_|_|\_\_|_| |_|
+//
+//== Descrição =====================================================================================
+// Registro de Mudanças
+//== Formatação ====================================================================================
+// {DATA} - (VERSÃO)
+// {DESCRIÇÃO}
+//== Manual ========================================================================================
+// DATA: Dia em que foi feito a mudança no seguinte formato: {DIA}.{MÊS}.{ANO}
+//
+// VERSÃO: Número da versão respectiva a mudança feita: {SEASON}.{EPISÓDIO}.{PATCH}.{REVISÃO}
+//			- SEASON: número da temporada em que o projeto está (anual).
+//			- EPISÓDIO: grande conjunto de mudanças contendo várias novidades (mensal).
+//			- PATCH: pequeno conjunto de mudanças completas pré-planejadas (semanal).
+//			- REVISÃO: quantidade de modificações feitas no projeto (revisão SVN).
+//
+// DESCRIÇÃO: Deve conter todas as informações respectivas as mudanças ocorridas na revisão.
+//				Acompanhando o seguinte formato: {INDENTAÇÃO}- {MENSAGEM}
+//			- INDENTAÇÃO: Deve ser feito através de espaços largos (tabs).
+//			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
+//==================================================================================================
+
+12.07.2016 - 0.0.0.42
+- Keyboard agora se encontra como VirtualKeyboard e também implementará Keyboard.
+- Keyboard passa a ser uma interface que será visível durante o desenvolvimento do jogo.
+- VirtualKeyboard será visto como Keyboard para o desenvolvedor e KeyboardDispatcher para a Engine.
+- Aidicionado EngineListener para aumentar a variedade de processos possíveis na engine.
+	- Como por exemplo o encerramento de serviços/aplicações exclusivas dos jogos.
+
+12.07.2016 - 0.0.0.41
+- Removido uma verificação em setName de WorldDataDefault que não seria mais utilizada.
+- RendererWorldsDefault não renderizava corretamente os terrenos por estar usando Y ao invés de Z.
+
+11.07.2016 - 0.0.0.40
+- Sistema básico para o carregamento de mundos e terrenos, onde cada mundo possui vários terrenos.
+	- Segue um padrão semelhante a leitura de texturas e modelagens.
+	- WorldLoader irá armazenar os mundos e cada mundo os seus respectivos terrenos.
+	- O sistema foi criado de forma que seja possível ler vários tipos de mundos e terrenos.
+	- No momento será assumida uma textura padrão para os terrenos, em breve será ajustado.
+	- Os formatos padrões de mundos são WDS e XML e de terrenos WTD e BMP.
+
+11.07.2016 - 0.0.0.39
+- Diversas correções de documentações que estava incompletadas ou não haviam uma especificação exata.
+- BMPUtil teve alguns métodos renomeados e passados para privado em quanto PNGUtil renomeou parâmetros.
+- PreferencesSettings não causava exception quando folderPreferences não era definido.
+
+09.07.2016 - 0.0.0.38
+- Problema onde EntityDefault não funcionava corretamente com toString.
+- DefaultLoader não estava selecionando os recursos de forma correga.
+
+09.07.2016 - 0.0.0.37
+- BufferCore modificado para usar Bits da biblioteca JavaUtil, Bits foi removido de Erakin.
+- Novo método que permite converter um vector de 3i para 3f e vice versa.
+- PreferencesDefault atualizado conforme as modificações de JavaUtil para Stream.
+- ProjectionMatrix não irá mais usar valores estáticos para inicializar e sim Preferences.
+
+12.04.2016 - 0.0.0.36
+- Documentação corrigido para:
+	- ModelException, ModelRuntimeException, TextureException e TextureRuntimeException.
+- ModelLoader agora irá utilizar getPathanem() ao invés de PreferencesSettings.
+- TextureLoader possui nova condição que evita duplicação de texturas criadas.
+
+12.04.2016 - 0.0.0.35
+- Correções textuais em relação a nome de métodos e documentação das classes.
+	- Readers estavam sendo tratados como Loaders, o que não deve acontecer:
+		- ModelReader e Texture Reader.
+- ModelReaderOBJ não estava completamente documentado.
+
+12.04.2016 - 0.0.0.34
+- Atualizando classpath para utilização da biblioteca LWJGL em versão 2.9.3.
+- Método toString de Model corrigido, não era formado caso não houvesse textura definida.
+- ResourceRoot irá exibir em seu toString caminho, nome de arquivo e extensão juntos.
+
+05.01.2016 - 0.0.0.33
+- Pequenos ajustes na documentação de TextureReader e TextureReaderDefault.
+
+05.01.2016 - 0.0.0.32
+- DefaultLoader adicionado para fazer algumas ações padrões entre os carregadores.
+	- Melhorar o encapsulamento e responsabilidades de cada carregador.
+	- ModelLoader e TextureLoader atualizados conforme DefaultLoader.
+
+05.01.2016 - 0.0.0.31
+- Novos métodos estáticos úteis para ampliar o uso de Buffer e facilitar codificações.
+- TaskDefault atualizado para evitar métodos sobrescritos e também documentado.
+
+11.11.2015 - 0.0.0.30
+- Correção no nome do projeto, o engine não necessariamente é exclusivo para Asckaryn.
+- Pequenos ajuste a nome de variáveis e métodos, RendererManagerDefault e ModelDataDefault.
+
+29.09.2015 - 0.0.0.29
+- ProjectionMatrix movido de common para engine e adicionar ProjectionListener.
+	- ProjectionListener será usado para ouvir as mudanças na matriz se necessário.
+- Modificando alguns procedimentos em RendererEntitiesDefault para não poderem ser sobrescritos.
+- Pequena correção para que TextureLoader force as texturas virem no formato RGBA com padrão.
+- Ajuste em TextureReaderPNG com getDepth que não permitiria a conversão RGBA corretamente.
+
+26.09.2015 - 0.0.0.28
+- ModelDataDefault não estava mostrando a quantidade de índices no seu toString.
+- TextureReader agora permite definir como será a saída dos pixels, RGB|RGBA|LUMINANCE.
+- Algumas atualizações para TextureReaderDefault:
+	- Modificado de acordo com TextureReader;
+	- Adicionado novos métodos abstratos para obter depth, width e height;
+	- Irá criar o TextureData internamente e fará o papel de leitor padrão.
+- TextureReaderJPG, TextureReaderPNG e TextureReaderBMP atualizados conforme TextureReaderDefault.
+- TextureReaderBMP irá funcionar de uma forma mais expandida permitindo alguns outros BMP.
+- BMPUtil atualizado para melhorar a abrangência de BMPs com TextureReaderBMP.
+- PixelReadImpl renomado para PixelReadPNG já que é funciona apenas com PNGs.
+- Adicionado PixelReadPalette para funcionar como PixelReadPNG para paletas em RGBA.
+
+26.09.2015 - 0.0.0.27
+- Agora a matriz de projeção é única e "global", de modo que seja usado o mesmo para todos.
+	- Utiliza ProjectionMatrix com Singleton e Utilities com métodos estáticos para facilitar.
+- Novos métodos utilitários adicionados para fazer um substring mais rápido em alguns casos.
+- BufferCore não exibia o espaço restante adequadamente quando estava fechado.
+- BufferInput faz a leitura dos dados de uma forma mais "eficaz", lendo tudo de uma só vez.
+- Adicionando createProjectionMatrix para usar uma matriz já existente.
+
+20.09.2015 - 0.0.0.26
+- Mais ajustes em relação a câmera devido ao nome das variáveis/métodos.
+- Movido o cálculo de inclinação da câmera como última operação na atualização, CameraDefault.
+- Tradução da documentação feita em DrawElement, removendo alguns pedaços detalhados.
+- Completando a funcionalidade de glClearScreen para funcionar adequadamente, GLUtil.
+- Aprimoramento na performance e separando detalhadamente as operações, RendererEntitiesDefault.
+	- Renderizações agora não consumem tanto tempo se forem em altas quantias de diferentes modelos.
+	- Detalhamento permitindo adicionar operações antes/depois da modelagem e renderização.
+	- Adicionando getters para câmera e luz (ambiente) que serão necessários.
+
+20.09.2015 - 0.0.0.25
+- Efeito especial básica de iluminações adicionado e uma implementação básica, Light|LightDefault.
+- Novo método utilitário para facilitar codificações e melhor visualização, sizeOfCollection.
+- Nome dos atributos e operações em CameraDefault que não estavam batendo com as funcionalidades.
+- Documentação de VAO que deveria ter sido enviado na rev24.
+- Enumeração adicionada para indicar mais facilmente as formas que VAO pode ser exibido, DrawElement.
+- Propriedades para indicar reflexo de luzes e nível do brilho refletido, Model.
+- ModelReaderOBJ irá guardar os dados de faces de forma mais ágil para melhor performance.
+
+19.09.2015 - 0.0.0.24
+- Unificando Shader e ShaderProgram, deixando como Shader e ShaderDefault (melhor usabilidade).
+- EntityDefault não estava fazendo rotação conforme o esperado na ordem XYZ conforme as coordenadas.
+- Pequenas documentações de VAO que não tinham sido feitas e o índice de VBOs inicia no construtor.
+- Shader agora não é mais responsável por possuir o bindAttributes e getAllUniformLocations.
+- Reduzindo responsabilidades de TextureLoader.createTexture separando validações em validateLimits.
+
+18.09.2015 - 0.0.0.23
+- Atualizando leitura de texturas PNG com melhorias e correções:
+	- TextureLoader agora só vai permitir criar texturas com depth de 24bits ou 32bits;
+	- PixelReadImpl não estava funcionando como deveria e também aprimorando o uso de line;
+	- TextureDataDefault não havia o toString implementado como é de se esperar de todas as classes;
+	- TextureReaderPNG estava lendo apenas a primeira chunk IDAT sendo que pode haver várias.
+
+18.09.2015 - 0.0.0.22
+- Ajuste para fatalError() registrar o erro e em seguida mostrar o printStackTrace.
+
+18.09.2015 - 0.0.0.21
+- Atualizações para o sistema de Buffer interno do Engine:
+	- Renomeado getData para getSaved, getBuffer para getData e size para space;
+	- Dados salvos estavam sendo sobrescritos durante leitura (não era necessário).
+
+17.09.2015 - 0.0.0.20
+- Ajuste de 1.0 para 3.0 no nível de aproximação, CameraDefault.
+- Procedimento para definir índices estava como nome errado, VAO.setIndices().
+- Pequenas atualizações do pacote de classes de stream usado de Util Stream rev76.
+- ModelLoader deverá aceitar criação de modelagens apenas de ModelData.
+- Simplificação em como será criado/carregado texturas em TextureLoader.
+- Diversos ajustes de correção, entendimento e funcionamento em engine.resource.model.
+	- ModelReader não será mais um ModelData, não faz sentido em fazer isso.
+	- ModelReaderMDL e ModelReaderOBJ não estavam a funcionar corretamente.
+
+08.09.2015 - 0.0.0.19
+- Novo procedimento para que RendererEntitiesDefault funcione adequadamente, prepare().
+- Dois novos métodos em Maths para auxiliar durante a criação de áreas para visão e projeção.
+- Interface para a utilização para simulações de câmeras como visão da tela da aplicação.
+	- Implementação básica do funcionamento, sendo necessário especificar melhor, CameraDefault.
+
+06.09.2015 - 0.0.0.18
+- Estruturas básicas para entidades e renderizador de entidades, Entity e RendererEntity.
+- Implementação básica do funcionamento de um renderizador de entidades, RendererEntityAbstract.
+- Implementação básica de um gerenciador de renderização, RendererManagerDefault.
+
+06.09.2015 - 0.0.0.17
+- Procedimentos para trabalhar com valores aleatórios em Utilities.
+- Agora fatalError deverá mostrar um printStackTrace() para facilitar a identificação do problema.
+- Correção no nome de variáveis e classes nomeadas com Render em quanto deveria ser Renderer.
+
+05.09.2015 - 0.0.0.16
+- ShaderProgram agora deverá trabalhar também com variáveis uniformes.
+- Implementação para definição das variáveis uniformes em ShaderProgramDefault.
+
+05.09.2015 - 0.0.0.15
+- Método que permite forçar a finalização do engine por um erro fatal em Utilities.
+- TryCatch para render() e update() em Engine para exibir o erro em uma janela se ocorrer.
+- Math renomeado para Maths para não causar erro durante a utilização da classe.
+- Removido renderização de Model, não é uma responsabilidade dessa classe e sim do renderizador.
+
+03.09.2015 - 0.0.0.14
+- VAO não estava funcionando adequadamente em alguns casos.
+	- Corrigindo forma de armazenamento dos índices (ELEMENT_ARRAY_BUFFER para ARRAY_BUFFER).
+	- Alguns desvínculos que deveriam ter sido colocados que podem causar problemas.
+- ModelReaderOBJ não estava carregando adequadamente os dados das faces (índices).
+- Renomeando ATTRIB_POSITIONS para ATTRIB_VERTICES e adicionando vinculação de textura.
+- Atualizando ShaderProgramDefault para ler o diretório 'shaders' ao invés de 'shader'.
+	- Movendo vinculação dos atributos para antes da ligação e validação do programa.
+- TextureLoader não estava salvando as texturas adequadamente devido ao diretório e vinculação.
+- Texture ativação da textura agora é dinâmica não fixando apenas em GL_TEXTURE0.
+- TextureReaderPNG e BMPUtil não irão mais restabelecer ByteBuffer, não é sua função.
+
+01.09.2015 - 0.0.0.13
+- Serviço básico para gerenciamento de modelagens tri-dimensionais a partir de arquivos.
+	- Suportando extensões do tipo MDL (modelagem do erakin) e OBJ (exportação do blender).
+
+01.09.2015 - 0.0.0.12
+- TextureReaderPNG adicionado para suportar a leitura dos arquivos PNG como texturas.
+- Classe PNG irá conter alguns procedimentos para tornar melhorar a coesão de TextureReaderPNG.
+- Novo pacote que premite trabalhar detalhadamente com os pixels de diferentes formas.
+
+01.09.2015 - 0.0.0.11
+- Modificando TextureData para usar ByteBuffer diretamente afim de economizar tempo de processamento.
+- Atualização em TextureLoader para se adaptar a TextureData, cancelando criação do ByteBuffer.
+- Pequenos ajustes das atualizações acima e documentação para TextureReaderBMP.
+- BMP modificado para trabalhar diretamente com o ByteBuffer ao invés de vetor de bytes.
+
+31.08.2015 - 0.0.0.10
+- Serviço básico para gerenciamento de texturas a partir de arquivos.
+- Classes que deverão garantir o armazenamento, leitura e interpretação de imagens.
+	- No momento será garantido apenas a leitura de imagens no formato BMP.
+
+31.08.2015 - 0.0.0.9
+- ResourceRoot irá armazenar referências em nós ao invés de lista dinâmica.
+	- Evitar consumo de memória desnecessário, espera-se poucas referências.
+
+31.08.2015 - 0.0.0.8
+- Modificações para o Buffer:
+	- Agora deverá permitir fazer a leitura a partir de um vetor de bytes passado.
+	- Poderá obter o comprimento (bytes totais) e tamanho (bytes restantes).
+	- Inverter a ordem de leitura dos bytes para os dados primitivos.
+	- Ajuste na forma como é feito o salvamento dos bytes.
+
+24.08.2015 - 0.0.0.7
+- Exceções utilizadas como genéricas no engine tiveram seus nomes corrigidos.
+- Documentação das exceptions e movido engine.shader para engine.resource.shader.
+
+23.08.2015 - 0.0.0.6
+- Movido toda todas as classes de erakin.shader para erakin.engine.shader.
+- Classes para utilização de modelagens 3D e texturas adicionadas.
+	- Utiliza um sistema de recurso raiz e recurso referencial.
+- Mapeador para armazenamento de recursos, ResourceMap.
+
+22.08.2015 - 0.0.0.5
+- Estrutura para criação de shader adicionado (computação gráfica).
+- Shader é para utilização dos shader e ShaderProgram para programação.
+- ShaderProgramDefault é uma implementação básica de ShaderProgram.
+
+22.08.2015 - 0.0.0.4
+- Alterado logInfo para logNotice em DisplayManager.
+	- logInfo deve ser apenas para registros externos, com arquivos.
+- TaskDefault agora possui throws em todos os seus métodos.
+
+22.08.2015 - 0.0.0.3
+- Lista de tarefas não estava a funcionar adequadamente.
+- Pequenos ajustes gerais que deveriam ter sido vistos na rev2.
+- Classes que permitem trabalhar com VAO, VBO, apenas para facilitar.
+- Adicionando TaskDefault para facilitar a construção de novas tarefas.
+- Engine deve ser encerrado adequadamente quando fechar a janela.
+
+20.08.2015 - 0.0.0.2
+- Classe básicas para a inicialização do funcionamento do engine.
+- Núcleo do engine contendo as funcionalidades inciais para subir a aplicação.
+- Algumas classes que serão utilizadas mais afrente para gerenciar bytes, Buffer.
+- Interfaces básicas de base de como é o funcionamento dos jogos, Updateable, Renderable.
+- Pequenas partes para inicialização do sistema de entradas para teclado, Keyboard.
+- Gerenciamento básico para exibir, terminar e configurar a janela da aplicação.
+- Serviço de preferências para melhor utilização do engine e configurações.
+
+17.08.2015 - 0.0.0.1
+- Inicialização do repositório, diretórios básicos adicionados.

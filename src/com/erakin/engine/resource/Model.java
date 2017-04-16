@@ -1,0 +1,259 @@
+package com.erakin.engine.resource;
+
+import org.diverproject.util.FileUtil;
+import org.diverproject.util.ObjectDescription;
+
+import com.erakin.engine.lwjgl.VAO;
+import com.erakin.engine.lwjgl.enumeration.DrawElement;
+
+/**
+ * <h1>Modelo</h1>
+ *
+ * <p>São estruturas em espaço carregadas em disco para o engine e armazenadas no OpenGL.
+ * Objetos desse tipo irão permitir que durante o desenvolvimento estas possam ser usadas.
+ * Apesar do OpenGL oferecer essa possibilidade, o engine utiliza uma forma melhor.</p>
+ *
+ * <p>Essa forma melhor pode ser vista como a existência da documentação no seu uso,
+ * e obviamente o acesso mais rápido e compreensível das funcionalidades do modelo.
+ * Como um bônus permite determinar uma textura para ser usada junto ao modelo.</p>
+ *
+ * <p>Além disso é um recurso fictício, por tanto não possui informações diretas.
+ * A utilização desse objeto permite uma utilização de estruturas espaciais (modelagens)
+ * de forma muito mais simplória e rápida, reduzindo códigos e aumenta o entendimento.</p>
+ *
+ * @see Texture
+ * @see Resource
+ *
+ * @author Andrew
+ */
+
+public class Model extends Resource
+{
+	/**
+	 * Código de atribuir um VBO de vértices no espaço para um modelo.
+	 */
+	public static final int ATTRIB_VERTICES = 0;
+
+	/**
+	 * Código de atribuir um VBO de coordenada de textura para um modelo.
+	 */
+	public static final int ATTRIB_TEXTURE_COORDS = 1;
+
+	/**
+	 * Código de atribuir um VBO de normalização para um modelo.
+	 */
+	public static final int ATTRIB_NORMALS = 2;
+
+	/**
+	 * Textura que está sendo usada pelo modelo.
+	 */
+	private Texture texture;
+
+	/**
+	 * Nível da força para refletir iluminações.
+	 */
+	float reflectivity;
+
+	/**
+	 * Nível da redução para brilhos refletidos.
+	 */
+	float shineDamping;
+
+	/**
+	 * Constrói um novo modelo a partir de uma modelo raíz especifica.
+	 * @param root modelo raíz que será usada para criar o modelo.
+	 */
+
+	Model(ModelRoot root)
+	{
+		super(root);
+
+		this.reflectivity = root.defaultReflectivity;
+		this.shineDamping = root.defaultShineDamping;
+	}
+
+	/**
+	 * Uma textura possui informações sobre uma imagem, usado para colorir o modelo.
+	 * A textura internamente será usada durante a computação gráfica (shader).
+	 * @return aquisição da textura que está sendo utilizada pela modelagem.
+	 */
+
+	public Texture getTexture()
+	{
+		return texture;
+	}
+
+	/**
+	 * Permite definir qual será a textura usada por esse modelo na renderização.
+	 * Essa textura não pode ser usada por mais nenhum outro modelo ou objeto.
+	 * Quando esse modelo for liberado, a textura também será, caso outro
+	 * objeto esteja usando essa mesma textura fictícia será perdido também.
+	 * @param texture referência da textura fictícia que será usada.
+	 */
+
+	public void setTexture(Texture texture)
+	{
+		this.texture = texture;
+	}
+
+	/**
+	 * Contagem de vértices determina quantos índices existem no VAO desse modelo.
+	 * @return aquisição do número de vértices nessa modelagem.
+	 */
+
+	public int getVertexCount()
+	{
+		return !valid() ? 0 : ((ModelRoot) root).vao.getVertexCount();
+	}
+
+	@Override
+	public int getID()
+	{
+		VAO vao = ((ModelRoot) root).vao;
+
+		return vao == null ? 0 : vao.getID();
+	}
+
+	@Override
+	public void bind()
+	{
+		if (!valid())
+			return;
+
+		ModelRoot model = ((ModelRoot) root);
+
+		VAO vao = model.vao;
+		vao.bind();
+		vao.enable(ATTRIB_VERTICES);
+		vao.enable(ATTRIB_TEXTURE_COORDS);
+		vao.enable(ATTRIB_NORMALS);
+	}
+
+	@Override
+	public void unbind()
+	{
+		if (!valid())
+			return;
+
+		ModelRoot model = ((ModelRoot) root);
+
+		VAO vao = model.vao;
+		vao.disable(ATTRIB_VERTICES);
+		vao.disable(ATTRIB_TEXTURE_COORDS);
+		vao.disable(ATTRIB_NORMALS);
+		vao.unbind();
+	}
+
+	/**
+	 * Ao ser chamado irá acessar o VAO respectivo a essa modelagem e desenhar esta.
+	 * O resultado do desenhado varia de acordo com o tipo de computação gráfica usado.
+	 * @param mode em que modo deverá ser feito o desenho dos vértices da modelagem.
+	 * @see DrawElement
+	 */
+
+	public void draw(DrawElement mode)
+	{
+		ModelRoot model = ((ModelRoot) root);
+
+		VAO vao = model.vao;
+		vao.draw(mode);
+	}
+
+	/**
+	 * Refletividade indica o quanto a luz será refletida quando atingir o objeto em questão (modelagem).
+	 * Esse reflexo varia ainda também com as variáveis da luz como distância e sua intensidade (força).
+	 * @return aquisição do nível da força para refletir iluminações através do brilho.
+	 */
+
+	public float getReflectivity()
+	{
+		return reflectivity;
+	}
+
+	/**
+	 * Aumentar a refletividade significa que as luzes que atingir a modelagem serão refletidas mais fortes.
+	 * Quanto mais forte for o reflexo mais intenso a modelagem será sobreposta pela cor da luz refletida.
+	 * Não será aceito valores negativos, caso seja passado um, será automaticamente ignorado pelo método.
+	 * @param reflectivity novo nível da força para refletir iluminações através do brilho.
+	 */
+
+	public void setReflectivity(float reflectivity)
+	{
+		if (reflectivity >= 0)
+			this.reflectivity = reflectivity;
+	}
+
+	/**
+	 * Uma modelagem utiliza o valor de refletividade padrão de acordo com a modelagem raíz referente.
+	 * Quando esse método for chamado, irá pedir a raíz o valor padrão de refletividade e usá-lo.
+	 */
+
+	public void restoreReflectivity()
+	{
+		this.reflectivity = ((ModelRoot) root).defaultReflectivity;
+	}
+
+	/**
+	 * Redução do brilho é usado na computação gráfica para reduzir o efeito da luz ao atingir um objeto.
+	 * Essa redução possui duas variantes, a distância da direção do reflexo em relação com a câmera,
+	 * e o nível de redução do brilho, quanto maior ambos os valores, menor será o brilho refletido visto.
+	 * @return aquisição do nível da redução do brilho para iluminações refletidas.
+	 */
+
+	public float getShineDamping()
+	{
+		return shineDamping;
+	}
+
+	/**
+	 * Aumentar a redução do brilho significa que será mais difícil notar o brilho obtido do reflexo da luz.
+	 * Não será aceito valores negativos, caso seja passado um, será automaticamente ignorado pelo método.
+	 * @param shineDamping novo nível da força para redução do brilho para iluminações refletidas.
+	 */
+
+	public void setShineDamping(float shineDamping)
+	{
+		if (shineDamping >= 0)
+			this.shineDamping = shineDamping;
+	}
+
+	/**
+	 * Uma modelagem utiliza o valor de redução do brilho padrão de acordo com a modelagem raíz referente.
+	 * Quando esse método for chamado, irá pedir a raíz o valor padrão de redução do brilho e usá-lo.
+	 */
+
+	public void restoreShineDamping()
+	{
+		this.reflectivity = ((ModelRoot) root).defaultShineDamping;
+	}
+
+	@Override
+	public void release()
+	{
+		super.release();
+
+		if (texture != null)
+		{
+			texture.release();
+			texture = null;
+		}
+	}
+
+	@Override
+	public boolean valid()
+	{
+		return root != null && root.isAlive() && ((ModelRoot) root).vao != null;
+	}
+
+	@Override
+	public void toString(ObjectDescription description)
+	{
+		description.append("model", FileUtil.getFileName(root.filePath));
+
+		if (texture != null)
+			description.append("texture", FileUtil.getFileName(texture.root.filePath));
+
+		description.append("reflectivity", reflectivity);
+		description.append("shineDamping", shineDamping);
+	}
+}
