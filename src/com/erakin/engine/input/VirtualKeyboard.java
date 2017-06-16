@@ -90,11 +90,11 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	{
 		state = SERVICE_STARTED;
 
-		typedListeners = new DynamicList<>();
-		pressedListeners = new DynamicList<>();
-		releasedListeners = new DynamicList<>();
-		keyPresseds = new boolean[EnumKEY.KEY_MAX];
-		keyClickeds = new DynamicList<>();
+		if (typedListeners == null)		typedListeners = new DynamicList<>();
+		if (pressedListeners == null)	pressedListeners = new DynamicList<>();
+		if (releasedListeners == null)	releasedListeners = new DynamicList<>();
+		if (keyPresseds == null)		keyPresseds = new boolean[EnumKEY.KEY_MAX];
+		if (keyClickeds == null)		keyClickeds = new DynamicList<>();
 
 		state = SERVICE_RUNNING;
 	}
@@ -184,6 +184,9 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	@Override
 	public boolean wasClicked(int... key)
 	{
+		if (getState() != SERVICE_RUNNING)
+			return false;
+
 		for (int i = 0; i < key.length; i++)
 			for (KeyAction action : keyClickeds)
 				if (!action.isKey(key[i]))
@@ -195,6 +198,9 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	@Override
 	public boolean isPressed(int... key)
 	{
+		if (getState() != SERVICE_RUNNING)
+			return false;
+
 		for (int i = 0; i < key.length; i++)
 			if (IntUtil.interval(key[i], 0, keyPresseds.length - 1))
 				if (!keyPresseds[key[i]])
@@ -206,6 +212,9 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	@Override
 	public void addListener(KeyListener listener)
 	{
+		if (getState() != SERVICE_RUNNING)
+			return;
+
 		addTypedListener(listener);
 		addPressedListener(listener);
 		addReleasedListener(listener);
@@ -214,6 +223,9 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	@Override
 	public void removeListener(KeyListener listener)
 	{
+		if (getState() != SERVICE_RUNNING)
+			return;
+
 		removeTypedListener(listener);
 		removePressedListener(listener);
 		removeReleasedListener(listener);
@@ -222,6 +234,9 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	@Override
 	public void addTypedListener(KeyTypedListener listener)
 	{
+		if (getState() != SERVICE_RUNNING)
+			return;
+
 		if (!typedListeners.contains(listener))
 			typedListeners.add(listener);
 	}
@@ -229,12 +244,18 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	@Override
 	public void removeTypedListener(KeyTypedListener listener)
 	{
+		if (getState() != SERVICE_RUNNING)
+			return;
+
 		typedListeners.remove(listener);
 	}
 
 	@Override
 	public void addPressedListener(KeyPressedListener listener)
 	{
+		if (getState() != SERVICE_RUNNING)
+			return;
+
 		if (!pressedListeners.contains(listener))
 			pressedListeners.add(listener);
 	}
@@ -242,12 +263,18 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	@Override
 	public void removePressedListener(KeyPressedListener listener)
 	{
+		if (getState() != SERVICE_RUNNING)
+			return;
+
 		pressedListeners.remove(listener);
 	}
 
 	@Override
 	public void addReleasedListener(KeyReleasedListener listener)
 	{
+		if (getState() != SERVICE_RUNNING)
+			return;
+
 		if (!releasedListeners.contains(listener))
 			releasedListeners.add(listener);
 	}
@@ -255,6 +282,9 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	@Override
 	public void removeReleasedListener(KeyReleasedListener listener)
 	{
+		if (getState() != SERVICE_RUNNING)
+			return;
+
 		releasedListeners.remove(listener);
 	}
 }

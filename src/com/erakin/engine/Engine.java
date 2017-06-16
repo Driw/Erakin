@@ -296,6 +296,7 @@ public class Engine implements Tickable
 			if (!rendererManager.isInitiate())
 				rendererManager.initiate();
 
+			ProjectionMatrix.getInstance().update();
 			sceneManager.update(delay);
 			rendererManager.update(delay);
 

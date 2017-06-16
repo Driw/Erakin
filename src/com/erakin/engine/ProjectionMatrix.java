@@ -176,6 +176,9 @@ public class ProjectionMatrix
 
 	public void update()
 	{
+		if (updated)
+			return;
+
 		createProjectionMatrix(matrix, fieldOfView, nearPlane, farPlane);
 
 		updated = true;

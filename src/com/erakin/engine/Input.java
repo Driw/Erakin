@@ -53,14 +53,75 @@ public interface Input
 		return VIRTUAL_KEYBOARD;
 	}
 
+	/**
+	 * Verifica se uma ou mais teclas especificadas foram clicadas recentemente (configurável).
+	 * @param key código de todas as teclas do qual deseja verificar se foram clicadas.
+	 * @return true se todas as teclas foram clicadas ou false se uma ou mais não foram.
+	 */
+
 	boolean wasClicked(int... key);
+
+	/**
+	 * Verifica se uma ou mais teclas especificadas estão sendo pressionadas no momento.
+	 * @param key código de todas as teclas do qual deseja verificar se foram pressionadas.
+	 * @return true se todas as teclas estão pressionadas ou false se ao menos uma não estiver.
+	 */
+
 	boolean isPressed(int... key);
+
+	/**
+	 * Permite adicionar um listener completo para receber eventos do teclado detectados.
+	 * @param listener referência do listener pare receber todos os tipos de eventos.
+	 */
+
 	void addListener(KeyListener listener);
+
+	/**
+	 * Permite remove rum listener especificado da lista de eventos de to teclado detectados.
+	 * @param listener referência do listener que recebe todos os tipos de eventos.
+	 */
+
 	void removeListener(KeyListener listener);
+
+	/**
+	 * Permite adicionar um listener completo para receber eventos do teclado detectados.
+	 * @param listener referência do listener pare receber os eventos do tipo digitação.
+	 */
+
 	void addTypedListener(KeyTypedListener listener);
+
+	/**
+	 * Permite remove rum listener especificado da lista de eventos de to teclado detectados.
+	 * @param listener referência do listener que recebe os eventos do tipo digitação.
+	 */
+
 	void removeTypedListener(KeyTypedListener listener);
+
+	/**
+	 * Permite adicionar um listener completo para receber eventos do teclado detectados.
+	 * @param listener referência do listener pare receber os eventos do tipo pressionado.
+	 */
+
 	void addPressedListener(KeyPressedListener listener);
+
+	/**
+	 * Permite remove rum listener especificado da lista de eventos de to teclado detectados.
+	 * @param listener referência do listener que receberos eventos do tipo pressionado.
+	 */
+
 	void removePressedListener(KeyPressedListener listener);
+
+	/**
+	 * Permite adicionar um listener completo para receber eventos do teclado detectados.
+	 * @param listener referência do listener pare receber os eventos do tipo liberado.
+	 */
+
 	void addReleasedListener(KeyReleasedListener listener);
+
+	/**
+	 * Permite remove rum listener especificado da lista de eventos de to teclado detectados.
+	 * @param listener referência do listener que recebe os eventos do tipo liberado.
+	 */
+
 	void removeReleasedListener(KeyReleasedListener listener);
 }
