@@ -1,21 +1,17 @@
 package com.erakin.engine;
 
+import static org.diverproject.log.LogSystem.logException;
 import static org.diverproject.log.LogSystem.logWarning;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Iterator;
 
+import org.diverproject.ini.JIni;
+import org.diverproject.ini.JIniException;
+import org.diverproject.util.FileUtil;
 import org.diverproject.util.collection.Map;
 import org.diverproject.util.collection.Map.MapItem;
 import org.diverproject.util.collection.abstraction.DynamicMap;
-import org.diverproject.util.stream.Input;
-import org.diverproject.util.stream.StreamException;
-import org.diverproject.util.stream.StreamRuntimeException;
-import org.diverproject.util.stream.implementation.InputBuilder;
-import org.diverproject.util.stream.implementation.option.OptionInput;
-import org.diverproject.util.stream.implementation.option.OptionListInput;
-import org.diverproject.util.stream.implementation.option.OptionOutput;
 
 /**
  * <h1>Padrão de Preferências</h1>
@@ -63,16 +59,20 @@ public class PreferencesDefault implements Preferences
 
 		if (file.exists())
 		{
-			try {
+			switch (FileUtil.getExtension(file.getAbsolutePath()))
+			{
+				case "ini":
+					try {
 
-				InputBuilder builder = new InputBuilder();
-				Input input = builder.newInput(file);
-				OptionInput optionInput = new OptionListInput(input);
+						JIni ini = new JIni(file);
+						ini.load();
+						load(ini);
 
-				load(optionInput);
-
-			} catch (IOException e) {
-				logWarning("falha ao inicializar preferências (arquivo: %s)", file.getPath());
+					} catch (JIniException e) {
+						logWarning("falha ao inicializar preferências (arquivo: %s)", file.getPath());
+						logException(e);
+					}
+					break;
 			}
 		}
 	}
@@ -87,27 +87,34 @@ public class PreferencesDefault implements Preferences
 	{
 		File file = new File(getPreferencesFilePath());
 
-		try {
+		if (file.exists())
+		{
+			switch (FileUtil.getExtension(file.getAbsolutePath()))
+			{
+				case "ini":
+					try {
 
-//			StreamFactory factory = new DefaultStreamFactory();
-//			OptionBuilder builder = factory.newOptionBuilder();
-//			OutputOption output = builder.newOutputOption(file);
+						JIni ini = new JIni(file);
+						save(ini);
+						ini.save();
 
-//			save(output);
-
-		} catch (StreamRuntimeException e) {
-			logWarning("falha ao finalizar preferências (arquivo: %s)", file.getPath());
+					} catch (JIniException e) {
+						logWarning("falha ao inicializar preferências (arquivo: %s)", file.getPath());
+						logException(e);
+					}
+					break;
+			}
 		}
 	}
 
 	/**
-	 * Carrega as preferências armazenadas em uma stream de opções de acordo com a JavaUtil.
-	 * @param input referência da stream do qual contém as opções para preferências.
-	 * @throws StreamException apenas quando o formato for inválido ou fim inesperado.
-	 * @see InputOption
+	 * Carrega as preferências existentes lidas de um arquivo em formato INI.
+	 * Irá iterar todas as preferências existentes e atualizar seu valor se carregado.
+	 * Caso o a preferência não exista irá manter o valor anterior a leitura do INI.
+	 * @param ini referência do objecto que carrega as configurações INI carregadas.
 	 */
 
-	protected void load(OptionInput input)
+	protected void load(JIni ini)
 	{
 		Iterator<MapItem<String, Object>> iterator = options.iteratorItems();
 
@@ -115,27 +122,26 @@ public class PreferencesDefault implements Preferences
 		{
 			MapItem<String, Object> item = iterator.next();
 
-			if (item.value instanceof Integer)
-				setOptionInt(item.key, (Integer) item.value);
+			if (item.value instanceof Integer && ini.contains(item.key))
+				options.update(item.key, ini.getInt(item.key));
 
-			else if (item.value instanceof Float)
-				setOptionFloat(item.key, (Float) item.value);
+			else if (item.value instanceof Float && ini.contains(item.key))
+				options.update(item.key, ini.getFloat(item.key));
 
-			else if (item.value instanceof Boolean)
-				setOptionBoolean(item.key, (Boolean) item.value);
+			else if (item.value instanceof Boolean && ini.contains(item.key))
+				options.update(item.key, ini.getBoolean(item.key));
 
-			else if (item.value instanceof String)
-				setOptionString(item.key, (String) item.value);
+			else if (item.value instanceof String && ini.contains(item.key))
+				options.update(item.key, ini.getString(item.key));
 		}
 	}
 
 	/**
-	 * Salva as preferências existentes em uma stream de opções de acordo com a JavaUtil.
-	 * @param output referência da stream do qual deverá armazenar as opções de preferência.
-	 * @throws StreamException apenas quando não for possível escrever ou fim inesperado.
+	 * Salva as preferências aqui existentes em um arquivo INI através do seguinte objeto:
+	 * @param ini referência do objeto que permite escrever em formato de arquivo INI.
 	 */
 
-	protected void save(OptionOutput output)
+	protected void save(JIni ini)
 	{
 		int i = 0;
 		int size = options.size();
@@ -156,16 +162,16 @@ public class PreferencesDefault implements Preferences
 			Object value = values[i];
 
 			if (value instanceof Integer)
-				output.putInt(key, (Integer) value);
+				ini.putInt(key, (Integer) value);
 
 			else if (value instanceof Float)
-				output.putFloat(key, (Float) value);
+				ini.putFloat(key, (Float) value);
 
 			else if (value instanceof Boolean)
-				output.putBoolean(key, (Boolean) value);
+				ini.putBoolean(key, (Boolean) value);
 
 			else if (value instanceof String)
-				output.putString(key, (String) value);
+				ini.putString(key, (String) value);
 		}
 	}
 
@@ -244,7 +250,7 @@ public class PreferencesDefault implements Preferences
 
 	protected String getPreferencesFilePath()
 	{
-		return "preferences.prf";
+		return "preferences.ini";
 	}
 
 	/**

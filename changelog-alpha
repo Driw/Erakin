@@ -26,6 +26,15 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+16.06.2017 - 0.0.0.5
+- PreferencesDefault atualizado para considerar JIni na leitura dos arquivos de configurações das preferências.
+
+16.06.2017 - 0.0.0.4
+- ProjectionMatrix não estava sendo atualizado, adicionado o chamado na Engine antes do update dos renderizadores.
+- Documentação dos métodos de todos os métodos necessários para a implementação do Input.
+- Pequenos ajustes em VirtualKeyboard.start() e considerando SERVICE_RUNNING em alguns métodos.
+- Atualizando ProjectionMatrix para que update() só tenha efeito se updated for false.
+
 16.04.2017 - 0.0.0.3
 - Convertendo a codificação de charset dos arquivos changelogs para UTF-8.
 
