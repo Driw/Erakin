@@ -26,6 +26,10 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+21.06.2017 - 0.0.0.6
+- Adicionando commandName para que DrawElement possa ser identificado mais facilmente.
+	- Agora DrawElement pode ser identificado (parse) por um nome ou código.
+
 16.06.2017 - 0.0.0.5
 - PreferencesDefault atualizado para considerar JIni na leitura dos arquivos de configurações das preferências.
 
