@@ -1,4 +1,4 @@
-package com.erakin.engine.input;
+package org.erakin.api.input;
 
 import org.diverproject.jni.input.KeyEvent;
 import org.diverproject.jni.input.KeyboardDispatcher;
@@ -7,9 +7,6 @@ import org.diverproject.util.collection.List;
 import org.diverproject.util.collection.abstraction.DynamicList;
 import org.diverproject.util.lang.IntUtil;
 import org.diverproject.util.service.ServiceException;
-
-import com.erakin.engine.Input;
-import com.erakin.engine.Keyboard;
 
 /**
  * <h1>Teclado Virtual</h1>

@@ -1,6 +1,7 @@
 package com.erakin.engine.render;
 
-import com.erakin.common.vector.Vector3i;
+import org.erakin.api.lwjgl.math.Vector3i;
+
 import com.erakin.engine.resource.World;
 
 /**

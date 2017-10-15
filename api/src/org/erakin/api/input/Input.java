@@ -1,12 +1,6 @@
-package com.erakin.engine;
+package org.erakin.api.input;
 
 import org.diverproject.jni.input.KeyboardDispatcher;
-
-import com.erakin.engine.input.KeyListener;
-import com.erakin.engine.input.KeyPressedListener;
-import com.erakin.engine.input.KeyReleasedListener;
-import com.erakin.engine.input.KeyTypedListener;
-import com.erakin.engine.input.VirtualKeyboard;
 
 /**
  * <h1>Entrada</h1>

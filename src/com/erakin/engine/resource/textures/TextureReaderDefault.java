@@ -3,10 +3,10 @@ package com.erakin.engine.resource.textures;
 import java.io.FileInputStream;
 import java.nio.ByteBuffer;
 
+import org.erakin.api.buffer.Buffer;
+import org.erakin.api.buffer.BufferInput;
 import org.lwjgl.BufferUtils;
 
-import com.erakin.common.buffer.Buffer;
-import com.erakin.common.buffer.BufferInput;
 import com.erakin.engine.resource.textures.pixel.PixelFormat;
 
 /**

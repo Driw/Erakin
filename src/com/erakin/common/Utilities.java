@@ -6,10 +6,11 @@ import static org.diverproject.util.MessageUtil.showError;
 import java.util.Random;
 
 import org.diverproject.util.collection.Collection;
+import org.diverproject.util.lang.HexUtil;
+import org.diverproject.util.lang.StringUtil;
+import org.diverproject.util.stream.Input;
 import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
 
-import com.erakin.common.vector.Vector3i;
 import com.erakin.engine.ProjectionMatrix;
 
 /**
@@ -280,24 +281,63 @@ public final class Utilities
 	}
 
 	/**
-	 * Passa os valores de um vetor de 3 pontos flutuantes para um vetor de 3 pontos inteiros.
-	 * @param vector referência do vetor contendo os 3 pontos flutuantes.
-	 * @return vetor de 3 pontos especificados como X, Y e Z do tipo inteiro.
+	 * Converte um tipo de valor numérico para um String contendo seu valor em hexadecimal de 2 caracteres.
+	 * @param value valor numérico do tipo byte do qual será convertido para hexadecimal.
+	 * @return aquisição da String com o valor hexadecimal obtido a partir do valor especificado.
 	 */
 
-	public static Vector3i convert3f3i(Vector3f vector)
+	public static String hex(byte value)
 	{
-		return new Vector3i((int) vector.x, (int) vector.y, (int) vector.z);
+		return StringUtil.addEndWhile("0", HexUtil.parseByte(value), 2);
 	}
 
 	/**
-	 * Passa os valores de um vetor de 3 pontos inteiros para um vetor de 3 pontos flutuantes.
-	 * @param vector referência do vetor contendo os 3 pontos inteiros.
-	 * @return vetor de 3 pontos especificados como X, Y e Z do tipo flutuante.
+	 * Converte um tipo de valor numérico para um String contendo seu valor em hexadecimal de 4 caracteres.
+	 * @param value valor numérico do tipo short do qual será convertido para hexadecimal.
+	 * @return aquisição da String com o valor hexadecimal obtido a partir do valor especificado.
 	 */
 
-	public static Vector3f convert3i3f(Vector3i vector)
+	public static String hex(short value)
 	{
-		return new Vector3f(vector.x, vector.y, vector.z);
+		return StringUtil.addEndWhile("0", HexUtil.parseShort(value), 4);
+	}
+
+	/**
+	 * Converte um tipo de valor numérico para um String contendo seu valor em hexadecimal de 8 caracteres.
+	 * @param value valor numérico do tipo int do qual será convertido para hexadecimal.
+	 * @return aquisição da String com o valor hexadecimal obtido a partir do valor especificado.
+	 */
+
+	public static String hex(int value)
+	{
+		return StringUtil.addEndWhile("0", HexUtil.parseInt(value), 8);
+	}
+
+	/**
+	 * Converte um tipo de valor numérico para um String contendo seu valor em hexadecimal de 16 caracteres.
+	 * @param value valor numérico do tipo long do qual será convertido para hexadecimal.
+	 * @return aquisição da String com o valor hexadecimal obtido a partir do valor especificado.
+	 */
+
+	public static String hex(long value)
+	{
+		return StringUtil.addEndWhile("0", HexUtil.parseLong(value), 16);
+	}
+
+	/**
+	 * Procedimento para validação do tipo de arquivo com base nas informações "magic" (dados inicias padrão).
+	 * O magic corresponde a uma sequência de dados fixo que todo arquivo de um tipo especifico deve possuir.
+	 * @param input referência da stream para entrada de dados criado a partir do arquivo em disco.
+	 * @param realMagic vetor com os bytes referentes a validação do valor magic do arquivo.
+	 * @return true se o valor for válido ou false caso contrário.
+	 */
+
+	public static boolean magicFileValidade(Input input, byte realMagic[])
+	{
+		for (byte b : realMagic)
+			if (input.getByte() != b)
+				return false;
+
+		return true;
 	}
 }

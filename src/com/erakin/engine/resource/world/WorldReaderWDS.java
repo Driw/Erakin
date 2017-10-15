@@ -2,7 +2,8 @@ package com.erakin.engine.resource.world;
 
 import java.io.File;
 
-import com.erakin.common.buffer.Buffer;
+import org.erakin.api.buffer.Buffer;
+
 import com.erakin.engine.resource.TerrainLoader;
 
 /**

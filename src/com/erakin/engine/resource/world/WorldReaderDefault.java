@@ -2,8 +2,8 @@ package com.erakin.engine.resource.world;
 
 import java.io.File;
 
-import com.erakin.common.buffer.Buffer;
-import com.erakin.common.buffer.BufferInput;
+import org.erakin.api.buffer.Buffer;
+import org.erakin.api.buffer.BufferInput;
 
 /**
  * <h1>Leitor de Dados para Mapa Padrão</h1>

@@ -10,8 +10,8 @@ import java.util.zip.Inflater;
 import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.lang.ByteUtil;
 import org.diverproject.util.lang.IntUtil;
+import org.erakin.api.buffer.Buffer;
 
-import com.erakin.common.buffer.Buffer;
 import com.erakin.engine.resource.textures.pixel.PixelFormat;
 import com.erakin.file.images.PNG.PNGUtil;
 

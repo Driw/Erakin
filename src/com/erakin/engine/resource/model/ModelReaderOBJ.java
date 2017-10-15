@@ -9,10 +9,9 @@ import org.diverproject.util.collection.List;
 import org.diverproject.util.collection.Queue;
 import org.diverproject.util.collection.abstraction.DynamicList;
 import org.diverproject.util.collection.abstraction.DynamicQueue;
+import org.erakin.api.lwjgl.math.Vector3i;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
-
-import com.erakin.common.vector.Vector3i;
 
 /**
  * <h1>Leitor de Modelagem OBJ</h1>

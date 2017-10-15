@@ -4,6 +4,8 @@ import org.diverproject.util.FileUtil;
 import org.diverproject.util.collection.Map;
 import org.diverproject.util.collection.abstraction.StringSimpleMap;
 
+import com.erakin.engine.resource.world.rmd.WorldReaderRMD;
+
 /**
  * <h1>Fábrica para Leitor de Mapas</h1>
  *

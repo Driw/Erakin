@@ -87,7 +87,7 @@ public class WorldDataDefault implements WorldData
 
 	private void init(int width, int length, float unit)
 	{
-		if (width < 2 || length < 2)
+		if (width < 1 || length < 1)
 			throw new WorldRuntimeException("tamanho do mundo muito pequeno");
 
 		if (unit < 0.1f)
@@ -195,7 +195,7 @@ public class WorldDataDefault implements WorldData
 
 	public void setTerrainSize(int terrainWidth, int terrainLength)
 	{
-		if (terrainWidth > 2 && terrainLength > 2)
+		if (terrainWidth > 0 && terrainLength > 0)
 		{
 			this.terrainWidth = terrainWidth;
 			this.terrainLength = terrainLength;

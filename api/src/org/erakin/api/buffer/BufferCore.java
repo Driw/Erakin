@@ -1,4 +1,4 @@
-package com.erakin.common.buffer;
+package org.erakin.api.buffer;
 
 import static org.diverproject.util.lang.Bits.makeInt;
 import static org.diverproject.util.lang.Bits.makeLong;

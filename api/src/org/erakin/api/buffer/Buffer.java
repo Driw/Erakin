@@ -1,4 +1,4 @@
-package com.erakin.common.buffer;
+package org.erakin.api.buffer;
 
 /**
  * <h1>Buffer</h1>

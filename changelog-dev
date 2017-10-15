@@ -26,6 +26,14 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+14.10.2016 - 0.0.1.43
+- Adicionado novo projeto denominado API, para que seja possível criar aplicações em LWJGL como ferramentas.
+	- Alguns arquivos (buffer, input e outros) já foram movidos para a API, já que serão úteis.
+	- Boa parte do código da Engine (atual) deve ir para a API e outro projeto Tools deve ser criado.
+- Removido atributos de terrainWidth e terrainLength, será considerado terrainDimension, world.
+- Será permitido mundos que tenham um terreno de tamanho 1x1 para adicionar possíveis exceções.
+	- Acredito que mais a frente será reformulado o modo como é feito o load dos mundos.
+
 12.07.2016 - 0.0.0.42
 - Keyboard agora se encontra como VirtualKeyboard e também implementará Keyboard.
 - Keyboard passa a ser uma interface que será visível durante o desenvolvimento do jogo.

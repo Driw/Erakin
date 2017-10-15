@@ -1,4 +1,4 @@
-package com.erakin.engine.input;
+package org.erakin.api.input;
 
 import org.diverproject.jni.input.KeyEvent;
 

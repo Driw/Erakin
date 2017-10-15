@@ -2,8 +2,8 @@ package com.erakin.engine.resource.model;
 
 import java.io.InputStream;
 
-import com.erakin.common.buffer.Buffer;
-import com.erakin.common.buffer.BufferInput;
+import org.erakin.api.buffer.Buffer;
+import org.erakin.api.buffer.BufferInput;
 
 /**
  * <h1>Leitor de Modelagem MDL</h1>

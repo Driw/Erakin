@@ -3,8 +3,9 @@ package com.erakin.engine.resource.world;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
-import com.erakin.common.buffer.Buffer;
-import com.erakin.common.buffer.BufferInput;
+import org.erakin.api.buffer.Buffer;
+import org.erakin.api.buffer.BufferInput;
+
 import com.erakin.engine.resource.Model;
 import com.erakin.engine.resource.ModelLoader;
 import com.erakin.engine.resource.Terrain;

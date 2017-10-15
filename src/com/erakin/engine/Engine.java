@@ -19,6 +19,7 @@ import org.diverproject.util.UtilException;
 import org.diverproject.util.collection.Node;
 import org.diverproject.util.service.LibrarySystem;
 import org.diverproject.util.service.ServiceSystem;
+import org.erakin.api.input.InputManager;
 import org.lwjgl.opengl.Display;
 
 import com.erakin.common.ErakinException;
@@ -110,8 +111,7 @@ public class Engine implements Tickable
 		ServiceSystem serviceSystem = ServiceSystem.getInstance();
 		serviceSystem.setPropertie(PROPERTIE_USE_LOG, true);
 
-		InputSystem inputSystem = InputSystem.getInstance();
-		inputSystem.setPropertie(PROPERTIE_USE_LOG, true);
+		InputManager.setDefaultProperties();
 	}
 
 	/**
@@ -149,7 +149,7 @@ public class Engine implements Tickable
 		try {
 
 			initiateDisplay();
-			initiateInput();
+			InputManager.initiateInput();
 			initiateLoop();
 
 		} catch (UtilException e) {
@@ -179,21 +179,6 @@ public class Engine implements Tickable
 
 		DisplayManager display = DisplayManager.getInstance();
 		display.create(settings);
-	}
-
-	/**
-	 * Ao ser chamado define qual será o serviço para receber o despache dos eventos de teclado.
-	 * Além disso deverá também garantir que o serviço de entrada seja inicializado no sistema.
-	 * @throws InputException apenas se houver falha na inicialização do serviço de entrada.
-	 */
-
-	private void initiateInput() throws InputException
-	{
-		InputSystem system = InputSystem.getInstance();
-		system.setKeyboardDispatcher(Keyboard.getInstance());
-		system.initialize();
-
-		logNotice("serviços inicializados.\n");
 	}
 
 	/**

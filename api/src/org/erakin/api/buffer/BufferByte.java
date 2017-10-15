@@ -1,4 +1,4 @@
-package com.erakin.common.buffer;
+package org.erakin.api.buffer;
 
 import java.nio.ByteBuffer;
 

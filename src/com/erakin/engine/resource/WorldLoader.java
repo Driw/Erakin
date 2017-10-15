@@ -8,6 +8,7 @@ import java.io.File;
 import org.diverproject.util.FileUtil;
 import org.diverproject.util.ObjectDescription;
 
+import com.erakin.engine.resource.world.TerrainDimension;
 import com.erakin.engine.resource.world.WorldData;
 import com.erakin.engine.resource.world.WorldException;
 import com.erakin.engine.resource.world.WorldReader;
@@ -153,8 +154,7 @@ public class WorldLoader extends DefaultLoader
 		root.prefix = data.getPrefix();
 		root.width = data.getWidth();
 		root.length = data.getLength();
-		root.terrainWidth = data.getTerrainWidth();
-		root.terrainLength = data.getTerrainLength();
+		root.terrainDimension = new TerrainDimension(data.getTerrainWidth(), data.getTerrainLength());
 		root.terrainLoader = data.getTerrainLoader();
 		root.folder = new File(folderPathname);
 		root.unit = data.getUnit();

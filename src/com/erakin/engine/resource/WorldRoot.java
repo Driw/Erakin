@@ -42,16 +42,6 @@ public class WorldRoot extends ResourceRoot
 	int length;
 
 	/**
-	 * Quantas células um terreno terá no eixo da longitude.
-	 */
-	int terrainWidth;
-
-	/**
-	 * Quantas células um terreno terá no eixo da latitude.
-	 */
-	int terrainLength;
-
-	/**
 	 * Tamanho de cada unidade (célula) do terreno.
 	 */
 	float unit;
@@ -75,7 +65,6 @@ public class WorldRoot extends ResourceRoot
 	public World genResource()
 	{
 		World map = new World(this);
-		map.setTerrainDimension(terrainDimension);
 		map.setWorldTerrainLoader(terrainLoader);
 		addReference(map);
 
@@ -88,8 +77,6 @@ public class WorldRoot extends ResourceRoot
 		description.append("id", id);
 		description.append("width", width);
 		description.append("height", length);
-		description.append("terrainWidth", terrainWidth);
-		description.append("terrainLength", terrainLength);
 		description.append("folder", folder == null ? null : folder.getPath());
 	}
 }

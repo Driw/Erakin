@@ -1,4 +1,4 @@
-package com.erakin.common.vector;
+package org.erakin.api.lwjgl.math;
 
 import java.nio.IntBuffer;
 

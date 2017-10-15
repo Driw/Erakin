@@ -4,7 +4,8 @@ import static com.erakin.engine.resource.textures.pixel.PixelFormat.FORMAT_RGB;
 
 import java.nio.ByteBuffer;
 
-import com.erakin.common.buffer.Buffer;
+import org.erakin.api.buffer.Buffer;
+
 import com.erakin.engine.resource.textures.pixel.PixelFormat;
 
 public class TextureReaderJPG extends TextureReaderDefault

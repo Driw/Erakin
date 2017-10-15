@@ -1,4 +1,4 @@
-package com.erakin.engine.input;
+package org.erakin.api.input;
 
 /**
  * <h1>Ação de Tecla</h1>

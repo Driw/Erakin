@@ -6,8 +6,8 @@ import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.collection.Queue;
 import org.diverproject.util.collection.abstraction.DynamicQueue;
 import org.diverproject.util.lang.IntUtil;
+import org.erakin.api.lwjgl.math.Vector3i;
 
-import com.erakin.common.vector.Vector3i;
 import com.erakin.engine.camera.Camera;
 import com.erakin.engine.resource.Model;
 import com.erakin.engine.resource.Terrain;
@@ -168,17 +168,17 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	{
 		int realRange = (int) (range * world.getUnit());
 
-		int entityX = position.getX();
-		int entityZ = position.getZ();
 		int terrainWidth = (int) (world.getTerrainWidth() * world.getUnit());
 		int terrainLength = (int) (world.getTerrainLength() * world.getUnit());
 		int maxX = terrainWidth * world.getWidth();
 		int maxZ = terrainLength * world.getLength();
 
-		int startX = IntUtil.limit(entityX - realRange, 0, maxX - 1);
-		int endX = IntUtil.limit(entityX + realRange, 0, maxX - 1);
-		int startZ = IntUtil.limit(entityZ - realRange, 0, maxZ - 1);
-		int endZ = IntUtil.limit(entityZ + realRange, 0, maxZ - 1);
+		int entityX = position.getX();
+		int entityZ = position.getZ();
+		int startX = IntUtil.limit(entityX - realRange, 0, maxX);
+		int endX = IntUtil.limit(entityX + realRange, 0, maxX);
+		int startZ = IntUtil.limit(entityZ - realRange, 0, maxZ);
+		int endZ = IntUtil.limit(entityZ + realRange, 0, maxZ);
 
 		for (int renderZ = startZ; renderZ < endZ; renderZ += terrainLength)
 			for (int renderX = startX; renderX < endX; renderX += terrainWidth)

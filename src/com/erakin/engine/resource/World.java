@@ -7,7 +7,6 @@ import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.lang.IntUtil;
 
 import com.erakin.engine.resource.world.TerrainDimension;
-import com.erakin.engine.resource.world.WorldRuntimeException;
 
 /**
  * <h1>Mundo</h1>
@@ -60,6 +59,7 @@ public class World extends Resource
 		super(root);
 
 		terrains = new Terrain[root.width][root.length];
+		terrainDimension = root.terrainDimension;
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class World extends Resource
 	@Override
 	public boolean valid()
 	{
-		return root != null && terrains != null && terrains != null;
+		return root != null && terrains != null;
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class World extends Resource
 
 	public int getTerrainWidth()
 	{
-		return root == null ? 0 : ((WorldRoot) root).terrainWidth;
+		return root == null ? 0 : ((WorldRoot) root).terrainDimension.getWidth();
 	}
 
 	/**
@@ -117,7 +117,7 @@ public class World extends Resource
 
 	public int getTerrainLength()
 	{
-		return root == null ? 0 : ((WorldRoot) root).terrainLength;
+		return root == null ? 0 : ((WorldRoot) root).terrainDimension.getLength();
 	}
 
 	/**
@@ -297,18 +297,15 @@ public class World extends Resource
 	}
 
 	/**
-	 * Permite definir qual será a dimensão que os terrenos deverão possuir para estar nesse mundo.
-	 * Uma vez que a dimensão do mundo seja definida não será permitido que este seja trocado.
-	 * Isso é restringido a fim de evitar que haja colisão ou espaço em branco entre os terrenos.
-	 * @param dimension referência da dimensão de terrenos que esse mundo deverá se usar.
+	 * Dimensionamento do terreno permite especificar quantas células cada terreno vai possuir.
+	 * Alterar o valor após o carregamento de um terreno poderá causar má renderização.
+	 * As mudanças feitas nesse mundo serão aplicados a todos os mundos relacionados ao root.
+	 * @return aquisição do objeto contendo o dimensionamento de terrenos do mundo.
 	 */
 
-	void setTerrainDimension(TerrainDimension dimension)
+	public TerrainDimension getTerrainDimension()
 	{
-		if (terrainDimension != null)
-			throw new WorldRuntimeException("tentativa de mudar a dimensão de terrenos de '%s'", root.fileName);
-
-		terrainDimension = dimension;
+		return terrainDimension;
 	}
 
 	/**
@@ -351,8 +348,13 @@ public class World extends Resource
 	{
 		description.append("prefix", getPrefix());
 		description.append("loader", nameOf(terrainLoader));
-		description.append("terrainWidth", terrainDimension.getWidth());
-		description.append("terrainLength", terrainDimension.getLength());
+
+		if (terrainDimension != null)
+		{
+			description.append("terrainWidth", terrainDimension.getWidth());
+			description.append("terrainLength", terrainDimension.getLength());
+		}
+
 		description.append("terrains", terrains != null);
 	}
 }
