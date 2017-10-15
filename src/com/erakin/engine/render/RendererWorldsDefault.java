@@ -1,6 +1,7 @@
 package com.erakin.engine.render;
 
 import static com.erakin.api.ErakinAPIUtil.nameOf;
+import static org.diverproject.log.LogSystem.logWarning;
 
 import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.collection.Queue;
@@ -11,7 +12,6 @@ import com.erakin.api.lwjgl.math.Vector3i;
 import com.erakin.api.render.ModelRender;
 import com.erakin.api.render.TerrainRender;
 import com.erakin.api.render.WorldRender;
-import com.erakin.api.resources.World;
 import com.erakin.engine.camera.Camera;
 import com.erakin.engine.world.light.Light;
 
@@ -24,6 +24,13 @@ import com.erakin.engine.world.light.Light;
  * <p>Utiliza uma coleção do tipo fila como armazenamento dos mundos e usa a fila dinâmica para tal.
  * Nesse caso a fila é usada ao final de toda renderização e os mundos serão removidos do mesmo.
  * A forma que essa estrutura trabalha, é o melhor para ser alocado como armazenador dos mundos.</p>
+ *
+ * @see RendererWorlds
+ * @see ModelRender
+ * @see TerrainRender
+ * @see WorldRender
+ * @see Camera
+ * @see Light
  *
  * @author Andre Mello
  */
@@ -38,7 +45,7 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	/**
 	 * Mundo que será usado para obter as chunks e renderizá-los.
 	 */
-	private World world;
+	private WorldRender world;
 
 	/**
 	 * Ponto central para efetuar a renderização.
@@ -107,10 +114,10 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	/**
 	 * Mundo é usado para saber de onde os terrenos a serem renderizados serão obtidos.
 	 * Assim sendo, o renderizado poderá saber os terrenos de que mundo devem ser visualizados.
-	 * @return aquisição da referência do mundo do qual está sendo renderizado.
+	 * @return aquisição da referência do mundo renderizável do qual está sendo renderizado.
 	 */
 
-	public World getWorld()
+	public WorldRender getWorld()
 	{
 		return world;
 	}
@@ -152,7 +159,7 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	}
 
 	@Override
-	public final void setWorld(World world)
+	public final void setWorld(WorldRender world)
 	{
 		if (world != null)
 			this.world = world;
@@ -189,7 +196,7 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 
 				TerrainRender terrain = world.getTerrain(xTerrain, zTerrain);
 
-				if (!terrains.contains(terrain))
+				if (terrain != null && !terrains.contains(terrain))
 					terrains.offer(terrain);
 			}
 
@@ -210,9 +217,15 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 			TerrainRender terrain = terrains.poll();
 			ModelRender model = terrain.getModel();
 
-			beforeRenderChunk(model);
-			renderTerrain(terrain);
-			afterRenderChunk(model);
+			if (model == null)
+				logWarning("terreno sem modelagem (world: %s, terreno: %d,%d)\n", world.getPrefix(), terrain.getX(), terrain.getZ());
+
+			else
+			{
+				beforeRenderChunk(model);
+				renderTerrain(terrain);
+				afterRenderChunk(model);
+			}
 		}
 	}
 

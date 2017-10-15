@@ -89,6 +89,9 @@ public abstract class ResourceRoot implements FolderElement
 
 	public String getFilePath()
 	{
+		if (fileExtension.isEmpty())
+			return String.format("%s/%s", filePath, fileName);
+
 		return String.format("%s/%s.%s", filePath, fileName, fileExtension);
 	}
 
@@ -176,8 +179,9 @@ public abstract class ResourceRoot implements FolderElement
 		if (listener != null)
 			listener.resourceRelease();
 
-		for (Resource reference : references)
-			reference.release();
+		if (references != null)
+			for (Resource reference : references)
+				reference.release();
 	}
 
 	/**

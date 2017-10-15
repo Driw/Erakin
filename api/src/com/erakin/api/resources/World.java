@@ -129,13 +129,7 @@ public class World extends Resource implements WorldRender
 		return root == null ? 0.0f : ((WorldRoot) root).unit;
 	}
 
-	/**
-	 * Nome dos mundos normalmente são grandes e ID são gerados automaticamente.
-	 * Isso torna o mundo difícil de ser identificado pelo desenvolvedor de jogo.
-	 * Para isso é usado um pré-fixo que é configurado no arquivo de definições do mundo.
-	 * @return aquisição do pré-fixo do mundo utilizá-lo para facilitar sua identificação.
-	 */
-
+	@Override
 	public String getPrefix()
 	{
 		return root == null ? null : ((WorldRoot) root).prefix;

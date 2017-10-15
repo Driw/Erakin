@@ -143,7 +143,7 @@ public final class ModelLoader extends DefaultLoader
 				root.fileName, indices.length, vertices.length, textures.length, normals.length);
 
 		if (!insertResource(root))
-			logWarning("não foi possível salvar a modelage '%s'.\n", root.fileName);
+			logWarning("não foi possível salvar a modelagem '%s'.\n", root.fileName);
 
 		return root.genResource();
 	}

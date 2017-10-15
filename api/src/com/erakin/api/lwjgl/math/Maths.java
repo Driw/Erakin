@@ -11,20 +11,14 @@ import org.lwjgl.util.vector.Vector3f;
  * Utilizado por diversas classes que precisam realizar as mesmas operações e muitas vezes complexas.
  * Assim é possível reduzir quantidade de códigos e facilitar o entendimento nessas outras classes.</p>
  *
+ * <p>Aqui apenas os cálculos gerais serão especificados, estes podem ser utilizados por diversas partes do sistema.
+ * Outras classes de cálculos podem existir, porém terá utilidade apenas para uma parte específica do sistema.</p>
+ *
  * @author Andrew Mello
  */
 
 public class Maths
 {
-	/**
-	 * Construtor privado para evitar instâncias desnecessárias dessa classe utilitária.
-	 */
-
-	private Maths()
-	{
-		
-	}
-
 	/**
 	 * Deve obter um valor na escola dobrada de 2 num limite máximo possível.
 	 * O limite possível será o valor passado, em quanto o valor retornado,
@@ -109,5 +103,14 @@ public class Maths
 		projectionMatrix.m33 = 0;
 
 		return projectionMatrix;
+	}
+
+	/**
+	 * Construtor privado para evitar instâncias desnecessárias dessa classe utilitária.
+	 */
+
+	private Maths()
+	{
+		
 	}
 }

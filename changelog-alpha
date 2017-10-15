@@ -26,6 +26,12 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+15.10.2016 - 0.0.1.10
+- Adicionado getPrefixo() para WorldRender afim de identificar o mundo em ocasiões específicas.
+	- No caso dessa build a ocasião foi relacionado ao gerar a modelagem dos terrenos e validação.
+- ResourceRoot.getFilePath() atualizado para que seja possível ter um caminho sem extensão.
+- RendererWorlds ainda usava World, para tornar mais dinâmico iremos usar WorldRender.
+
 15.10.2016 - 0.0.1.9
 - Implementação de ModelRender, TerrainRender e WorldRender para tornar recursos renderizáveis mais dinâmicos.
 	- Desta forma é possível criar classes que possam ser renderizadas de outras formas (raw/injeção direta).

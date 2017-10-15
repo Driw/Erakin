@@ -1,7 +1,7 @@
 package com.erakin.engine.render;
 
 import com.erakin.api.lwjgl.math.Vector3i;
-import com.erakin.api.resources.World;
+import com.erakin.api.render.WorldRender;
 
 /**
  * <h1>Renderizador para Mundos</h1>
@@ -14,6 +14,7 @@ import com.erakin.api.resources.World;
  * Permitindo inserir um mundo no mesmo de modo que seja possível renderizar este na tela se visualizada.</p>
  *
  * @see RendererManager
+ * @see WorldRender
  *
  * @author Andrew Mello
  */
@@ -23,10 +24,10 @@ public interface RendererWorlds extends RendererManager
 	/**
 	 * Irá indicar qual o mundo que será usado pelo renderizador para ser renderizado na tela.
 	 * Para que o renderizador funcione, é necessário definir um novo mundo para se renderizar.
-	 * @param world referência do mundo do qual será renderizado pelo renderizador de mundos.
+	 * @param world referência do mundo renderizável do qual será renderizado pelo renderizador de mundos.
 	 */
 
-	void setWorld(World world);
+	void setWorld(WorldRender world);
 
 	/**
 	 * Ao definir a posição de renderização será indicado a partir de que ponto será feito a renderização.
