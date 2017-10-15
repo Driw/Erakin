@@ -1,6 +1,6 @@
 package com.erakin.engine;
 
-import com.erakin.common.ErakinException;
+import com.erakin.api.ErakinException;
 
 /**
  * <h1>Configurações para Preferências</h1>

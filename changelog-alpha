@@ -26,6 +26,26 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+14.10.2016 - 0.0.1.8
+- Corrigido o nome dos pacotes que deveriam ser com.erakin.api e não org.erakin.api.
+- Todos os arquivos relacionados a dados de texture foram movidos para api.resources.texture.
+	- Separado os formatos de textures (BMP, JPG e PNG) para textures.{file_extension}.
+		- Será necessário utilizar TextureManager para especificar quais extensões serão permitidas.
+- Todos os arquivos relacionados a dados de modelagens foram movidos para api.resources.model.
+	- Separado os formatos de model (MDL e OBJ) para models.{file_extension}.
+		- Será necessário utilizar ModelManager para especificar quais extensões serão permitidas.
+- Todos os arquivos relacionados a dados de mundos e terrenos foram movidos para api.resources.world.
+	- Separado os formatos de mundos (WDS e XML) para models.{file_extension}.
+		- Será necessário utilizar WorldManager para especificar quais extensões serão permitidas.
+
+14.10.2016 - 0.0.1.7
+- Adicionado novo projeto denominado API, para que seja possível criar aplicações em LWJGL como ferramentas.
+	- Alguns arquivos (buffer, input e outros) já foram movidos para a API, já que serão úteis.
+	- Boa parte do código da Engine (atual) deve ir para a API e outro projeto Tools deve ser criado.
+- Removido atributos de terrainWidth e terrainLength, será considerado terrainDimension, world.
+- Será permitido mundos que tenham um terreno de tamanho 1x1 para adicionar possíveis exceções.
+	- Acredito que mais a frente será reformulado o modo como é feito o load dos mundos.
+
 21.06.2017 - 0.0.0.6
 - Adicionando commandName para que DrawElement possa ser identificado mais facilmente.
 	- Agora DrawElement pode ser identificado (parse) por um nome ou código.

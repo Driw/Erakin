@@ -1,6 +1,6 @@
 package com.erakin.engine.resource.shader;
 
-import com.erakin.common.ErakinRuntimeException;
+import com.erakin.api.ErakinRuntimeException;
 
 /**
  * <h1>Exceção de Shader</h1>

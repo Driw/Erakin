@@ -1,11 +1,11 @@
 package com.erakin.engine.entity;
 
-import static com.erakin.common.Utilities.objectString;
+import static com.erakin.api.ErakinAPIUtil.objectString;
 
 import org.diverproject.util.ObjectDescription;
 import org.lwjgl.util.vector.Vector3f;
 
-import com.erakin.engine.resource.Model;
+import com.erakin.api.resources.Model;
 
 /**
  * <h1>Entidade Padrão</h1>

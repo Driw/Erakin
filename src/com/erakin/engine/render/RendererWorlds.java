@@ -1,8 +1,7 @@
 package com.erakin.engine.render;
 
-import org.erakin.api.lwjgl.math.Vector3i;
-
-import com.erakin.engine.resource.World;
+import com.erakin.api.lwjgl.math.Vector3i;
+import com.erakin.api.resources.World;
 
 /**
  * <h1>Renderizador para Mundos</h1>

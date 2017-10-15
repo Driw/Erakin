@@ -1,6 +1,6 @@
 package com.erakin.engine.render;
 
-import static com.erakin.common.Utilities.nameOf;
+import static com.erakin.api.ErakinAPIUtil.nameOf;
 
 import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.collection.Map;
@@ -9,9 +9,9 @@ import org.diverproject.util.collection.Queue;
 import org.diverproject.util.collection.abstraction.DynamicMap;
 import org.diverproject.util.collection.abstraction.DynamicQueue;
 
+import com.erakin.api.resources.Model;
 import com.erakin.engine.camera.Camera;
 import com.erakin.engine.entity.Entity;
-import com.erakin.engine.resource.Model;
 import com.erakin.engine.world.light.Light;
 
 /**

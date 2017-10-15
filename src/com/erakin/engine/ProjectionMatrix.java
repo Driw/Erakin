@@ -1,7 +1,7 @@
 package com.erakin.engine;
 
-import static com.erakin.common.Utilities.sizeOfCollection;
-import static com.erakin.engine.Maths.createProjectionMatrix;
+import static com.erakin.api.ErakinAPIUtil.sizeOfCollection;
+import static com.erakin.api.lwjgl.math.Maths.createProjectionMatrix;
 import static org.diverproject.log.LogSystem.logDebug;
 
 import org.diverproject.util.ObjectDescription;

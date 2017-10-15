@@ -1,7 +1,7 @@
 package com.erakin.engine;
 
-import static com.erakin.common.Utilities.fatalError;
-import static com.erakin.common.Utilities.nameOf;
+import static com.erakin.api.ErakinAPIUtil.fatalError;
+import static com.erakin.api.ErakinAPIUtil.nameOf;
 import static org.diverproject.log.LogSystem.logException;
 import static org.diverproject.log.LogSystem.logNotice;
 import static org.diverproject.util.MessageUtil.showException;
@@ -19,10 +19,10 @@ import org.diverproject.util.UtilException;
 import org.diverproject.util.collection.Node;
 import org.diverproject.util.service.LibrarySystem;
 import org.diverproject.util.service.ServiceSystem;
-import org.erakin.api.input.InputManager;
 import org.lwjgl.opengl.Display;
 
-import com.erakin.common.ErakinException;
+import com.erakin.api.ErakinException;
+import com.erakin.api.input.InputManager;
 import com.erakin.engine.render.RendererManager;
 import com.erakin.engine.scene.SceneManager;
 

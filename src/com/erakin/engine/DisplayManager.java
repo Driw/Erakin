@@ -1,6 +1,6 @@
 package com.erakin.engine;
 
-import static com.erakin.common.Constants.NANOSECOND;
+import static com.erakin.api.Constants.NANOSECOND;
 import static org.diverproject.log.LogSystem.logNotice;
 import static org.lwjgl.opengl.GL11.glViewport;
 
@@ -13,7 +13,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.PixelFormat;
 
-import com.erakin.common.ErakinException;
+import com.erakin.api.ErakinException;
 
 /**
  * <h1>Gerenciador de exibição</h1>

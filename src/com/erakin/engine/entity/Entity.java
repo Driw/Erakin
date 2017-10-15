@@ -2,8 +2,8 @@ package com.erakin.engine.entity;
 
 import org.lwjgl.util.vector.Vector3f;
 
+import com.erakin.api.resources.Model;
 import com.erakin.engine.Updatable;
-import com.erakin.engine.resource.Model;
 
 /**
  * <h1>Entidade</h1>

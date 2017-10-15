@@ -1,11 +1,11 @@
 package com.erakin.engine.render;
 
-import static com.erakin.common.Utilities.nameOf;
+import static com.erakin.api.ErakinAPIUtil.nameOf;
 
 import org.diverproject.util.ObjectDescription;
 
+import com.erakin.api.resources.World;
 import com.erakin.engine.entity.Entity;
-import com.erakin.engine.resource.World;
 
 /**
  * <h1>Gerenciador de Renderização Padrão</h1>

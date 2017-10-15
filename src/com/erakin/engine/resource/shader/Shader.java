@@ -1,6 +1,6 @@
 package com.erakin.engine.resource.shader;
 
-import com.erakin.engine.lwjgl.GLBind;
+import com.erakin.api.lwjgl.GLBind;
 
 /**
  * <h1>Programação Shader</h1>

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="textures"/>
+	<classpathentry kind="src" path="models"/>
+	<classpathentry kind="src" path="worlds"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Util Console"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Util Log"/>

@@ -1,17 +1,17 @@
 package com.erakin.engine.render;
 
-import static com.erakin.common.Utilities.nameOf;
+import static com.erakin.api.ErakinAPIUtil.nameOf;
 
 import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.collection.Queue;
 import org.diverproject.util.collection.abstraction.DynamicQueue;
 import org.diverproject.util.lang.IntUtil;
-import org.erakin.api.lwjgl.math.Vector3i;
 
+import com.erakin.api.lwjgl.math.Vector3i;
+import com.erakin.api.resources.Model;
+import com.erakin.api.resources.Terrain;
+import com.erakin.api.resources.World;
 import com.erakin.engine.camera.Camera;
-import com.erakin.engine.resource.Model;
-import com.erakin.engine.resource.Terrain;
-import com.erakin.engine.resource.World;
 import com.erakin.engine.world.light.Light;
 
 /**
