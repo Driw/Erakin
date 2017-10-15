@@ -74,7 +74,10 @@ public class WorldReaderFactory
 
 	public void addMapReader(String extension, WorldReader reader)
 	{
-		readers.update(extension, reader);
+		if (readers.containsKey(extension))
+			readers.update(extension, reader);
+		else
+			readers.add(extension, reader);
 	}
 
 	/**

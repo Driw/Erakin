@@ -74,7 +74,10 @@ public class TextureReaderFactory
 
 	public void addTextureReader(String extension, TextureReader reader)
 	{
-		readers.update(extension, reader);
+		if (readers.containsKey(extension))
+			readers.update(extension, reader);
+		else
+			readers.add(extension, reader);
 	}
 
 	/**

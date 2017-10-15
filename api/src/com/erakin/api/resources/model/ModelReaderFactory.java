@@ -73,7 +73,10 @@ public class ModelReaderFactory
 
 	public void addModelReader(String extension, ModelReader reader)
 	{
-		readers.update(extension, reader);
+		if (readers.containsKey(extension))
+			readers.update(extension, reader);
+		else
+			readers.add(extension, reader);
 	}
 
 	/**

@@ -5,6 +5,7 @@ import org.diverproject.util.ObjectDescription;
 
 import com.erakin.api.lwjgl.VAO;
 import com.erakin.api.lwjgl.math.enumeration.DrawElement;
+import com.erakin.api.render.ModelRender;
 
 /**
  * <h1>Modelo</h1>
@@ -27,7 +28,7 @@ import com.erakin.api.lwjgl.math.enumeration.DrawElement;
  * @author Andrew
  */
 
-public class Model extends Resource
+public class Model extends Resource implements ModelRender
 {
 	/**
 	 * Código de atribuir um VBO de vértices no espaço para um modelo.
@@ -144,13 +145,7 @@ public class Model extends Resource
 		vao.unbind();
 	}
 
-	/**
-	 * Ao ser chamado irá acessar o VAO respectivo a essa modelagem e desenhar esta.
-	 * O resultado do desenhado varia de acordo com o tipo de computação gráfica usado.
-	 * @param mode em que modo deverá ser feito o desenho dos vértices da modelagem.
-	 * @see DrawElement
-	 */
-
+	@Override
 	public void draw(DrawElement mode)
 	{
 		ModelRoot model = ((ModelRoot) root);
@@ -159,12 +154,7 @@ public class Model extends Resource
 		vao.draw(mode);
 	}
 
-	/**
-	 * Refletividade indica o quanto a luz será refletida quando atingir o objeto em questão (modelagem).
-	 * Esse reflexo varia ainda também com as variáveis da luz como distância e sua intensidade (força).
-	 * @return aquisição do nível da força para refletir iluminações através do brilho.
-	 */
-
+	@Override
 	public float getReflectivity()
 	{
 		return reflectivity;
@@ -193,13 +183,7 @@ public class Model extends Resource
 		this.reflectivity = ((ModelRoot) root).defaultReflectivity;
 	}
 
-	/**
-	 * Redução do brilho é usado na computação gráfica para reduzir o efeito da luz ao atingir um objeto.
-	 * Essa redução possui duas variantes, a distância da direção do reflexo em relação com a câmera,
-	 * e o nível de redução do brilho, quanto maior ambos os valores, menor será o brilho refletido visto.
-	 * @return aquisição do nível da redução do brilho para iluminações refletidas.
-	 */
-
+	@Override
 	public float getShineDamping()
 	{
 		return shineDamping;

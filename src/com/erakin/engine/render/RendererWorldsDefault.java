@@ -8,8 +8,9 @@ import org.diverproject.util.collection.abstraction.DynamicQueue;
 import org.diverproject.util.lang.IntUtil;
 
 import com.erakin.api.lwjgl.math.Vector3i;
-import com.erakin.api.resources.Model;
-import com.erakin.api.resources.Terrain;
+import com.erakin.api.render.ModelRender;
+import com.erakin.api.render.TerrainRender;
+import com.erakin.api.render.WorldRender;
 import com.erakin.api.resources.World;
 import com.erakin.engine.camera.Camera;
 import com.erakin.engine.world.light.Light;
@@ -52,7 +53,7 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	/**
 	 * Lista contendo todas as chunks que serão renderizadas.
 	 */
-	private Queue<Terrain> terrains;
+	private Queue<TerrainRender> terrains;
 
 	/**
 	 * Constrói um novo renderizador de mundos padrões iniciado a posição central e campo de visão.
@@ -63,7 +64,7 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	{
 		range = 64;
 		position = new Vector3i();
-		terrains = new DynamicQueue<Terrain>();
+		terrains = new DynamicQueue<TerrainRender>();
 	}
 
 	@Override
@@ -161,10 +162,10 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	 * Chamado internamente para fazer a renderização de um determinado mundo especificado.
 	 * A renderização funciona de acordo com a posição central de renderização e distância.
 	 * Nenhum terreno fora do alcance será enfileirado para a renderização de terrenos.
-	 * @param world referência do mundo do qual deverá ser renderizado.
+	 * @param world referência do mundo renderizável do qual será utilizado.
 	 */
 
-	private void renderWorld(World world)
+	private void renderWorld(WorldRender world)
 	{
 		int realRange = (int) (range * world.getUnit());
 
@@ -186,7 +187,7 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 				int xTerrain = renderX / terrainWidth;
 				int zTerrain = renderZ / terrainLength;
 
-				Terrain terrain = world.getTerrain(xTerrain, zTerrain);
+				TerrainRender terrain = world.getTerrain(xTerrain, zTerrain);
 
 				if (!terrains.contains(terrain))
 					terrains.offer(terrain);
@@ -202,12 +203,12 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	 * @param terrains referência da fila contendo os terrenos que devem ser renderizados.
 	 */
 
-	private void renderTerrains(Queue<Terrain> terrains)
+	private void renderTerrains(Queue<TerrainRender> terrains)
 	{
 		while (terrains.size() > 0)
 		{
-			Terrain terrain = terrains.poll();
-			Model model = terrain.getModel();
+			TerrainRender terrain = terrains.poll();
+			ModelRender model = terrain.getModel();
 
 			beforeRenderChunk(model);
 			renderTerrain(terrain);
@@ -226,28 +227,28 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	 * Durante a renderização de entidades, o grupo de entidades com o mesmo modelo são chamados para renderizar.
 	 * Após fazer a ativação (habilitar uso) da modelagem esse método será chamado uma única vez por cada entidade.
 	 * Deverá garantir que as entidades sejam renderizadas na tela utilizando sua textura e shader adequados.
-	 * @param terrain referência da entidade do qual está sendo chamada para renderizar.
+	 * @param terrain referência do terreno renderizável do qual está sendo chamada para renderizar.
 	 */
 
-	protected abstract void renderTerrain(Terrain terrain);
+	protected abstract void renderTerrain(TerrainRender terrain);
 
 	/**
 	 * Antes de fazer a renderização das entidades, é necessário habilitar no OpenGL uma modelagem para ser usada.
 	 * Assim que essa for habilitada, as entidades que usam esse modelo serão chamadas para serem renderizadas.
 	 * Esse procedimento pode ainda usar o shader adequadamente de acordo com as informações da modelagem.
-	 * @param model referência da modelagem do próximo conjunto de entidades a ser renderizada.
+	 * @param model referência do modelo renderizável do próximo conjunto de entidades a ser renderizada.
 	 */
 
-	protected abstract void beforeRenderChunk(Model model);
+	protected abstract void beforeRenderChunk(ModelRender model);
 
 	/**
 	 * Após fazer a renderização de um conjunto de entidades especificados, esse procedimento será chamado.
 	 * Esse conjunto de entidades tem em comum a sua modelagem tri-dimensional usada, <b>model</b>.
 	 * Deve dizer ao OpenGL para desabilitar o uso dessa modelagem ou informações do shader se necessário.
-	 * @param model referência da modelagem do conjunto de entidades que foram renderizada.
+	 * @param model referência do modelo renderizável do conjunto de entidades que foram renderizada.
 	 */
 
-	protected abstract void afterRenderChunk(Model model);
+	protected abstract void afterRenderChunk(ModelRender model);
 
 	/**
 	 * Procedimento chamado assim que for solicitado ao renderizador para renderizar.

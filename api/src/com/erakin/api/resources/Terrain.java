@@ -4,6 +4,7 @@ import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.lang.IntUtil;
 
 import com.erakin.api.lwjgl.GLBind;
+import com.erakin.api.render.TerrainRender;
 
 /**
  * <h1>Terreno</h1>
@@ -19,7 +20,7 @@ import com.erakin.api.lwjgl.GLBind;
  * @author Andrew
  */
 
-public class Terrain
+public class Terrain implements TerrainRender
 {
 	/**
 	 * Identificação do mundo no sistema.
@@ -83,11 +84,7 @@ public class Terrain
 		return worldID;
 	}
 
-	/**
-	 * Terrenos são formados através de uma modelagem tri-dimensiona e usados para serem visualizados.
-	 * @return aquisição da modelagem tri-dimensional respectiva a esse terreno.
-	 */
-
+	@Override
 	public Model getModel()
 	{
 		return model;
@@ -103,46 +100,34 @@ public class Terrain
 		this.model = model;
 	}
 
-	/**
-	 * Um mundo é formado por uma grande de terrenos, onde todos os terrenos possuem o mesmo tamanho.
-	 * Coordenadas de um terreno permitem saber em que posição da grade de terrenos ele se encontra.
-	 * @return aquisição da coordenada na longitude do terreno na grade de terrenos do mundo.
-	 */
-
+	@Override
 	public int getX()
 	{
 		return x;
 	}
 
-	/**
-	 * Um mundo é formado por uma grande de terrenos, onde todos os terrenos possuem o mesmo tamanho.
-	 * Coordenadas de um terreno permitem saber em que posição da grade de terrenos ele se encontra.
-	 * @return aquisição da coordenada na latitude do terreno na grade de terrenos do mundo.
-	 */
-
+	@Override
 	public int getZ()
 	{
 		return z;
 	}
 
-	/**
-	 * Terrenos são formados por diversas células (geralmente quadrados) formados por duas faces.
-	 * @return aquisição do tamanho do terreno em células no eixo da longitude.
-	 */
-
+	@Override
 	public int getWidth()
 	{
 		return width;
 	}
 
-	/**
-	 * Terrenos são formados por diversas células (geralmente quadrados) formados por duas faces.
-	 * @return aquisição do tamanho do terreno em células no eixo da latitude.
-	 */
-
+	@Override
 	public int getLength()
 	{
 		return length;
+	}
+
+	@Override
+	public Texture getHeightTexture()
+	{
+		return model == null ? null : model.getTexture();
 	}
 
 	/**
@@ -200,17 +185,5 @@ public class Terrain
 		description.append("hasModel", model != null);
 
 		return description.toString();
-	}
-
-	/**
-	 * Terrenos podem usar uma textura única que permite visualizá-lo com cores que define sua altitude.
-	 * Por exemplo: o nível mais baixo terá um tom azul em quanto o mais alto um tom vermelho.
-	 * Logo todos os níveis do terreno terão uma cor relativa ao seu nível em degradê de azul e vermelho.
-	 * @return aquisição da textura que irá representar o nivelamento do terreno em degradê.
-	 */
-
-	public Texture getHeightTexture()
-	{
-		return model == null ? null : model.getTexture();
 	}
 }

@@ -26,6 +26,11 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+15.10.2016 - 0.0.1.9
+- Implementação de ModelRender, TerrainRender e WorldRender para tornar recursos renderizáveis mais dinâmicos.
+	- Desta forma é possível criar classes que possam ser renderizadas de outras formas (raw/injeção direta).
+- Corrigido problema onde modos de leitura não eram adicionados, ModelReaderFactory, TextureReaderFactory e WorldReaderFactory.
+
 14.10.2016 - 0.0.1.8
 - Corrigido o nome dos pacotes que deveriam ser com.erakin.api e não org.erakin.api.
 - Todos os arquivos relacionados a dados de texture foram movidos para api.resources.texture.
