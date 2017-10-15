@@ -155,7 +155,7 @@ public class TerrainLoaderBMP implements TerrainLoader
 		ModelDataDefault data = new ModelDataDefault();
 		data.init(vertexCount, textureCount, normalCount, faceCount);
 
-		generateVertices(world, data, world.getUnit());
+		generateVertices(world, data, world.getUnitSize());
 		generateNormals(world, data);
 		generateTextures(world, data);
 		generateIndices(world, data);

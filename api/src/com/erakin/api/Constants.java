@@ -28,6 +28,11 @@ public class Constants
 	public static final int NANOSECOND = 1000000000;
 
 	/**
+	 * Tamanho em bytes de um objeto Vector3f (3 float);
+	 */
+	public static final int VECTOR3F_BYTES = 12;
+
+	/**
 	 * Construtor privado para evitar instâncias desnecessárias.
 	 */
 

@@ -1,5 +1,7 @@
 package com.erakin.api.render;
 
+import com.erakin.api.resources.World;
+
 /**
  * <h1>Mundo Renderizável</h1>
  *
@@ -8,6 +10,7 @@ package com.erakin.api.render;
  * Caso o renderizador não seja de base padrão essa interface pode não ser suficiente para renderizar o mundo.</p>
  *
  * @see TerrainRender
+ * @see World
  *
  * @author Andrew
  */
@@ -15,12 +18,21 @@ package com.erakin.api.render;
 public interface WorldRender
 {
 	/**
+	 * Nome dos mundos normalmente são grandes e ID são gerados automaticamente.
+	 * Isso torna o mundo difícil de ser identificado pelo desenvolvedor de jogo.
+	 * Para isso é usado um pré-fixo que é configurado no arquivo de definições do mundo.
+	 * @return aquisição do pré-fixo do mundo utilizá-lo para facilitar sua identificação.
+	 */
+
+	String getPrefix();
+
+	/**
 	 * Unidade é usada durante o carregamento de um terreno para definir o dimensionamento.
 	 * Esse dimensionamento se refere a uma única célula (geralmente quadrados) do terreno.
 	 * @return aquisição do tamanho de cada unidade (célula) do terreno.
 	 */
 
-	float getUnit();
+	float getUnitSize();
 
 	/**
 	 * Quanto um terreno é carregado, é necessário que este possua um tamanho pré-definido.

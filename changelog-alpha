@@ -26,6 +26,11 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+15.10.2016 - 0.0.1.11
+- Implementação inicial de mundos gerados por injeção direta (criado pela engine).
+	- Este tipo de mundo Simple Flat Terrain (SFT) será usado pelo editor de mapas futuro na engine.
+	- Atualmente o mundo gerado é totalmente plano, mas já suporta múltiplos terrenos.
+
 15.10.2016 - 0.0.1.10
 - Adicionado getPrefixo() para WorldRender afim de identificar o mundo em ocasiões específicas.
 	- No caso dessa build a ocasião foi relacionado ao gerar a modelagem dos terrenos e validação.

@@ -23,6 +23,7 @@ import org.diverproject.util.collection.Index;
 import org.diverproject.util.collection.abstraction.StaticArray;
 import org.lwjgl.opengl.GL15;
 
+import com.erakin.api.ErakinRuntimeException;
 import com.erakin.api.lwjgl.math.enumeration.DrawElement;
 
 /**
@@ -85,6 +86,21 @@ public class VAO implements GLBind
 	public VAO()
 	{
 		id = glGenVertexArrays();
+		vbos = new StaticArray<VBO>(MAX_VBOS);
+	}
+
+	/**
+	 * Constrói um novo VAO, especificando qual sua identificação no OpenGL.
+	 * Essa inicialização irá criar um novo VAO com atributos em branco.
+	 * @param vaoID identificação do VAO no OpenGL.
+	 */
+
+	public VAO(int vaoID)
+	{
+		if (vaoID < 0)
+			throw new ErakinRuntimeException("id inválido (vaoID: %d)", vaoID);
+
+		id = vaoID;
 		vbos = new StaticArray<VBO>(MAX_VBOS);
 	}
 

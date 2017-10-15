@@ -124,7 +124,7 @@ public class World extends Resource implements WorldRender
 	}
 
 	@Override
-	public float getUnit()
+	public float getUnitSize()
 	{
 		return root == null ? 0.0f : ((WorldRoot) root).unit;
 	}

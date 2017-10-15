@@ -19,6 +19,11 @@ import org.diverproject.util.ObjectDescription;
 public class TerrainDimension
 {
 	/**
+	 * Tamanho do objeto em bytes (2 int e 1 boolean).
+	 */
+	public static final int BYTES = 9;
+
+	/**
 	 * Tamanho do terreno no eixo da largura.
 	 */
 	private int width;

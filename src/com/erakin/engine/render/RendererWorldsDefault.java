@@ -174,10 +174,10 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 
 	private void renderWorld(WorldRender world)
 	{
-		int realRange = (int) (range * world.getUnit());
+		int realRange = (int) (range * world.getUnitSize());
 
-		int terrainWidth = (int) (world.getTerrainWidth() * world.getUnit());
-		int terrainLength = (int) (world.getTerrainLength() * world.getUnit());
+		int terrainWidth = (int) (world.getTerrainWidth() * world.getUnitSize());
+		int terrainLength = (int) (world.getTerrainLength() * world.getUnitSize());
 		int maxX = terrainWidth * world.getWidth();
 		int maxZ = terrainLength * world.getLength();
 
