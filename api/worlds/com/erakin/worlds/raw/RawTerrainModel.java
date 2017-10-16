@@ -36,6 +36,27 @@ import com.erakin.api.resources.world.TerrainRuntimeException;
 public class RawTerrainModel implements ModelRender
 {
 	/**
+	 * Posicionamento relativo para o vértice do sudoeste.
+	 */
+	public static final int OFFSET_SOUTH_WEST = 0;
+
+	/**
+	 * Posicionamento relativo para o vértice do sudeste.
+	 */
+	public static final int OFFSET_SOUTH_EAST = 1;
+
+	/**
+	 * Posicionamento relativo para o vértice do nordeste.
+	 */
+	public static final int OFFSET_NORTH_EAST = 2;
+
+	/**
+	 * Posicionamento relativo para o vértice do noroeste.
+	 */
+	public static final int OFFSET_NORTH_WEST = 3;
+
+
+	/**
 	 * Quantidade de bytes do último modelo gerado.
 	 */
 	private int sizeof;
@@ -98,12 +119,13 @@ public class RawTerrainModel implements ModelRender
 
 	private ModelData createModelData()
 	{
-		int faceCount = terrain.getWidth() * terrain.getLength() * 6;
-		int vertexCount = (terrain.getWidth() * terrain.getLength()) + terrain.getWidth() + terrain.getLength() + 1;
-		int textureCount = vertexCount;
-		int normalCount = vertexCount;
+		int unitCount = terrain.getWidth() * terrain.getLength();
+		int faceCount = unitCount * 6;
+		int vertexCount = unitCount * 4;
+		int textureCount = unitCount * 4;
+		int normalCount = unitCount * 4;
 
-		sizeof = ((vertexCount * 7) + faceCount) * 4;
+		sizeof = (faceCount + (vertexCount * 3) + (textureCount * 2) + (normalCount * 3)) * 4;
 
 		ModelDataDefault data = new ModelDataDefault();
 		data.init(vertexCount, textureCount, normalCount, faceCount);
@@ -122,11 +144,17 @@ public class RawTerrainModel implements ModelRender
 
 	private void generateCellVertex(ModelDataDefault data)
 	{
-		float unitSize = terrain.world.getUnitSize();
+		for (int z = 0; z < terrain.getLength(); z++)
+			for (int x = 0; x < terrain.getWidth(); x++)
+			{
+				int offset = terrain.offset(x, z) * 4;
 
-		for (int z = 0; z <= terrain.getLength(); z++)
-			for (int x = 0; x <= terrain.getWidth(); x++)
-				data.setVertice(terrain.offset(x, z), x * unitSize, 0f, z * unitSize);
+				RawTerrainUnit unit = terrain.getUnit(x, z);
+				data.setVertice(offset + OFFSET_SOUTH_WEST, unit.getSouthWest());
+				data.setVertice(offset + OFFSET_SOUTH_EAST, unit.getSouthEast());
+				data.setVertice(offset + OFFSET_NORTH_EAST, unit.getNorthEast());
+				data.setVertice(offset + OFFSET_NORTH_WEST, unit.getNorthWest());
+			}
 	}
 
 	/**
@@ -136,14 +164,39 @@ public class RawTerrainModel implements ModelRender
 
 	private void generateCellNormals(ModelDataDefault data)
 	{
-		for (int z = 0; z <= terrain.getLength(); z++)
-			for (int x = 0; x <= terrain.getWidth(); x++)
-			{
-				Vector3f normal = new Vector3f(0, 2f, 0);
-				normal.normalise();		
+		int offset = 0;
 
-				data.setNormal(terrain.offset(x, z), normal.x, normal.y, normal.z);
+		for (int z = 0; z < terrain.getLength(); z++)
+			for (int x = 0; x < terrain.getWidth(); x++)
+			{
+				RawTerrainUnit unit = terrain.getUnit(x, z);
+
+				float defaultHeight = unit.avarageHeight();
+				float heightL = getHeight(x - 1, z, defaultHeight);
+				float heightR = getHeight(x + 1, z, defaultHeight);
+				float heightD = getHeight(x, z - 1, defaultHeight);
+				float heightU = getHeight(x, z + 1, defaultHeight);
+
+				Vector3f normal = new Vector3f(heightL - heightR, 2f, heightD - heightU);
+				normal.normalise();
+
+				data.setNormal(offset++, normal.x, normal.y, normal.z);
+				data.setNormal(offset++, normal.x, normal.y, normal.z);
+				data.setNormal(offset++, normal.x, normal.y, normal.z);
+				data.setNormal(offset++, normal.x, normal.y, normal.z);
 			}
+	}
+
+	private float getHeight(int x, int z, float defaultHeight)
+	{
+		try {
+
+			RawTerrainUnit unit = terrain.getUnit(x, z);
+			return unit.avarageHeight();
+
+		} catch (TerrainRuntimeException e) {
+			return defaultHeight;
+		}
 	}
 
 	/**
@@ -153,14 +206,16 @@ public class RawTerrainModel implements ModelRender
 
 	private void generateCellTextures(ModelDataDefault data)
 	{
-		for (int z = 0; z <= terrain.getLength(); z++)
-			for (int x = 0; x <= terrain.getWidth(); x++)
-			{
-				float tx = (float) x / ((float) terrain.getWidth());
-				float ty = (float) z / ((float) terrain.getLength());
+		int offset = 0;
 
-				data.setTexture(terrain.offset(x, z), tx, ty);
-			}		
+		for (int z = 0; z < terrain.getLength(); z++)
+			for (int x = 0; x < terrain.getWidth(); x++)
+			{
+				data.setTexture(offset++, 1f, 1f);
+				data.setTexture(offset++, 0f, 1f);
+				data.setTexture(offset++, 0f, 0f);
+				data.setTexture(offset++, 1f, 0f);
+			}
 	}
 
 	/**
@@ -170,22 +225,19 @@ public class RawTerrainModel implements ModelRender
 
 	private void generateCellIndices(ModelDataDefault data)
 	{
+		int offset = 0;
+
 		for (int z = 0; z < terrain.getLength(); z++)
 			for (int x = 0; x < terrain.getWidth(); x++)
 			{
-				int offset = ((z * terrain.getWidth()) + x) * 6;
+				int vertexOffset = terrain.offset(x, z) * 4;
 
-				int topLeft = (z * terrain.getWidth()) + x + z;
-				int topRight = topLeft + 1;
-				int bottomLeft = topLeft + terrain.getWidth() + 1;
-				int bottomRight = bottomLeft + 1;
-
-				data.setIndice(offset + 0, topLeft);
-				data.setIndice(offset + 1, bottomLeft);
-				data.setIndice(offset + 2, topRight);
-				data.setIndice(offset + 3, topRight);
-				data.setIndice(offset + 4, bottomLeft);
-				data.setIndice(offset + 5, bottomRight);
+				data.setIndice(offset++, vertexOffset + OFFSET_SOUTH_WEST);
+				data.setIndice(offset++, vertexOffset + OFFSET_NORTH_WEST);
+				data.setIndice(offset++, vertexOffset + OFFSET_SOUTH_EAST);
+				data.setIndice(offset++, vertexOffset + OFFSET_SOUTH_EAST);
+				data.setIndice(offset++, vertexOffset + OFFSET_NORTH_WEST);
+				data.setIndice(offset++, vertexOffset + OFFSET_NORTH_EAST);
 			}		
 	}
 

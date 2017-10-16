@@ -266,7 +266,7 @@ public class RawTerrain implements TerrainRender
 
 	int offset(int x, int z)
 	{
-		return (z * (width + 1)) + x;
+		return (z * width) + x;
 	}
 
 	/**
@@ -339,7 +339,7 @@ public class RawTerrain implements TerrainRender
 	 * @throws TerrainRuntimeException ocorre apenas se as coordenadas forem inválidas.
 	 */
 
-	public RawTerrainUnit getCell(int x, int z)
+	public RawTerrainUnit getUnit(int x, int z)
 	{
 		if (isCoordinate(x, z))
 			return tiles[x][z];

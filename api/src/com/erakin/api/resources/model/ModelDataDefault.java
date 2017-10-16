@@ -1,6 +1,7 @@
 package com.erakin.api.resources.model;
 
 import org.diverproject.util.ObjectDescription;
+import org.lwjgl.util.vector.Vector3f;
 
 /**
  * <h1>Dados Temporário para Modelo</h1>
@@ -92,6 +93,19 @@ public class ModelDataDefault implements ModelData
 		vertexPositions[(vertex * 3) + 0] = x;
 		vertexPositions[(vertex * 3) + 1] = y;
 		vertexPositions[(vertex * 3) + 2] = z;
+	}
+
+	/**
+	 * Deve definir o ponto exato no espaço para um determinado vértice.
+	 * @param vertex índice do vértice que será definido sua textura.
+	 * @param vector vetor com as coordenadas de posicionamento (x,y e z).
+	 */
+
+	public void setVertice(int vertex, Vector3f vector)
+	{
+		vertexPositions[(vertex * 3) + 0] = vector.x;
+		vertexPositions[(vertex * 3) + 1] = vector.y;
+		vertexPositions[(vertex * 3) + 2] = vector.z;
 	}
 
 	/**

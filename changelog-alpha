@@ -26,6 +26,13 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+16.10.2016 - 0.0.1.12
+- Nova opção para que ModelDataDefault permita usar setVertice() passando um Vector3f.
+- Correção na fórmula de RawTerrain.offset(), já que a estrutura dos vértices foi alterada.
+- Ajustes em RawTerrainModel para quantidade de vértices, normalizações e coordenadas de textura.
+	- Ordem dos dados também foi corrigida, agora está renderizando adequadamente.
+- Novo método que permite saber a altura do centro da unidade de terreno, avarageHeight().
+
 15.10.2016 - 0.0.1.11
 - Implementação inicial de mundos gerados por injeção direta (criado pela engine).
 	- Este tipo de mundo Simple Flat Terrain (SFT) será usado pelo editor de mapas futuro na engine.

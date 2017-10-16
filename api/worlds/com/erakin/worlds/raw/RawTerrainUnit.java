@@ -126,6 +126,15 @@ public class RawTerrainUnit
 		return northWest;
 	}
 
+	/**
+	 * @return aquisição da altura média dessa unidade.
+	 */
+
+	public float avarageHeight()
+	{
+		return (southWest.getY() + southEast.getY() + northEast.getY() + northWest.getY()) / 4;
+	}
+
 	@Override
 	public String toString()
 	{
