@@ -91,7 +91,6 @@ public class DisplayManager
 	 */
 	private long lastFrame;
 
-
 	/**
 	 * Construtor privado para evitar múltiplas instâncias do gerenciador de exibição.
 	 */

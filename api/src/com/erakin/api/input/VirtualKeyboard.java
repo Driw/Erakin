@@ -86,7 +86,9 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	{
 		while (keyClickeds.size() > 0)
 		{
-			if (!keyClickeds.get(0).isOver())
+			KeyAction action = keyClickeds.get(0);
+
+			if (action != null && !action.isOver())
 				break;
 
 			keyClickeds.remove(0);
@@ -204,7 +206,7 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 			boolean clicked = false;
 
 			for (KeyAction action : keyClickeds)
-				if (action.isKey(key[i]))
+				if (action != null && action.isKey(key[i]))
 				{
 					clicked = true;
 					break;

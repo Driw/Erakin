@@ -26,6 +26,9 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+22.10.2016 - 0.0.1.16
+- Pequenos ajustes em update() e wasClicked() para evitar possíveis NullPointerExceptions, VirtualKeyboard.
+
 21.10.2016 - 0.0.1.15
 - A lógica para wasClicked() não estava 100% funcional, VirtualKeyboard.
 
