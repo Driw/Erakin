@@ -98,7 +98,7 @@ public class ModelDataDefault implements ModelData
 	/**
 	 * Deve definir o ponto exato no espaço para um determinado vértice.
 	 * @param vertex índice do vértice que será definido sua textura.
-	 * @param vector vetor com as coordenadas de posicionamento (x,y e z).
+	 * @param vector vetor com as coordenadas de posicionamento (x, y e z).
 	 */
 
 	public void setVertice(int vertex, Vector3f vector)
@@ -119,6 +119,19 @@ public class ModelDataDefault implements ModelData
 	{
 		textureCoords[(vertex * 2) + 0] = x;
 		textureCoords[(vertex * 2) + 1] = y;
+	}
+
+	/**
+	 * Deve definir as propriedades para regularização das superfícies.
+	 * @param vertex índice do vértice que será definido sua regularização.
+	 * @param vector vetor com os valores de normalização (x, y e z).
+	 */
+
+	public void setNormal(int vertex, Vector3f vector)
+	{
+		vertexNormals[(vertex * 3) + 0] = vector.x;
+		vertexNormals[(vertex * 3) + 1] = vector.y;
+		vertexNormals[(vertex * 3) + 2] = vector.z;
 	}
 
 	/**
@@ -148,6 +161,19 @@ public class ModelDataDefault implements ModelData
 		indices[index] = vertex;
 	}
 
+	/**
+	 * Calcula aproximadamente quantos bytes esse objeto está ocupando em memória.
+	 * @return aquisição do espaço em memória ocupado pelo objeto em bytes.
+	 */
+
+	public int sizeof()
+	{
+		return	(vertexPositions.length * Float.BYTES) +
+				(textureCoords.length * Float.BYTES) + 
+				(vertexNormals.length * Float.BYTES) +
+				(indices.length * Integer.BYTES);
+	}
+
 	@Override
 	public String toString()
 	{
@@ -157,6 +183,7 @@ public class ModelDataDefault implements ModelData
 		description.append("textures", textureCoords.length / 2);
 		description.append("normals", vertexNormals.length / 3);
 		description.append("indices", indices.length);
+		description.append("sizeof", sizeof());
 
 		return description.toString();
 	}

@@ -1,6 +1,8 @@
 package com.erakin.api.render;
 
+import com.erakin.api.lwjgl.GLBind;
 import com.erakin.api.lwjgl.math.enumeration.DrawElement;
+import com.erakin.api.resources.Texture;
 
 /**
  * <h1>Modelo Renderizável</h1>
@@ -14,24 +16,8 @@ import com.erakin.api.lwjgl.math.enumeration.DrawElement;
  * @author Andrew
  */
 
-public interface ModelRender
+public interface ModelRender extends GLBind
 {
-	/**
-	 * Deve fazer a vinculação desse objeto com o OpenGL para ser utilizado.
-	 * Uma vez que tenha sido vinculado, todas interações no OpenGL será com esse objeto.
-	 * Funciona de forma diferente para cada objeto, de acordo com a identificação e tipo.
-	 */
-
-	void bind();
-
-	/**
-	 * Quando chamado deve fazer desfazer a vinculação de qualquer objeto usado.
-	 * Uma vez que tenha sido desvinculado, não terá interação com o OpenGL.
-	 * Funciona da mesma forma que qualquer outro objeto desse tipo.
-	 */
-
-	void unbind();
-
 	/**
 	 * Ao ser chamado irá acessar o VAO respectivo a essa modelagem e desenhar esta.
 	 * O resultado do desenhado varia de acordo com o tipo de computação gráfica usado.
@@ -40,6 +26,14 @@ public interface ModelRender
 	 */
 
 	void draw(DrawElement mode);
+
+
+	/**
+	 * A textura do modelo possui informações sobre uma imagem, usado para texturizar o modelo.
+	 * @return aquisição da textura que está sendo utilizada pelo modelo para texturizar.
+	 */
+
+	Texture getTexture();
 
 	/**
 	 * Refletividade indica o quanto a luz será refletida quando atingir o objeto em questão (modelagem).

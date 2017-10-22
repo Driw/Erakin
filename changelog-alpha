@@ -26,6 +26,14 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+21.10.2016 - 0.0.1.13
+- Um dos construtores de FileVersion não estava definindo minor corretamente.
+- Alterando ModelRender para que seja um GLBind, já que usa da mesma ideia/funções.
+	- Também foi incorporado outro método, getTexture().
+- Agora ModelDataDefault permite usar setNormal com um Vector3f.
+	- Implementado a contagem de bytes utilizado pelo objeto, sizeof().
+- Atualização de Terrain para que use ModelRender ao invés de um Model.
+
 16.10.2016 - 0.0.1.12
 - Nova opção para que ModelDataDefault permita usar setVertice() passando um Vector3f.
 - Correção na fórmula de RawTerrain.offset(), já que a estrutura dos vértices foi alterada.

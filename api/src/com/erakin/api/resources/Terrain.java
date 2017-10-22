@@ -4,6 +4,7 @@ import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.lang.IntUtil;
 
 import com.erakin.api.lwjgl.GLBind;
+import com.erakin.api.render.ModelRender;
 import com.erakin.api.render.TerrainRender;
 
 /**
@@ -15,7 +16,7 @@ import com.erakin.api.render.TerrainRender;
  * Também será registrado em um atributo a identificação do mundo que pertence.<p>
  *
  * @see GLBind
- * @see Model
+ * @see ModelRender
  *
  * @author Andrew
  */
@@ -55,7 +56,7 @@ public class Terrain implements TerrainRender
 	/**
 	 * Modelagem tri-dimensional do terreno.
 	 */
-	Model model;
+	ModelRender model;
 
 	/**
 	 * Constrói um novo terreno, sendo necessário definir suas coordenadas no mundo.
@@ -85,7 +86,7 @@ public class Terrain implements TerrainRender
 	}
 
 	@Override
-	public Model getModel()
+	public ModelRender getModel()
 	{
 		return model;
 	}
@@ -95,7 +96,7 @@ public class Terrain implements TerrainRender
 	 * @param model referência da nova modelagem tri-dimensional a ser usada pelo terreno.
 	 */
 
-	public void setModel(Model model)
+	public void setModel(ModelRender model)
 	{
 		this.model = model;
 	}

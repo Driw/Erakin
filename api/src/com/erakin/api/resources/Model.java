@@ -73,12 +73,7 @@ public class Model extends Resource implements ModelRender
 		this.shineDamping = root.defaultShineDamping;
 	}
 
-	/**
-	 * Uma textura possui informações sobre uma imagem, usado para colorir o modelo.
-	 * A textura internamente será usada durante a computação gráfica (shader).
-	 * @return aquisição da textura que está sendo utilizada pela modelagem.
-	 */
-
+	@Override
 	public Texture getTexture()
 	{
 		return texture;

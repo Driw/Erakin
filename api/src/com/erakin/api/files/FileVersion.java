@@ -25,7 +25,7 @@ public class FileVersion
 	public FileVersion(int major, int minor)
 	{
 		setMajor(major);
-		setMinor(major);
+		setMinor(minor);
 	}
 
 	public void read(Input input)

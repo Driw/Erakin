@@ -14,6 +14,7 @@ import com.erakin.api.lwjgl.math.enumeration.DrawElement;
 import com.erakin.api.render.ModelRender;
 import com.erakin.api.resources.Model;
 import com.erakin.api.resources.ModelLoader;
+import com.erakin.api.resources.Texture;
 import com.erakin.api.resources.model.ModelData;
 import com.erakin.api.resources.model.ModelDataDefault;
 import com.erakin.api.resources.world.TerrainRuntimeException;
@@ -106,9 +107,9 @@ public class RawTerrainModel implements ModelRender
 		if (isGenerated())
 			throw new TerrainRuntimeException("modelo do terreno já foi gerado");
 
-		ModelData data = createModelData();
 		String path = format("%s/terrain_%d_%d", terrain.world.getPrefix(), terrain.getX(), terrain.getZ());
 
+		ModelData data = createModelData();
 		model = ModelLoader.getIntance().createModel(path, data);
 	}
 
@@ -125,10 +126,10 @@ public class RawTerrainModel implements ModelRender
 		int textureCount = unitCount * 4;
 		int normalCount = unitCount * 4;
 
-		sizeof = (faceCount + (vertexCount * 3) + (textureCount * 2) + (normalCount * 3)) * 4;
-
 		ModelDataDefault data = new ModelDataDefault();
 		data.init(vertexCount, textureCount, normalCount, faceCount);
+		sizeof = data.sizeof();
+
 		generateCellVertex(data);
 		generateCellNormals(data);
 		generateCellTextures(data);
@@ -268,6 +269,12 @@ public class RawTerrainModel implements ModelRender
 	}
 
 	@Override
+	public int getID()
+	{
+		return model.getID();
+	}
+
+	@Override
 	public void bind()
 	{
 		model.bind();
@@ -280,9 +287,27 @@ public class RawTerrainModel implements ModelRender
 	}
 
 	@Override
+	public boolean valid()
+	{
+		return model.valid();
+	}
+
+	@Override
+	public void release()
+	{
+		model.release();
+	}
+
+	@Override
 	public void draw(DrawElement mode)
 	{
 		model.draw(mode);
+	}
+
+	@Override
+	public Texture getTexture()
+	{
+		return model == null ? null : model.getTexture();
 	}
 
 	@Override
