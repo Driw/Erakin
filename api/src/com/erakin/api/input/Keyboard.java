@@ -30,11 +30,6 @@ import org.diverproject.util.service.ServiceException;
 
 public class Keyboard implements KeyboardDispatcher
 {
-	/**
-	 * Instância para teclado virtual no padrão de projetos Singleton.
-	 */
-	private static final Keyboard INSTANCE = new Keyboard();
-
 	@Override
 	public void update(long delay)
 	{
@@ -82,16 +77,5 @@ public class Keyboard implements KeyboardDispatcher
 	{
 		// TODO Auto-generated method stub
 		
-	}
-
-	/**
-	 * Procedimento que permite obter a única instância do teclado virtual.
-	 * Utiliza o padrão Singleton para evitar a existência de mais instâncias.
-	 * @return aquisição da instância para utilização das preferências de vídeo.
-	 */
-
-	public static KeyboardDispatcher getInstance()
-	{
-		return INSTANCE;
 	}
 }

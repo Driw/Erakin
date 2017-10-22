@@ -10,6 +10,8 @@ import org.diverproject.util.lang.HexUtil;
 import org.diverproject.util.lang.StringUtil;
 import org.diverproject.util.stream.Input;
 
+import com.erakin.api.input.VirtualKeyboard;
+
 /**
  * <h1>Utilitários</h1>
  *
@@ -22,6 +24,11 @@ import org.diverproject.util.stream.Input;
 
 public final class ErakinAPIUtil
 {
+	/**
+	 * Referência da instância do teclado virtual.
+	 */
+	public static final VirtualKeyboard KEYBOARD = VirtualKeyboard.getInstance();
+
 	/**
 	 * Objeto randorizador.
 	 */

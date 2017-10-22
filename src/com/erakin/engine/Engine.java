@@ -149,6 +149,7 @@ public class Engine implements Tickable
 		try {
 
 			initiateDisplay();
+			InputManager.setDefaultProperties();
 			InputManager.initiateInput();
 			initiateLoop();
 
@@ -429,6 +430,11 @@ public class Engine implements Tickable
 	public void setRenderManger(RendererManager renderManger)
 	{
 		this.rendererManager = renderManger;
+	}
+
+	public long getTickCount()
+	{
+		return timerTick.getTicksCount();
 	}
 
 	@Override

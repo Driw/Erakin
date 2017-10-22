@@ -3,10 +3,12 @@ package com.erakin.api.input;
 import org.diverproject.jni.input.KeyEvent;
 import org.diverproject.jni.input.KeyboardDispatcher;
 import org.diverproject.jni.input.enums.EnumKEY;
+import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.collection.List;
 import org.diverproject.util.collection.abstraction.DynamicList;
 import org.diverproject.util.lang.IntUtil;
 import org.diverproject.util.service.ServiceException;
+import org.lwjgl.opengl.Display;
 
 /**
  * <h1>Teclado Virtual</h1>
@@ -45,9 +47,14 @@ import org.diverproject.util.service.ServiceException;
 public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatcher
 {
 	/**
+	 * Instância para teclado virtual no padrão de projetos Singleton.
+	 */
+	private static final VirtualKeyboard INSTANCE = new VirtualKeyboard();
+
+	/**
 	 * Código do estado de serviço que o teclado se encontrada.
 	 */
-	private int state;
+	private int state = SERVICE_UNDEFINID;
 
 	/**
 	 * Lista contendo as escutas quando teclas detectarem ações ou caracteres.
@@ -78,8 +85,12 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	public void update(long delay)
 	{
 		while (keyClickeds.size() > 0)
-			while (keyClickeds.get(0).isOver())
-				keyClickeds.remove(0);
+		{
+			if (!keyClickeds.get(0).isOver())
+				break;
+
+			keyClickeds.remove(0);
+		}
 	}
 
 	@Override
@@ -127,6 +138,9 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	@Override
 	public void dispatch(KeyEvent event)
 	{
+		if (!Display.isActive())
+			return;
+
 		if (getState() != SERVICE_RUNNING)
 			return;
 
@@ -173,6 +187,7 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	private void dispatchRelasedKey(KeyEvent event)
 	{
 		keyPresseds[event.getKey()] = false;
+		keyClickeds.add(new KeyAction(event.getKey()));
 
 		for (KeyReleasedListener listener : releasedListeners)
 			listener.keyReleased(event);
@@ -185,11 +200,21 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 			return false;
 
 		for (int i = 0; i < key.length; i++)
+		{
+			boolean founded = true;
+
 			for (KeyAction action : keyClickeds)
 				if (!action.isKey(key[i]))
-					return false;
+				{
+					founded = true;
+					break;
+				}
 
-		return true;
+			if (!founded)
+				break;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -283,5 +308,30 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 			return;
 
 		releasedListeners.remove(listener);
+	}
+
+	@Override
+	public String toString()
+	{
+		ObjectDescription description = new ObjectDescription(getClass());
+
+		description.append("state", state);
+		description.append("keyClickeds", keyClickeds.size());
+		description.append("typedListeners", typedListeners.size());
+		description.append("pressedListeners", pressedListeners.size());
+		description.append("releasedListeners", releasedListeners.size());
+
+		return description.toString();
+	}
+
+	/**
+	 * Procedimento que permite obter a única instância do teclado virtual.
+	 * Utiliza o padrão Singleton para evitar a existência de mais instâncias.
+	 * @return aquisição da instância para utilização das preferências de vídeo.
+	 */
+
+	public static VirtualKeyboard getInstance()
+	{
+		return INSTANCE;
 	}
 }

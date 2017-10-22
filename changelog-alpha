@@ -26,6 +26,15 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+21.10.2016 - 0.0.1.14
+- Não há necessidade de existir engine.Keyboard, será usado Keyboard/VirtualKeyboard da API.
+- VirtualKeyboard.update() causava Exception, modificado a lógica, porém mesma ideia.
+- Agora VirtualKeyboard.dispatch() só irá funcionar se a janela do OpenGL estiver ativa.
+	- Antes mesmo quando a janela minimizada ou desfocada despachava os KeyEvent.
+- Corrigido a lógica de wasClicked() que estava sempre retornando true, VirtualKeyboard.
+- Também foi movido INSTANCE de Keyboard para VirtualKeyboard, caso contrário não vai funcionar.
+- VirtualKeyboard também será vinculado a biblioteca de serviços, ServiceSystem.
+
 21.10.2016 - 0.0.1.13
 - Um dos construtores de FileVersion não estava definindo minor corretamente.
 - Alterando ModelRender para que seja um GLBind, já que usa da mesma ideia/funções.
