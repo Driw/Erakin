@@ -26,6 +26,9 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+21.10.2016 - 0.0.1.15
+- A lógica para wasClicked() não estava 100% funcional, VirtualKeyboard.
+
 21.10.2016 - 0.0.1.14
 - Não há necessidade de existir engine.Keyboard, será usado Keyboard/VirtualKeyboard da API.
 - VirtualKeyboard.update() causava Exception, modificado a lógica, porém mesma ideia.

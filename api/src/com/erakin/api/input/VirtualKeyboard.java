@@ -201,20 +201,20 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 
 		for (int i = 0; i < key.length; i++)
 		{
-			boolean founded = true;
+			boolean clicked = false;
 
 			for (KeyAction action : keyClickeds)
-				if (!action.isKey(key[i]))
+				if (action.isKey(key[i]))
 				{
-					founded = true;
+					clicked = true;
 					break;
 				}
 
-			if (!founded)
-				break;
+			if (!clicked)
+				return false;
 		}
 
-		return false;
+		return true;
 	}
 
 	@Override
