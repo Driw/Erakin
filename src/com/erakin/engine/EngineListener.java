@@ -32,4 +32,12 @@ public interface EngineListener
 	 */
 
 	void onShutdown();
+
+	/**
+	 * Esse procedimento será chamada por cada quadro de renderização da Engine.
+	 * O mas comum é a utilização de tarefas, porém tarefas são executadas depois.
+	 * @param delay tempo em milissegundos passados desde a última atualização.
+	 */
+
+	void tick(long delay);
 }

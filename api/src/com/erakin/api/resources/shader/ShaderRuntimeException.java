@@ -1,4 +1,4 @@
-package com.erakin.engine.resource.shader;
+package com.erakin.api.resources.shader;
 
 import com.erakin.api.ErakinRuntimeException;
 

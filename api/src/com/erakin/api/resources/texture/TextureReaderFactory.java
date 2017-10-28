@@ -17,7 +17,7 @@ import org.diverproject.util.collection.abstraction.StringSimpleMap;
  *
  * @see Map
  * @see TextureReader
- * @see TextureReaderBMP
+ * @see ShaderReaderGLSL
  * @see TextureReaderJPG
  * @see TextureReaderPNG
  *
@@ -39,7 +39,6 @@ public class TextureReaderFactory
 	/**
 	 * Construtor privado para respeitar o padrão de projetos Singleton.
 	 * Inicializa o mapeamento de leitores disponíveis adicionando os padrões.
-	 * Para esse será considerado os como padrão os formatos PNG, BMP e JPG.
 	 */
 
 	private TextureReaderFactory()

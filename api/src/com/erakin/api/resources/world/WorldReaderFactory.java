@@ -39,7 +39,6 @@ public class WorldReaderFactory
 	/**
 	 * Construtor privado para respeitar o padrão de projetos Singleton.
 	 * Inicializa o mapeamento de leitores disponíveis adicionando os padrões.
-	 * Para esse será considerado os como padrão apenas o formato MFS.
 	 */
 
 	private WorldReaderFactory()

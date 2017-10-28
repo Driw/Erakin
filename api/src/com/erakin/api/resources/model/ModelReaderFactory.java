@@ -17,8 +17,6 @@ import org.diverproject.util.collection.abstraction.StringSimpleMap;
  *
  * @see Map
  * @see ModelReader
- * @see ModelReaderMDL
- * @see ModelReaderOBJ
  *
  * @author Andrew
  */
@@ -38,7 +36,6 @@ public class ModelReaderFactory
 	/**
 	 * Construtor privado para respeitar o padrão de projetos Singleton.
 	 * Inicializa o mapeamento de leitores disponíveis adicionando os padrões.
-	 * Para esse será considerado os como padrão apenas os formatos MDL e OBJ.
 	 */
 
 	private ModelReaderFactory()

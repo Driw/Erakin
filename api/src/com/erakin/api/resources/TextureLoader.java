@@ -82,7 +82,6 @@ public final class TextureLoader extends DefaultLoader
 	 * Permite obter uma determinada textura já carregada ou então forçar o carregamento desta.
 	 * Se a textura existir irá retornar uma textura temporária dessa raíz caso contrário irá
 	 * criar uma nova raíz carregando as informações do arquivo de acordo com o nome da textura.
-	 * Utiliza as propriedades de preferências que definem o caminho para arquivos de texturas.
 	 * @param name nome do qual foi dado a textura, em outras palavras o nome do arquivo,
 	 * caso não seja definido nenhuma extensão para esse, será considerado <b>png</b> por padrão.
 	 * @return aquisição do objeto de textura temporária gerado da raíz de acordo com o nome.

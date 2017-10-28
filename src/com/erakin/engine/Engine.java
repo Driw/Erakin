@@ -79,6 +79,11 @@ public class Engine implements Tickable
 	private RendererManager rendererManager;
 
 	/**
+	 * Listener para permitir dinâmica em relação a execução da engine.
+	 */
+	private EngineListener listener;
+
+	/**
 	 * Nó que armazena a primeira tarefa que é nula (apenas para não perder a raíz).
 	 */
 	private Node<Task> taskRoot;
@@ -191,6 +196,7 @@ public class Engine implements Tickable
 	{
 		running = true;
 		timerTick = new TimerTick(1);
+		listener.onInitiate();
 
 		DisplayManager display = DisplayManager.getInstance();
 
@@ -216,6 +222,8 @@ public class Engine implements Tickable
 				System.exit(0);
 			}
 		}
+
+		listener.onClosed();
 	}
 
 	/**
@@ -226,6 +234,12 @@ public class Engine implements Tickable
 	private void tick()
 	{
 		long delay = timerTick.getTicks();
+
+		if (listener != null)
+			listener.tick(delay);
+
+		update(delay);
+		render(delay);
 
 		Node<Task> node = taskRoot;
 
@@ -269,9 +283,6 @@ public class Engine implements Tickable
 		}
 
 		ServiceSystem.getInstance().update(delay);
-
-		update(delay);
-		render(delay);
 	}
 
 	@Override
@@ -317,6 +328,7 @@ public class Engine implements Tickable
 		InputSystem.getInstance().shutdown();
 
 		rendererManager.cleanup();
+		listener.onShutdown();
 
 		System.exit(0);
 	}
@@ -352,6 +364,17 @@ public class Engine implements Tickable
 
 			logNotice("tarefa adicionada ao engine (%s).\n", nameOf(task));
 		}
+	}
+
+	/**
+	 * Define um listener para que determinados procedimentos sejam executados durante a engine.
+	 * Por exemplo, é necessário executar procedimentos após o OpenGL iniciar mas antes de renderizar.
+	 * @param listener referência do objeto que implementa o listener com os procedimentos a executar.
+	 */
+
+	public void setListener(EngineListener listener)
+	{
+		this.listener = listener;
 	}
 
 	/**
@@ -431,6 +454,13 @@ public class Engine implements Tickable
 	{
 		this.rendererManager = renderManger;
 	}
+
+	/**
+	 * Uma quantidade de ticks (unidade de tempo) é calculada para cada quadro processado.
+	 * Esse valor é repassado por diversos objetos para atualizar os dados e renderizar o jogo.
+	 * Sempre que o valor é calculado, ele é armazenado em uma contagem acumulativa de ticks.
+	 * @return aquisição do tempo em que a Engine está rodando em ticks (milissegundos).
+	 */
 
 	public long getTickCount()
 	{

@@ -26,6 +26,19 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+27.10.2016 - 0.0.2.17
+- DefaultLoader.toString() não estava funcionando corretamente com ObjectDescription.
+- Pequenos ajustes de documentações devido a mudanças anteriores.
+- ShaderDefault passa a ser um armazenado de dados para programação Shader temporário como ShaderDataDefault.
+- Modificado os métodos que Shader vai implementar e renomado para ShaderRender.
+- Implementação de EngineListener para resolver possíveis problemas de procedimentos entre o init e render da Engine.
+- Estrutura para leitura de computação gráfica em GLSL conforme os mesmos padrões usados para modelos e texturas.
+	- ShaderReaderFactory é especificado quais os tipos de extensões e classes para leitura dos arquivos.
+	- ShaderRoot irá guardar as informações dos dados no OpenGL podendo gerar vários Shader.
+	- Cada Shader é uma referência para um ShaderRoot podendo usar o mesmo conteúdo de forma diferente.
+	- ShaderLoader fica responsável por transcrever os dados obtidos do leitor para o OpenGL.
+	- Definido ShaderReaderGLSL para ser o leitor dos arquivos com extensão glsl.
+
 22.10.2016 - 0.0.1.16
 - Pequenos ajustes em update() e wasClicked() para evitar possíveis NullPointerExceptions, VirtualKeyboard.
 

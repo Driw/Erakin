@@ -130,10 +130,10 @@ public class DefaultLoader
 		ObjectDescription description = new ObjectDescription(getClass());
 
 		description.append("pathname", pathname);
-		description.append("resources", resources.length());
+		description.append("resources", resources.size());
 
 		toString(description);
 
-		return super.toString();
+		return description.toString();
 	}
 }
