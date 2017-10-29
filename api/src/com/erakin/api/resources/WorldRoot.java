@@ -19,7 +19,7 @@ import com.erakin.api.resources.world.TerrainDimension;
  * @author Andrew
  */
 
-public class WorldRoot extends ResourceRoot
+public class WorldRoot extends ResourceRoot<World>
 {
 	/**
 	 * Pré-fixo para facilitar a identificação do mundo.

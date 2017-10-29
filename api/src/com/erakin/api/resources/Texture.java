@@ -28,7 +28,7 @@ import org.diverproject.util.lang.IntUtil;
  * @author Andrew
  */
 
-public class Texture extends Resource
+public class Texture extends Resource<TextureRoot>
 {
 	/**
 	 * Número de separação que há na textura (multi-textura).
@@ -82,7 +82,7 @@ public class Texture extends Resource
 
 	public int getWidth()
 	{
-		return root == null ? 0 : ((TextureRoot) root).width;
+		return root == null ? 0 : root.width;
 	}
 
 	/**
@@ -92,13 +92,13 @@ public class Texture extends Resource
 
 	public int getHeight()
 	{
-		return root == null ? 0 : ((TextureRoot) root).height;
+		return root == null ? 0 : root.height;
 	}
 
 	@Override
 	public int getID()
 	{
-		return root == null ? 0 : ((TextureRoot) root).id;
+		return root == null ? 0 : root.id;
 	}
 
 	@Override
@@ -248,7 +248,7 @@ public class Texture extends Resource
 	@Override
 	public Texture clone()
 	{
-		return ((TextureRoot) root).genResource();
+		return root.genResource();
 	}
 
 	@Override

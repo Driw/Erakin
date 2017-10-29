@@ -2,6 +2,7 @@ package com.erakin.worlds.raw;
 
 import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.SizeUtil;
+import org.diverproject.util.collection.List;
 import org.diverproject.util.lang.IntUtil;
 
 import com.erakin.api.render.ModelRender;
@@ -328,6 +329,18 @@ public class RawTerrain implements TerrainRender
 	public void setHeightTexture(Texture texture)
 	{
 		this.heightTexture = texture;
+	}
+
+	@Override
+	public boolean isHeightTexture()
+	{
+		return true; // FIXME por enquanto forçar textura de relevo para funcionar como antes
+	}
+
+	@Override
+	public List<Texture> getTextures()
+	{
+		return null; // FIXME implementar com urgência!!
 	}
 
 	/**

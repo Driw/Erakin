@@ -12,9 +12,11 @@ import org.diverproject.util.ObjectDescription;
  * @see PreferencesSettings
  *
  * @author Andre Mello
+ *
+ * @param <T> tipo de recurso que poderá ser carregado.
  */
 
-public class DefaultLoader
+public class DefaultLoader<T extends Resource<?>>
 {
 	/**
 	 * Caminho parcial ou completo da localização dos arquivos que serão carregados.
@@ -24,7 +26,7 @@ public class DefaultLoader
 	/**
 	 * Mapeador de recursos para permitir o gerenciamento de adicionar, remover e selecionar.
 	 */
-	private ResourceMap resources;
+	private ResourceMap<T> resources;
 
 	/**
 	 * Cria um novo carregador padrão inicializando algumas definições básicas do seu funcionamento.
@@ -34,7 +36,7 @@ public class DefaultLoader
 
 	public DefaultLoader(String name)
 	{
-		resources = new ResourceMap(name);
+		resources = new ResourceMap<T>(name);
 	}
 
 	/**
@@ -45,7 +47,7 @@ public class DefaultLoader
 	 * @return true se conseguir inserir o recurso raíz ou false caso contrário.
 	 */
 
-	protected boolean insertResource(ResourceRoot resource)
+	protected boolean insertResource(ResourceRoot<T> resource)
 	{
 		return resources.add(resource);
 	}
@@ -69,7 +71,7 @@ public class DefaultLoader
 	 * @return referência do recurso raíz de acordo com o nome de identificação passado.
 	 */
 
-	protected ResourceRoot selectResource(String pathname)
+	protected ResourceRoot<T> selectResource(String pathname)
 	{
 		if (!pathname.startsWith(getPathname()))
 			pathname = String.format("%s/%s", getResourceName(), pathname);

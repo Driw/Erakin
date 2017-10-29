@@ -10,9 +10,11 @@ import org.diverproject.util.collection.abstraction.VirtualFolder;
  * simplesmente utilizar a raíz do recurso do qual já foi carregada, para isso usamos uma <i>pasta virtual</i>.</p>
  *
  * @author Andrew Mello
+ *
+ * @param <T> tipo de recurso que poderá ser mapeado.
  */
 
-public class ResourceMap extends VirtualFolder<ResourceRoot>
+public class ResourceMap<T extends Resource<?>> extends VirtualFolder<ResourceRoot<T>>
 {
 	/**
 	 * Constrói um novo mapeador de recursos para alocação de novos recursos.
@@ -31,19 +33,19 @@ public class ResourceMap extends VirtualFolder<ResourceRoot>
 	 * @param parent referência do mapeador que original a criação deste.
 	 */
 
-	private ResourceMap(String name, ResourceMap parent)
+	private ResourceMap(String name, ResourceMap<T> parent)
 	{
 		super(name, parent);
 	}
 
 	@Override
-	protected void subAdd(ResourceRoot file)
+	protected void subAdd(ResourceRoot<T> file)
 	{
 		prepareListener(file, this);
 	}
 
 	@Override
-	protected void subRemove(ResourceRoot file)
+	protected void subRemove(ResourceRoot<T> file)
 	{
 		file.listener = null;
 		file.release();
@@ -58,7 +60,7 @@ public class ResourceMap extends VirtualFolder<ResourceRoot>
 	 * @return aquisição do listener criado com as informações acima.
 	 */
 
-	private ResourceListener prepareListener(final ResourceRoot root, final ResourceMap map)
+	private ResourceListener prepareListener(final ResourceRoot<T> root, final ResourceMap<T> map)
 	{
 		return new ResourceListener()
 		{

@@ -1,6 +1,7 @@
 package com.erakin.api.resources;
 
 import org.diverproject.util.ObjectDescription;
+import org.diverproject.util.collection.List;
 import org.diverproject.util.lang.IntUtil;
 
 import com.erakin.api.lwjgl.GLBind;
@@ -129,6 +130,18 @@ public class Terrain implements TerrainRender
 	public Texture getHeightTexture()
 	{
 		return model == null ? null : model.getTexture();
+	}
+
+	@Override
+	public boolean isHeightTexture()
+	{
+		return true; // FIXME por enquanto forçar textura de relevo para funcionar como antes
+	}
+
+	@Override
+	public List<Texture> getTextures()
+	{
+		return null; // FIXME será necessário listar a textura dos terrenos
 	}
 
 	/**

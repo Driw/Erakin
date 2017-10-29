@@ -1,5 +1,7 @@
 package com.erakin.api.render;
 
+import org.diverproject.util.collection.List;
+
 import com.erakin.api.resources.Texture;
 
 /**
@@ -55,6 +57,13 @@ public interface TerrainRender
 	int getLength();
 
 	/**
+	 * Um terreno pode ser renderizado por múltiplas texturas e para isso é necessário saber quais usar.
+	 * @return aquisição da lista com todas as texturas disponíveis para texturização do terreno.
+	 */
+
+	List<Texture> getTextures();
+
+	/**
 	 * Terrenos podem usar uma textura única que permite visualizá-lo com cores que define sua altitude.
 	 * Por exemplo: o nível mais baixo terá um tom azul em quanto o mais alto um tom vermelho.
 	 * Logo todos os níveis do terreno terão uma cor relativa ao seu nível em degradê de azul e vermelho.
@@ -62,4 +71,14 @@ public interface TerrainRender
 	 */
 
 	Texture getHeightTexture();
+
+	/**
+	 * Um terreno pode ser renderizado utilizando dois tipos de texturas e para cada modo a lógica muda.
+	 * No primeiro modo apenas uma textura é vinculada e renderizada que é para visualizar a elevação do terreno.
+	 * Nesse caso, uma textura em degradê é usada, conforme o nível do relevo será usado um polo da textura.
+	 * No segundo modo, diversas texturas podem ser utilizadas, sendo necessário outra forma de renderização.
+	 * @return true se for para usar a textura de nível de elevação do terreno ou false para texturas múltiplas.
+	 */
+
+	boolean isHeightTexture();
 }

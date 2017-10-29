@@ -23,7 +23,7 @@ import com.erakin.api.resources.world.TerrainDimension;
  * @author Andre Mello
  */
 
-public class World extends Resource implements WorldRender
+public class World extends Resource<WorldRoot> implements WorldRender
 {
 	/**
 	 * Localização do terreno vinculado no eixo X.

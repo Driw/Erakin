@@ -39,28 +39,23 @@ public class ModelDataDefault implements ModelData
 	 */
 	protected int indices[];
 
-	@Override
-	public float[] getVertices()
-	{
-		return vertexPositions;
-	}
+	/**
+	 * Identificação de textura para cada conexão de vértice.
+	 */
+	protected int textureIndex[];
 
-	@Override
-	public float[] getTextureCoords()
-	{
-		return textureCoords;
-	}
+	/**
+	 * Cria uma nova instância de um objeto de armazenamento dos dados para criação de um modelo 3D.
+	 * Inicializa todos os vetores com tamanho zero para evitar NullPointerException.
+	 */
 
-	@Override
-	public float[] getNormals()
+	public ModelDataDefault()
 	{
-		return vertexNormals;
-	}
-
-	@Override
-	public int[] getIndices()
-	{
-		return indices;
+		vertexPositions = new float[0];
+		vertexNormals = new float[0];
+		textureCoords = new float[0];
+		indices = new int[0];
+		textureIndex = new int[0];
 	}
 
 	/**
@@ -78,6 +73,19 @@ public class ModelDataDefault implements ModelData
 		vertexNormals = new float[normalCount * 3];
 		textureCoords = new float[textureCount * 2];
 		indices = new int[faceCount];		
+
+		textureIndex = new int[0];
+	}
+
+	/**
+	 * Determina que o modelo irá utilizar múltiplas texturas durante a texturização do mesmo.
+	 * Será necessário definir a textura utilizada para cada uma das faces existentes no modelo.
+	 * @param triangleCount quantidade de triângulos formado a conectividade do modelo.
+	 */
+
+	public void setMultipleTextures(int triangleCount)
+	{
+		textureIndex = new int[triangleCount];
 	}
 
 	/**
@@ -162,6 +170,17 @@ public class ModelDataDefault implements ModelData
 	}
 
 	/**
+	 * Deve definir qual a textura que será usada na renderização de um triângulo do modelo.
+	 * @param index índice do triângulo (conexão de vértices) que será definido a textura.
+	 * @param textureID código de identificação da textura já carregada no OpenGL.
+	 */
+
+	public void setTextureIndex(int index, int textureID)
+	{
+		textureIndex[index] = textureID;
+	}
+
+	/**
 	 * Calcula aproximadamente quantos bytes esse objeto está ocupando em memória.
 	 * @return aquisição do espaço em memória ocupado pelo objeto em bytes.
 	 */
@@ -171,7 +190,38 @@ public class ModelDataDefault implements ModelData
 		return	(vertexPositions.length * Float.BYTES) +
 				(textureCoords.length * Float.BYTES) + 
 				(vertexNormals.length * Float.BYTES) +
-				(indices.length * Integer.BYTES);
+				(indices.length * Integer.BYTES) +
+				(textureIndex.length * Integer.BYTES);
+	}
+
+	@Override
+	public float[] getVertices()
+	{
+		return vertexPositions;
+	}
+
+	@Override
+	public float[] getTextureCoords()
+	{
+		return textureCoords;
+	}
+
+	@Override
+	public float[] getNormals()
+	{
+		return vertexNormals;
+	}
+
+	@Override
+	public int[] getIndices()
+	{
+		return indices;
+	}
+
+	@Override
+	public int[] getTextureIndex()
+	{
+		return textureIndex;
 	}
 
 	@Override
@@ -183,6 +233,7 @@ public class ModelDataDefault implements ModelData
 		description.append("textures", textureCoords.length / 2);
 		description.append("normals", vertexNormals.length / 3);
 		description.append("indices", indices.length);
+		description.append("textureIndex", textureIndex.length / 2);
 		description.append("sizeof", sizeof());
 
 		return description.toString();

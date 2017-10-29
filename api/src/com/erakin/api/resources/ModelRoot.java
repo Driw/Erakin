@@ -21,7 +21,7 @@ import com.erakin.api.lwjgl.VAO;
  * @author Andrew
  */
 
-public class ModelRoot extends ResourceRoot
+public class ModelRoot extends ResourceRoot<Model>
 {
 	/**
 	 * Identificação do Vertex-Array Object usado.

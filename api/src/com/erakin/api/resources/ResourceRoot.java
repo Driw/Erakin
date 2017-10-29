@@ -30,7 +30,7 @@ import org.diverproject.util.collection.Node;
  * @author Andrew
  */
 
-public abstract class ResourceRoot implements FolderElement
+public abstract class ResourceRoot<T extends Resource<?>> implements FolderElement
 {
 	/**
 	 * Quantos milissegundos um recurso raíz deve ficar vivo no sistema.
@@ -60,7 +60,7 @@ public abstract class ResourceRoot implements FolderElement
 	/**
 	 * Lista que deverá guardar todas as referências dos recursos instanciados.
 	 */
-	private Node<Resource> references;
+	private Node<T> references;
 
 	/**
 	 * Quantidade de referências que já foram criadas.
@@ -101,17 +101,17 @@ public abstract class ResourceRoot implements FolderElement
 	 * @return true se conseguir adicionar ou false se já tiver sido adicionado.
 	 */
 
-	boolean addReference(Resource resource)
+	boolean addReference(T resource)
 	{
 		if (resource.root != this)
 			return false;
 
 		if (references == null)
-			references = new Node<Resource>(resource);
+			references = new Node<T>(resource);
 
 		else
 		{
-			Node<Resource> node = new Node<Resource>(resource);
+			Node<T> node = new Node<T>(resource);
 			Node.attach(node, references);
 
 			references = node;
@@ -127,7 +127,7 @@ public abstract class ResourceRoot implements FolderElement
 	 * @return true se conseguir remover ou false caso contrário.
 	 */
 
-	boolean delReference(Resource resource)
+	boolean delReference(T resource)
 	{
 		if (references == null)
 			return false;
@@ -138,7 +138,7 @@ public abstract class ResourceRoot implements FolderElement
 			return true;
 		}
 
-		Node<Resource> node = references;
+		Node<T> node = references;
 
 		while (node.get() != resource)
 			node = node.getNext();
@@ -166,7 +166,7 @@ public abstract class ResourceRoot implements FolderElement
 	 * @return aquisição do recurso gerado a partir dessa raíz.
 	 */
 
-	public abstract Resource genResource();
+	public abstract T genResource();
 
 	/**
 	 * Faz a liberação do recurso raíz, chamando todas as referências para serem liberadas.
@@ -180,7 +180,7 @@ public abstract class ResourceRoot implements FolderElement
 			listener.resourceRelease();
 
 		if (references != null)
-			for (Resource reference : references)
+			for (T reference : references)
 				reference.release();
 	}
 

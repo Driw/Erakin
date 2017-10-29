@@ -50,7 +50,7 @@ import com.erakin.api.resources.texture.TextureRuntimeException;
  * @author Andrew Mello
  */
 
-public final class TextureLoader extends DefaultLoader
+public final class TextureLoader extends DefaultLoader<Texture>
 {
 	/**
 	 * Tamanho mínimo que uma textura terá.
@@ -93,7 +93,7 @@ public final class TextureLoader extends DefaultLoader
 		if (!name.contains("."))
 			name += ".png";
 
-		ResourceRoot resourceRoot = selectResource(name);
+		ResourceRoot<Texture> resourceRoot = selectResource(name);
 
 		if (resourceRoot != null)
 		{

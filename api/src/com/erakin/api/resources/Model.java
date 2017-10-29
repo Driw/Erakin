@@ -28,7 +28,7 @@ import com.erakin.api.render.ModelRender;
  * @author Andrew
  */
 
-public class Model extends Resource implements ModelRender
+public class Model extends Resource<ModelRoot> implements ModelRender
 {
 	/**
 	 * Código de atribuir um VBO de vértices no espaço para um modelo.
@@ -44,6 +44,11 @@ public class Model extends Resource implements ModelRender
 	 * Código de atribuir um VBO de normalização para um modelo.
 	 */
 	public static final int ATTRIB_NORMALS = 2;
+
+	/**
+	 * Código de atribuir um VBO de conectividade das texturas.
+	 */
+	public static final int ATTRIB_TEXTURE_INDEX = 3;
 
 	/**
 	 * Textura que está sendo usada pelo modelo.
@@ -123,6 +128,7 @@ public class Model extends Resource implements ModelRender
 		vao.enable(ATTRIB_VERTICES);
 		vao.enable(ATTRIB_TEXTURE_COORDS);
 		vao.enable(ATTRIB_NORMALS);
+		vao.enable(ATTRIB_TEXTURE_INDEX);
 	}
 
 	@Override
@@ -137,6 +143,7 @@ public class Model extends Resource implements ModelRender
 		vao.disable(ATTRIB_VERTICES);
 		vao.disable(ATTRIB_TEXTURE_COORDS);
 		vao.disable(ATTRIB_NORMALS);
+		vao.disable(ATTRIB_TEXTURE_INDEX);
 		vao.unbind();
 	}
 

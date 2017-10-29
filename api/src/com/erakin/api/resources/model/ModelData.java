@@ -51,4 +51,13 @@ public interface ModelData
 	 */
 
 	int[] getIndices();
+
+	/**
+	 * Vetor de índice de texturas permite identificar quais texturas usar para cada conexão de vértices.
+	 * Cada três vértices conectados poderá ter uma textura diferente utilizada se necessário,
+	 * essa identificação deve ser especificada aqui, caso seja apenas uma textura não terá valores.
+	 * @return aquisição do vetor contendo a textura por conexão de vértice.
+	 */
+
+	int[] getTextureIndex();
 }

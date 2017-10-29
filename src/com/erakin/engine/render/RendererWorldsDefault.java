@@ -222,9 +222,9 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 
 			else
 			{
-				beforeRenderChunk(model);
+				beforeRenderTerrain(model);
 				renderTerrain(terrain);
-				afterRenderChunk(model);
+				afterRenderTerrain(model);
 			}
 		}
 	}
@@ -252,7 +252,7 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	 * @param model referência do modelo renderizável do próximo conjunto de entidades a ser renderizada.
 	 */
 
-	protected abstract void beforeRenderChunk(ModelRender model);
+	protected abstract void beforeRenderTerrain(ModelRender model);
 
 	/**
 	 * Após fazer a renderização de um conjunto de entidades especificados, esse procedimento será chamado.
@@ -261,7 +261,7 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	 * @param model referência do modelo renderizável do conjunto de entidades que foram renderizada.
 	 */
 
-	protected abstract void afterRenderChunk(ModelRender model);
+	protected abstract void afterRenderTerrain(ModelRender model);
 
 	/**
 	 * Procedimento chamado assim que for solicitado ao renderizador para renderizar.

@@ -87,7 +87,7 @@ public class ShaderReaderGLSL implements ShaderReader
 
 	private void readFragmentProgram(Input input, StringBuilder fragmentProgram)
 	{
-		readProgram(input, fragmentProgram, START_VERTEX_PROGRAM, END_FRAGMENT_PROGRAM);
+		readProgram(input, fragmentProgram, START_FRAGMENT_PROGRAM, END_FRAGMENT_PROGRAM);
 	}
 
 	/**

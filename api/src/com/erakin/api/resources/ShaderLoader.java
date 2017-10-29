@@ -25,7 +25,7 @@ import com.erakin.api.resources.shader.ShaderReader;
 import com.erakin.api.resources.shader.ShaderReaderFactory;
 import com.erakin.api.resources.shader.ShaderRuntimeException;
 
-public class ShaderLoader extends DefaultLoader
+public class ShaderLoader extends DefaultLoader<Shader>
 {
 	private static final ShaderLoader INSTANCE = new ShaderLoader();
 
@@ -49,7 +49,7 @@ public class ShaderLoader extends DefaultLoader
 		if (!name.contains("."))
 			name += ".glsl";
 
-		ResourceRoot resourceRoot = selectResource(name);
+		ResourceRoot<Shader> resourceRoot = selectResource(name);
 
 		if (resourceRoot != null)
 		{

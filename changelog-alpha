@@ -26,6 +26,15 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+29.10.2016 - 0.0.2.19
+- ShaderReaderGLSL não estava funcionando corregamente, label especificada erroneamente.
+- Atualizando Resource e ResourceRoot para se tornarem classes parametrizadas.
+	- O objetivo principal é evitar casts desnecessários e burlagem na tipagem.
+- Nova atribuição para modelagens que vai permitir multiplas texturas em um único modelo.
+- Inicio da implementação para suporte de texturas múltiplas por modelo.
+- Agora ModelLoader atribui textureCoords e normals apenas se houver dados para tal.
+- Também foi renomeado beforeRenderChunk() para beforeRenderTerrain() e afterRenderChunk() para afterRenderTerrain().
+
 29.10.2016 - 0.0.2.18
 - A forma como os dados eram convertidos em PNG e BMP não podiam ser feito do mesmo jeito.
 	- BMP usa um buffer com todos os dados em quanto o PNG usa um buffer com uma linha da imagem.

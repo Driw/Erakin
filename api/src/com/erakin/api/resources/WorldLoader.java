@@ -36,7 +36,7 @@ import com.erakin.api.resources.world.WorldRuntimeException;
  * @author Andrew Mello
  */
 
-public class WorldLoader extends DefaultLoader
+public class WorldLoader extends DefaultLoader<World>
 {
 	/**
 	 * Instância para carregador de mundos no padrão de projetos Singleton.
@@ -86,7 +86,7 @@ public class WorldLoader extends DefaultLoader
 		if (!name.contains("."))
 			name += ".xml";
 
-		ResourceRoot resourceRoot = selectResource(name);
+		ResourceRoot<World> resourceRoot = selectResource(name);
 
 		if (resourceRoot != null)
 		{

@@ -2,7 +2,7 @@ package com.erakin.api.resources;
 
 import org.diverproject.util.ObjectDescription;
 
-public class ShaderRoot extends ResourceRoot
+public class ShaderRoot extends ResourceRoot<Shader>
 {
 	/**
 	 * Código para identificação da computação gráfica no OpenGL.

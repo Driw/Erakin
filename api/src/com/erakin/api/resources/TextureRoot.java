@@ -14,7 +14,7 @@ import org.diverproject.util.ObjectDescription;
  * @author Andrew
  */
 
-public class TextureRoot extends ResourceRoot
+public class TextureRoot extends ResourceRoot<Texture>
 {
 	/**
 	 * Código para identificação da textura no OpenGL.

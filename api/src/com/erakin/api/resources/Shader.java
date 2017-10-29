@@ -21,7 +21,7 @@ import com.erakin.api.resources.shader.ShaderRender;
  * @author Andrew
  */
 
-public class Shader extends Resource
+public class Shader extends Resource<ShaderRoot>
 {
 	/**
 	 * Código de identificação para desativar o uso de computação gráfica.
@@ -33,7 +33,7 @@ public class Shader extends Resource
 	 * @param root computação gráfica raíz que será usada para criar a computação gráfica.
 	 */
 
-	Shader(ResourceRoot root)
+	Shader(ShaderRoot root)
 	{
 		super(root);
 	}
@@ -50,18 +50,18 @@ public class Shader extends Resource
 
 	public int getVertexID()
 	{
-		return root == null ? 0 : ((ShaderRoot) root).vertex;
+		return root == null ? 0 : root.vertex;
 	}
 
 	public int getFragmentID()
 	{
-		return root == null ? 0 : ((ShaderRoot) root).fragment;
+		return root == null ? 0 : root.fragment;
 	}
 
 	@Override
 	public int getID()
 	{
-		return root == null ? 0 : ((ShaderRoot) root).id;
+		return root == null ? 0 : root.id;
 	}
 
 	@Override

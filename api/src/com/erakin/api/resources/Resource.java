@@ -33,19 +33,19 @@ import com.erakin.api.lwjgl.GLBind;
  * @author Andrew
  */
 
-public abstract class Resource implements GLBind
+public abstract class Resource<T extends ResourceRoot<?>> implements GLBind
 {
 	/**
 	 * Referência do recurso raíz que será usado por esse recurso.
 	 */
-	ResourceRoot root;
+	T root;
 
 	/**
 	 * Constrói um novo recurso sendo necessário definir sua raíz.
 	 * @param root referência do recurso raíz que será usado.
 	 */
 
-	Resource(ResourceRoot root)
+	Resource(T root)
 	{
 		this.root = root;
 	}
