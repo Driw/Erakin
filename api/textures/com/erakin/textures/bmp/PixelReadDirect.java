@@ -1,6 +1,10 @@
 package com.erakin.textures.bmp;
 
 import static com.erakin.api.ErakinAPIUtil.objectString;
+import static com.erakin.api.resources.texture.PixelColorOrder.COLOR_ORDER_LUMINANCE;
+import static com.erakin.api.resources.texture.PixelColorOrder.COLOR_ORDER_LUMINANCE_ALPHA;
+import static com.erakin.api.resources.texture.PixelColorOrder.COLOR_ORDER_RGB;
+import static com.erakin.api.resources.texture.PixelColorOrder.COLOR_ORDER_RGBA;
 import static com.erakin.api.resources.texture.PixelWriteImpl.WRITE_ABGR;
 import static com.erakin.api.resources.texture.PixelWriteImpl.WRITE_ALPHA;
 import static com.erakin.api.resources.texture.PixelWriteImpl.WRITE_BGRA;
@@ -8,18 +12,14 @@ import static com.erakin.api.resources.texture.PixelWriteImpl.WRITE_LUMINANCE;
 import static com.erakin.api.resources.texture.PixelWriteImpl.WRITE_LUMINANCE_ALPHA;
 import static com.erakin.api.resources.texture.PixelWriteImpl.WRITE_RGB;
 import static com.erakin.api.resources.texture.PixelWriteImpl.WRITE_RGBA;
-import static com.erakin.textures.bmp.PixelColorOrder.COLOR_ORDER_LUMINANCE;
-import static com.erakin.textures.bmp.PixelColorOrder.COLOR_ORDER_LUMINANCE_ALPHA;
-import static com.erakin.textures.bmp.PixelColorOrder.COLOR_ORDER_RGB;
-import static com.erakin.textures.bmp.PixelColorOrder.COLOR_ORDER_RGBA;
 
 import java.nio.ByteBuffer;
 
 import org.diverproject.util.ObjectDescription;
 
+import com.erakin.api.resources.texture.PixelColorOrder;
 import com.erakin.api.resources.texture.PixelRead;
 import com.erakin.api.resources.texture.PixelWrite;
-import com.erakin.textures.bmp.PixelColorOrder;
 
 /**
  * <h1>Implementação par Leitura de Pixels</h1>
@@ -152,7 +152,7 @@ public class PixelReadDirect implements PixelRead
 			if (transparency != null && red == transparency[1] && green == transparency[3] && blue == transparency[5])
 				alpha = 0;
 
-			PIXEL_WRITE.write(buffer, red, green, blue, alpha);
+			PIXEL_WRITE.write(buffer, blue, green, red, alpha); // Por algum motivo não pode ser RGB tem que ser BGR
 		}
 	}
 

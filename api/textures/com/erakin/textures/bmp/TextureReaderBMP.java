@@ -130,11 +130,9 @@ public class TextureReaderBMP extends TextureReaderDefault
 
 		header = parseHeader(buffer);
 		infoHeader = parseInfoHeader(buffer);
-		palette = parsePalette(buffer);
+		if (infoHeader.importantColors > 0 || buffer.space() != infoHeader.imageSize)
+			palette = parsePalette(buffer);
 		rasterData = parseRasterData(buffer);
-
-		if (buffer.space() != 0)
-			throw new TextureRuntimeException("nem todos os dados foram lidos");
 
 		buffer.close();
 	}
@@ -250,7 +248,7 @@ public class TextureReaderBMP extends TextureReaderDefault
 
 	private RasterData parseRasterData(Buffer buffer)
 	{
-		if ((buffer.space() + (palette.bytes.length)) < infoHeader.imageSize)
+		if (buffer.space() < infoHeader.imageSize)
 			throw new TextureRuntimeException("não há dados para o raster");
 
 		RasterData rasterData = new RasterData();
@@ -269,11 +267,13 @@ public class TextureReaderBMP extends TextureReaderDefault
 
 	private Palette parsePalette(Buffer buffer)
 	{
-		if (buffer.space() < 1024)
+		int palletSize = (infoHeader.importantColors == 0 ? 256 : infoHeader.importantColors) * 4;
+
+		if (buffer.space() < palletSize)
 			throw new TextureRuntimeException("não há dados para a paleta de cores");
 
 		Palette palette = new Palette();
-		palette.bytes = buffer.read(1024);
+		palette.bytes = buffer.read(palletSize);
 
 		return palette;
 	}
@@ -293,7 +293,7 @@ public class TextureReaderBMP extends TextureReaderDefault
 		}
 
 		else if (getInputFormat() == FORMAT_RGBA)
-			buffer.put(rasterData.bytes);
+			buffer.put(rasterData.bytes, 0, buffer.capacity());
 
 		else if (getInputFormat() == FORMAT_LUMINANCE)
 			BMPUtil.decodeGray(buffer, width, height, output, rasterData.bytes);
@@ -314,7 +314,7 @@ public class TextureReaderBMP extends TextureReaderDefault
 		description.append("size", infoHeader == null ? 0 : infoHeader.imageSize);
 		description.append("bitcount", infoHeader == null ? 0 : infoHeader.bitcount);
 		description.append("compression", infoHeader == null ? 0 : infoHeader.compression);
-		description.append("paletta", palette == null ? 0 : palette.bytes.length);
+		description.append("paletta", palette == null || palette.bytes == null ? 0 : palette.bytes.length);
 
 		return description.toString();
 	}

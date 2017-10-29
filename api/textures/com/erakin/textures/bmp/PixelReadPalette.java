@@ -97,7 +97,7 @@ public class PixelReadPalette implements PixelRead
 			byte blue = palette[indexOffset + 2];
 			byte alpha = palette[indexOffset + 3];
 
-			PIXEL_WRITE.write(buffer, red, green, blue, alpha);
+			PIXEL_WRITE.write(buffer, blue, green, red, alpha);
 		}
 	}
 

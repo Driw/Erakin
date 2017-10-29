@@ -140,7 +140,7 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	@Override
 	public void dispatch(KeyEvent event)
 	{
-		if (!Display.isActive())
+		if (!Display.isCreated() || !Display.isActive())
 			return;
 
 		if (getState() != SERVICE_RUNNING)

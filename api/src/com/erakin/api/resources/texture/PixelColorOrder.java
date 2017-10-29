@@ -1,4 +1,4 @@
-package com.erakin.textures.bmp;
+package com.erakin.api.resources.texture;
 
 import org.diverproject.util.ObjectDescription;
 
