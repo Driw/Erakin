@@ -214,13 +214,13 @@ public class Engine implements Tickable
 
 			logException(e);
 			showException(e);
+		}
 
-			try {
-				shutdown();
-			} catch (InputException ie) {
-				showException(e);
-				System.exit(0);
-			}
+		try {
+			shutdown();
+		} catch (InputException ie) {
+			showException(ie);
+			System.exit(0);
 		}
 
 		listener.onClosed();

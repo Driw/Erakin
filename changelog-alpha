@@ -26,6 +26,9 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+29.10.2016 - 0.0.2.20
+- Ao fechar a janela a Engine não era encerrada, apenas parava de rodar (saia do loop de update e tick).
+
 29.10.2016 - 0.0.2.19
 - ShaderReaderGLSL não estava funcionando corregamente, label especificada erroneamente.
 - Atualizando Resource e ResourceRoot para se tornarem classes parametrizadas.
