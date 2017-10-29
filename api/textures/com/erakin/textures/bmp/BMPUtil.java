@@ -5,11 +5,11 @@ import static com.erakin.api.resources.texture.PixelFormat.FORMAT_LUMINANCE;
 import static com.erakin.api.resources.texture.PixelFormat.FORMAT_LUMINANCE_ALPHA;
 import static com.erakin.api.resources.texture.PixelFormat.FORMAT_RGB;
 import static com.erakin.api.resources.texture.PixelFormat.FORMAT_RGBA;
-import static com.erakin.api.resources.texture.PixelReadDirect.CONVERT_LUMINANCE_RGB;
-import static com.erakin.api.resources.texture.PixelReadDirect.CONVERT_RGB_ALPHA;
-import static com.erakin.api.resources.texture.PixelReadDirect.CONVERT_RGB_LUMINANCE;
-import static com.erakin.api.resources.texture.PixelReadDirect.CONVERT_RGB_LUMINANCEALPHA;
-import static com.erakin.api.resources.texture.PixelReadDirect.CONVERT_RGB_RGBA;
+import static com.erakin.textures.bmp.PixelReadDirect.CONVERT_LUMINANCE_RGB;
+import static com.erakin.textures.bmp.PixelReadDirect.CONVERT_RGB_ALPHA;
+import static com.erakin.textures.bmp.PixelReadDirect.CONVERT_RGB_LUMINANCE;
+import static com.erakin.textures.bmp.PixelReadDirect.CONVERT_RGB_LUMINANCEALPHA;
+import static com.erakin.textures.bmp.PixelReadDirect.CONVERT_RGB_RGBA;
 import static com.erakin.textures.bmp.PixelReadPalette.CONVERT_PALETTE_ALPHA;
 import static com.erakin.textures.bmp.PixelReadPalette.CONVERT_PALETTE_LUMINANCE;
 import static com.erakin.textures.bmp.PixelReadPalette.CONVERT_PALETTE_LUMINANCE_ALPHA;
@@ -133,7 +133,8 @@ public class BMPUtil
 		else if (output == FORMAT_LUMINANCE_ALPHA)
 			directDecodeRGB(buffer, width, height, raster, CONVERT_RGB_LUMINANCEALPHA);
 
-		throw new FileRuntimeException("tipo de saída não aceita (bpp: %d, alpha: %s)", output.BYTES, output.ALPHA);
+		else
+			throw new FileRuntimeException("tipo de saída não aceita (bpp: %d, alpha: %s)", output.BYTES, output.ALPHA);
 	}
 
 	/**

@@ -250,7 +250,7 @@ public class TextureReaderBMP extends TextureReaderDefault
 
 	private RasterData parseRasterData(Buffer buffer)
 	{
-		if (buffer.space() < infoHeader.imageSize)
+		if ((buffer.space() + (palette.bytes.length)) < infoHeader.imageSize)
 			throw new TextureRuntimeException("não há dados para o raster");
 
 		RasterData rasterData = new RasterData();

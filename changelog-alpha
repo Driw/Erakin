@@ -26,6 +26,11 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+29.10.2016 - 0.0.2.18
+- A forma como os dados eram convertidos em PNG e BMP não podiam ser feito do mesmo jeito.
+	- BMP usa um buffer com todos os dados em quanto o PNG usa um buffer com uma linha da imagem.
+- Não estava sendo possível ler um BMP por que "faltava dados" (não considerava os dados da paleta).
+
 27.10.2016 - 0.0.2.17
 - DefaultLoader.toString() não estava funcionando corretamente com ObjectDescription.
 - Pequenos ajustes de documentações devido a mudanças anteriores.

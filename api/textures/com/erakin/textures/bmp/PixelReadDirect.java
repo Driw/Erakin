@@ -1,4 +1,4 @@
-package com.erakin.api.resources.texture;
+package com.erakin.textures.bmp;
 
 import static com.erakin.api.ErakinAPIUtil.objectString;
 import static com.erakin.api.resources.texture.PixelWriteImpl.WRITE_ABGR;
@@ -17,6 +17,8 @@ import java.nio.ByteBuffer;
 
 import org.diverproject.util.ObjectDescription;
 
+import com.erakin.api.resources.texture.PixelRead;
+import com.erakin.api.resources.texture.PixelWrite;
 import com.erakin.textures.bmp.PixelColorOrder;
 
 /**
@@ -139,12 +141,13 @@ public class PixelReadDirect implements PixelRead
 	@Override
 	public void read(ByteBuffer buffer, byte[] line, byte[] transparency, int offset, int length)
 	{
-		for (int i = offset; i < length; i += COLOR_ORDER.BPP)
+		for (int i = 0; i < length; i++)
 		{
-			byte red = COLOR_ORDER.RED == -1 ? 0 : line[i + COLOR_ORDER.RED];
-			byte green = COLOR_ORDER.GREEN == -1 ? 0 : line[i + COLOR_ORDER.GREEN];
-			byte blue = COLOR_ORDER.BLUE == -1 ? 0 : line[i + COLOR_ORDER.BLUE];
-			byte alpha = COLOR_ORDER.ALPHA == -1 ? 0 : line[i + COLOR_ORDER.ALPHA];
+			int palleteOffset = (offset + i) * COLOR_ORDER.BPP;
+			byte red = COLOR_ORDER.RED == -1 ? 0 : line[palleteOffset + COLOR_ORDER.RED];
+			byte green = COLOR_ORDER.GREEN == -1 ? 0 : line[palleteOffset + COLOR_ORDER.GREEN];
+			byte blue = COLOR_ORDER.BLUE == -1 ? 0 : line[palleteOffset + COLOR_ORDER.BLUE];
+			byte alpha = COLOR_ORDER.ALPHA == -1 ? 0 : line[palleteOffset + COLOR_ORDER.ALPHA];
 
 			if (transparency != null && red == transparency[1] && green == transparency[3] && blue == transparency[5])
 				alpha = 0;
