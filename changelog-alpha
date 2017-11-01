@@ -26,6 +26,9 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+01.11.2016 - 0.0.2.25
+- Implementação de uma classe para realizar cálculos de movimentação de objetos no espaço.
+
 01.11.2016 - 0.0.2.24
 - Agora é possível definir com qual cor será preenchida a tela por glClearScreen(), GLUtil.
 
