@@ -26,6 +26,9 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+01.11.2016 - 0.0.2.23
+- Adicionado ColorVector para representar cores no sistema ao invés de usar valores float.
+
 31.10.2016 - 0.0.2.22
 - O índice das texturas deve ser do tipo float e não int, por algum motivo no Shader buga.
 - Agora createShaderProgram() vai especificar qual o programa que não foi possível criar.
