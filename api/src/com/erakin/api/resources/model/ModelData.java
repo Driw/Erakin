@@ -59,5 +59,5 @@ public interface ModelData
 	 * @return aquisição do vetor contendo a textura por conexão de vértice.
 	 */
 
-	int[] getTextureIndex();
+	float[] getTextureIndex();
 }

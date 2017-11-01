@@ -42,7 +42,7 @@ public class ModelDataDefault implements ModelData
 	/**
 	 * Identificação de textura para cada conexão de vértice.
 	 */
-	protected int textureIndex[];
+	protected float textureIndex[];
 
 	/**
 	 * Cria uma nova instância de um objeto de armazenamento dos dados para criação de um modelo 3D.
@@ -55,7 +55,7 @@ public class ModelDataDefault implements ModelData
 		vertexNormals = new float[0];
 		textureCoords = new float[0];
 		indices = new int[0];
-		textureIndex = new int[0];
+		textureIndex = new float[0];
 	}
 
 	/**
@@ -74,7 +74,7 @@ public class ModelDataDefault implements ModelData
 		textureCoords = new float[textureCount * 2];
 		indices = new int[faceCount];		
 
-		textureIndex = new int[0];
+		textureIndex = new float[0];
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class ModelDataDefault implements ModelData
 
 	public void setMultipleTextures(int triangleCount)
 	{
-		textureIndex = new int[triangleCount];
+		textureIndex = new float[triangleCount];
 	}
 
 	/**
@@ -191,7 +191,7 @@ public class ModelDataDefault implements ModelData
 				(textureCoords.length * Float.BYTES) + 
 				(vertexNormals.length * Float.BYTES) +
 				(indices.length * Integer.BYTES) +
-				(textureIndex.length * Integer.BYTES);
+				(textureIndex.length * Float.BYTES);
 	}
 
 	@Override
@@ -219,7 +219,7 @@ public class ModelDataDefault implements ModelData
 	}
 
 	@Override
-	public int[] getTextureIndex()
+	public float[] getTextureIndex()
 	{
 		return textureIndex;
 	}

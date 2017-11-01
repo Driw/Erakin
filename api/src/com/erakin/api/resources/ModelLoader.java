@@ -129,7 +129,7 @@ public final class ModelLoader extends DefaultLoader<Model>
 		float vertices[] = data.getVertices();
 		float textures[] = data.getTextureCoords();
 		float normals[] = data.getNormals();
-		int textureIndex[] = data.getTextureIndex();
+		float textureIndex[] = data.getTextureIndex();
 
 		ModelRoot root = new ModelRoot();
 		root.fileName = FileUtil.getFileName(path);
@@ -139,14 +139,9 @@ public final class ModelLoader extends DefaultLoader<Model>
 		root.vao.setIndices(indices);
 		root.vao.setAttribute(ATTRIB_VERTICES, 3, vertices);
 
-		if (textures.length > 0)
-			root.vao.setAttribute(ATTRIB_TEXTURE_COORDS, 2, textures);
-
-		if (normals.length > 0)
-			root.vao.setAttribute(ATTRIB_NORMALS, 3, normals);
-
-		if (textureIndex.length > 0)
-			root.vao.setAttribute(ATTRIB_TEXTURE_INDEX, 1, textureIndex);
+		if (textures.length > 0)		root.vao.setAttribute(ATTRIB_TEXTURE_COORDS, 2, textures);
+		if (normals.length > 0)			root.vao.setAttribute(ATTRIB_NORMALS, 3, normals);
+		if (textureIndex.length > 0)	root.vao.setAttribute(ATTRIB_TEXTURE_INDEX, 1, textureIndex);
 
 		logDebug("modelagem '%s' lida com êxito (indices: %d, vertices: %d, textures: %d, normals: %d).\n",
 				root.fileName, indices.length, vertices.length, textures.length, normals.length);

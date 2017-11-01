@@ -26,6 +26,20 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+31.10.2016 - 0.0.2.22
+- O índice das texturas deve ser do tipo float e não int, por algum motivo no Shader buga.
+- Agora createShaderProgram() vai especificar qual o programa que não foi possível criar.
+
+29.10.2016 - 0.0.2.21
+- Movendo PixelColorOrder de textures.bmp para api.resources.texture, afinal usa-se em BMP e PNG.
+- Necessário definir um PIxelColorOrder para estrutura BMP e outor para PNG.
+- Ocorre exception em dispatch() ao fechar a Engine em determinados momentos, VirtualKeyboard.
+	- Agora verifica se existe a janela criada antes de verificar se esta está ativa.
+- Por algum motivo os dados devem ser escritos no formato BGR ao invés de RGB, textures.bmp.
+	- Quando obtido de uma paleta de cores também deve ser escrito no formato BGR.
+- Em alguns casos a paleta de cores de arquivos BMP não eram lidas, TexturerEaderBMP.
+	- Se não houver cores importantes mas há mais dados além da imagem então existe paleta de cores (256 itens).
+
 29.10.2016 - 0.0.2.20
 - Ao fechar a janela a Engine não era encerrada, apenas parava de rodar (saia do loop de update e tick).
 

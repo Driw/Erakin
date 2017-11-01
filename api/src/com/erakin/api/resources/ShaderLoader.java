@@ -126,7 +126,10 @@ public class ShaderLoader extends DefaultLoader<Shader>
 		glCompileShader(shaderID);
 
 		if (glGetShaderi(shaderID, GL_COMPILE_STATUS) == GL_FALSE)
-			throw new ShaderRuntimeException(glGetShaderInfoLog(shaderID, 1024));
+			if (type == GL_VERTEX_SHADER)
+				throw new ShaderRuntimeException("falha ao criar vertex program - %s", glGetShaderInfoLog(shaderID, 1024));
+			else
+				throw new ShaderRuntimeException("falha ao criar fragment program - %s", glGetShaderInfoLog(shaderID, 1024));
 
 		return shaderID;
 	}
