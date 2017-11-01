@@ -35,6 +35,12 @@ import org.lwjgl.opengl.GL11;
 public class GLUtil
 {
 	/**
+	 * Definição da cor que será usada para preencher a tela quando chamado para limpá-la.
+	 * <i>Essa cor é usada por padrão pela Engine para limpar a tela a cada quadro.</i>
+	 */
+	public static final ColorVector SCREEN_COLOR = new ColorVector(0, 0, 0);
+
+	/**
 	 * Construtor privado para evitar instâncias dessa classe.
 	 * Não há necessidade de existir instâncias para tal.
 	 */
@@ -54,7 +60,7 @@ public class GLUtil
 	{
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glClearColor(0, 0, 0, 1);
+		glClearColor(SCREEN_COLOR.getRed(), SCREEN_COLOR.getGreen(), SCREEN_COLOR.getBlue(), SCREEN_COLOR.getAlpha());
 	}
 
 	/**

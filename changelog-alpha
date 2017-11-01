@@ -26,6 +26,9 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+01.11.2016 - 0.0.2.24
+- Agora é possível definir com qual cor será preenchida a tela por glClearScreen(), GLUtil.
+
 01.11.2016 - 0.0.2.23
 - Adicionado ColorVector para representar cores no sistema ao invés de usar valores float.
 
