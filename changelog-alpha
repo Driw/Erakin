@@ -26,6 +26,11 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+01.11.2016 - 0.0.2.26
+- Agora as texturas carredas tem mipmap e GL_TEXTURE_LOD_BIAS definido.
+- Trocado GL_TEXTURE_MIN_FILTER de GL_LINEAR para GL_LINEAR_MIPMAP_LINEAR.
+- Trocado GL_TEXTURE_MAG_FILTER de GL_LINEAR para GL_LINEAR_MIPMAP_NEAREST.
+
 01.11.2016 - 0.0.2.25
 - Implementação de uma classe para realizar cálculos de movimentação de objetos no espaço.
 
