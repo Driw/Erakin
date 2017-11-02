@@ -1,22 +1,18 @@
-package com.erakin.api.resources;
+package com.erakin.api.resources.model;
 
-import static com.erakin.api.resources.Model.ATTRIB_NORMALS;
-import static com.erakin.api.resources.Model.ATTRIB_TEXTURE_COORDS;
-import static com.erakin.api.resources.Model.ATTRIB_TEXTURE_INDEX;
-import static com.erakin.api.resources.Model.ATTRIB_VERTICES;
+import static com.erakin.api.resources.model.Model.ATTRIB_NORMALS;
+import static com.erakin.api.resources.model.Model.ATTRIB_TEXTURE_COORDS;
+import static com.erakin.api.resources.model.Model.ATTRIB_TEXTURE_INDEX;
+import static com.erakin.api.resources.model.Model.ATTRIB_VERTICES;
 import static org.diverproject.log.LogSystem.logDebug;
 import static org.diverproject.log.LogSystem.logWarning;
 
 import java.io.FileInputStream;
 
-import org.diverproject.util.FileUtil;
-
 import com.erakin.api.lwjgl.VAO;
-import com.erakin.api.resources.model.ModelData;
-import com.erakin.api.resources.model.ModelException;
-import com.erakin.api.resources.model.ModelReader;
-import com.erakin.api.resources.model.ModelReaderFactory;
-import com.erakin.api.resources.model.ModelRuntimeException;
+import com.erakin.api.resources.DefaultLoader;
+import com.erakin.api.resources.ResourceMap;
+import com.erakin.api.resources.ResourceRoot;
 
 /**
  * <h1>Carregador de Modelagem</h1>
@@ -131,10 +127,7 @@ public final class ModelLoader extends DefaultLoader<Model>
 		float normals[] = data.getNormals();
 		float textureIndex[] = data.getTextureIndex();
 
-		ModelRoot root = new ModelRoot();
-		root.fileName = FileUtil.getFileName(path);
-		root.filePath = FileUtil.getParentPath(path);
-		root.fileExtension = FileUtil.getExtension(path);
+		ModelRoot root = new ModelRoot(path);
 		root.vao = new VAO();
 		root.vao.setIndices(indices);
 		root.vao.setAttribute(ATTRIB_VERTICES, 3, vertices);
@@ -144,10 +137,10 @@ public final class ModelLoader extends DefaultLoader<Model>
 		if (textureIndex.length > 0)	root.vao.setAttribute(ATTRIB_TEXTURE_INDEX, 1, textureIndex);
 
 		logDebug("modelagem '%s' lida com êxito (indices: %d, vertices: %d, textures: %d, normals: %d).\n",
-				root.fileName, indices.length, vertices.length, textures.length, normals.length);
+				root.getFileName(), indices.length, vertices.length, textures.length, normals.length);
 
 		if (!insertResource(root))
-			logWarning("não foi possível salvar a modelagem '%s'.\n", root.fileName);
+			logWarning("não foi possível salvar a modelagem '%s'.\n", root.getFileName());
 
 		return root.genResource();
 	}

@@ -1,7 +1,5 @@
 package com.erakin.api.resources.world;
 
-import com.erakin.api.resources.TerrainLoader;
-
 /**
  * <h1>Dados do Mundo</h1>
  *

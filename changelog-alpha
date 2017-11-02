@@ -26,6 +26,13 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+02.11.2016 - 0.0.2.27
+- Realizado algumas documentações de classes presentes em api.resources.*.
+- Movimentação das classes relacionadas a Model, Shader, Texture e World para seus respectivos pacotes.
+- Reduzindo um pouco do encapsulamento das classes relativas a Resource e ResourceRoot.
+- Implementação de ResourceFileLocation em Resource, assim todos recursos referenciam um arquivo em disco.
+- ModelRoot.genResource() criava um Model mas não registrava a referência.
+
 01.11.2016 - 0.0.2.26
 - Agora as texturas carredas tem mipmap e GL_TEXTURE_LOD_BIAS definido.
 - Trocado GL_TEXTURE_MIN_FILTER de GL_LINEAR para GL_LINEAR_MIPMAP_LINEAR.

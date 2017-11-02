@@ -1,6 +1,8 @@
-package com.erakin.api.resources;
+package com.erakin.api.resources.shader;
 
 import org.diverproject.util.ObjectDescription;
+
+import com.erakin.api.resources.ResourceRoot;
 
 public class ShaderRoot extends ResourceRoot<Shader>
 {
@@ -20,13 +22,14 @@ public class ShaderRoot extends ResourceRoot<Shader>
 	int fragment;
 
 	/**
-	 * Constrói uma nova textura raíz a partir de um caminho em disco especificado.
-	 * Esse caminho deverá ser respectivo ao diretório de recursos e da textura.
+	 * Construtor em package para permitir apenas que ShaderLoader construa um.
+	 * Isso irá garantir que um Shader Raíz inválido possa ser criado na engine.
+	 * @param filepath caminho do arquivo em disco com os dados do modelo carregado.
 	 */
 
-	ShaderRoot()
+	ShaderRoot(String filepath)
 	{
-		super();
+		super(filepath);
 	}
 
 	/**

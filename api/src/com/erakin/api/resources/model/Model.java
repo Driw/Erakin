@@ -1,4 +1,4 @@
-package com.erakin.api.resources;
+package com.erakin.api.resources.model;
 
 import org.diverproject.util.FileUtil;
 import org.diverproject.util.ObjectDescription;
@@ -6,6 +6,9 @@ import org.diverproject.util.ObjectDescription;
 import com.erakin.api.lwjgl.VAO;
 import com.erakin.api.lwjgl.math.enumeration.DrawElement;
 import com.erakin.api.render.ModelRender;
+import com.erakin.api.resources.Resource;
+import com.erakin.api.resources.ResourceFileLocation;
+import com.erakin.api.resources.texture.Texture;
 
 /**
  * <h1>Modelo</h1>
@@ -28,7 +31,7 @@ import com.erakin.api.render.ModelRender;
  * @author Andrew
  */
 
-public class Model extends Resource<ModelRoot> implements ModelRender
+public class Model extends Resource<ModelRoot> implements ModelRender, ResourceFileLocation
 {
 	/**
 	 * Código de atribuir um VBO de vértices no espaço para um modelo.
@@ -104,13 +107,13 @@ public class Model extends Resource<ModelRoot> implements ModelRender
 
 	public int getVertexCount()
 	{
-		return !valid() ? 0 : ((ModelRoot) root).vao.getVertexCount();
+		return !valid() ? 0 : root.vao.getVertexCount();
 	}
 
 	@Override
 	public int getID()
 	{
-		VAO vao = ((ModelRoot) root).vao;
+		VAO vao = root.vao;
 
 		return vao == null ? 0 : vao.getID();
 	}
@@ -121,7 +124,7 @@ public class Model extends Resource<ModelRoot> implements ModelRender
 		if (!valid())
 			return;
 
-		ModelRoot model = ((ModelRoot) root);
+		ModelRoot model = root;
 
 		VAO vao = model.vao;
 		vao.bind();
@@ -137,7 +140,7 @@ public class Model extends Resource<ModelRoot> implements ModelRender
 		if (!valid())
 			return;
 
-		ModelRoot model = ((ModelRoot) root);
+		ModelRoot model = root;
 
 		VAO vao = model.vao;
 		vao.disable(ATTRIB_VERTICES);
@@ -150,7 +153,7 @@ public class Model extends Resource<ModelRoot> implements ModelRender
 	@Override
 	public void draw(DrawElement mode)
 	{
-		ModelRoot model = ((ModelRoot) root);
+		ModelRoot model = root;
 
 		VAO vao = model.vao;
 		vao.draw(mode);
@@ -182,7 +185,7 @@ public class Model extends Resource<ModelRoot> implements ModelRender
 
 	public void restoreReflectivity()
 	{
-		this.reflectivity = ((ModelRoot) root).defaultReflectivity;
+		this.reflectivity = root.defaultReflectivity;
 	}
 
 	@Override
@@ -210,7 +213,7 @@ public class Model extends Resource<ModelRoot> implements ModelRender
 
 	public void restoreShineDamping()
 	{
-		this.reflectivity = ((ModelRoot) root).defaultShineDamping;
+		this.reflectivity = root.defaultShineDamping;
 	}
 
 	@Override
@@ -228,16 +231,52 @@ public class Model extends Resource<ModelRoot> implements ModelRender
 	@Override
 	public boolean valid()
 	{
-		return root != null && root.isAlive() && ((ModelRoot) root).vao != null;
+		return root != null && root.isAlive() && root.vao != null;
+	}
+
+	@Override
+	public String getFileExtension()
+	{
+		return root.getFileExtension();
+	}
+
+	@Override
+	public String getFileName()
+	{
+		return root.getFileExtension();
+	}
+
+	@Override
+	public String getFileFullName()
+	{
+		return root.getFileFullName();
+	}
+
+	@Override
+	public String getFileDirectory()
+	{
+		return root.getFileDirectory();
+	}
+
+	@Override
+	public String getFilePath()
+	{
+		return root.getFilePath();
+	}
+
+	@Override
+	protected Model clone()
+	{
+		return root.genResource();
 	}
 
 	@Override
 	public void toString(ObjectDescription description)
 	{
-		description.append("model", FileUtil.getFileName(root.filePath));
+		description.append("model", FileUtil.getFileName(root.getFilePath()));
 
 		if (texture != null)
-			description.append("texture", FileUtil.getFileName(texture.root.filePath));
+			description.append("texture", FileUtil.getFileName(texture.getFilePath()));
 
 		description.append("reflectivity", reflectivity);
 		description.append("shineDamping", shineDamping);

@@ -1,4 +1,4 @@
-package com.erakin.api.resources;
+package com.erakin.api.resources.texture;
 
 import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glBindTexture;
@@ -8,6 +8,9 @@ import static org.lwjgl.opengl.GL13.glActiveTexture;
 
 import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.lang.IntUtil;
+
+import com.erakin.api.resources.Resource;
+import com.erakin.api.resources.ResourceFileLocation;
 
 /**
  * <h1>Textura</h1>
@@ -28,7 +31,7 @@ import org.diverproject.util.lang.IntUtil;
  * @author Andrew
  */
 
-public class Texture extends Resource<TextureRoot>
+public class Texture extends Resource<TextureRoot> implements ResourceFileLocation
 {
 	/**
 	 * Número de separação que há na textura (multi-textura).
@@ -36,17 +39,17 @@ public class Texture extends Resource<TextureRoot>
 	private int split;
 
 	/**
-	 * TODO
+	 * Nível de dispersão do brilho na textura.
 	 */
 	private float shineDamper;
 
 	/**
-	 * TODO
+	 * Intensidade da refletividade da luz na textura.
 	 */
 	private float reflectivity;
 
 	/**
-	 * TODO
+	 * Textura com transparência.
 	 */
 	private boolean useTransparency;
 
@@ -63,16 +66,6 @@ public class Texture extends Resource<TextureRoot>
 	Texture(TextureRoot root)
 	{
 		super(root);
-	}
-
-	/**
-	 * Caminho da textura determina de onde a imagem foi carregada em disco.
-	 * @return string contendo o caminho da imagem usada para essa textura.
-	 */
-
-	public String getPath()
-	{
-		return root == null ? null : root.filePath;
 	}
 
 	/**
@@ -126,6 +119,8 @@ public class Texture extends Resource<TextureRoot>
 			root.delReference(this);
 			root = null;
 		}
+
+		root.id = 0;
 	}
 
 	@Override
@@ -135,8 +130,10 @@ public class Texture extends Resource<TextureRoot>
 	}
 
 	/**
-	 * TODO ???
-	 * @param index ???
+	 * Seleciona essa unidade de textura será afetada pelos efeitos de texturas chamados na sequência.
+	 * O número de unidades de textura que uma implementação suporte depende da sua implementação, mas deve ser menor que 80.
+	 * @param qual unidade de textura será ativada por esta textura, a textura deve ser um GL_TEXTURE{i},
+	 * onde <b>i</b> varia entre zero e o valor de <code>GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS</code> menos um. O valor inicial é GL_TEXTURE0.
 	 */
 
 	public void active(int index)
@@ -146,8 +143,8 @@ public class Texture extends Resource<TextureRoot>
 	}
 
 	/**
-	 * TODO ???
-	 * @return ???
+	 * Uma textura dividida determina que a imagem da textura possui na verdade mais de uma textura disponível.
+	 * @return aquisição de qual parte da textura será usada para representar essa textura.
 	 */
 
 	public int getSplit()
@@ -156,8 +153,8 @@ public class Texture extends Resource<TextureRoot>
 	}
 
 	/**
-	 * TODO ???
-	 * @param split ???
+	 * Uma textura dividida determina que a imagem da textura possui na verdade mais de uma textura disponível.
+	 * @param split qual parte da textura será usada para representar essa textura.
 	 */
 
 	public void setSplit(int split)
@@ -166,8 +163,9 @@ public class Texture extends Resource<TextureRoot>
 	}
 
 	/**
-	 * TODO ???
-	 * @return ???
+	 * A dispersão do brilho determina o quão próximo da linha de refletividade do brilho a câmera precisa estar.
+	 * Quanto menor mais perto da reta deve estar e quanto maior mais distante da reta deve estar.
+	 * @return aquisição do nível de dispersão do brilho emitido pela luz refletida na textura.
 	 */
 
 	public float getShineDamper()
@@ -176,8 +174,9 @@ public class Texture extends Resource<TextureRoot>
 	}
 
 	/**
-	 * TODO ???
-	 * @param shineDamper ???
+	 * A dispersão do brilho determina o quão próximo da linha de refletividade do brilho a câmera precisa estar.
+	 * Quanto menor mais perto da reta deve estar e quanto maior mais distante da reta deve estar.
+	 * @param shineDamper nível de dispersão do brilho emitido pela luz refletida na textura.
 	 */
 
 	public void setShineDamper(float shineDamper)
@@ -186,8 +185,9 @@ public class Texture extends Resource<TextureRoot>
 	}
 
 	/**
-	 * TODO ???
-	 * @return ???
+	 * A refletividade determina quão a intensidade do brilho emitido devido a refletividade de luzes na textura.
+	 * Quanto menor mais fraco será o brilho emitido e quanto maior mais forte será o brilho emitido.
+	 * @return aquisição do nível de intensidade do brilho emitido da luz refletida na textura.
 	 */
 
 	public float getReflectivity()
@@ -196,8 +196,9 @@ public class Texture extends Resource<TextureRoot>
 	}
 
 	/**
-	 * TODO ???
-	 * @param reflectivity ???
+	 * A refletividade determina quão a intensidade do brilho emitido devido a refletividade de luzes na textura.
+	 * Quanto menor mais fraco será o brilho emitido e quanto maior mais forte será o brilho emitido.
+	 * @param reflectivity nível de intensidade do brilho emitido da luz refletida na textura.
 	 */
 
 	public void setReflectivity(float reflectivity)
@@ -206,8 +207,9 @@ public class Texture extends Resource<TextureRoot>
 	}
 
 	/**
-	 * TODO ???
-	 * @return ???
+	 * Uma textura que possui transparência deve ser especificado anteriormente no carregamento da textura, caso contrário não funciona.
+	 * A transparência irá considerar pixels com tonalidade alpha transparentes de acordo com o valor especificado no mesmo.
+	 * @return true se a textura deve utilizar o recurso de transparência.
 	 */
 
 	public boolean isUseTransparency()
@@ -216,8 +218,9 @@ public class Texture extends Resource<TextureRoot>
 	}
 
 	/**
-	 * TODO ???
-	 * @param use ???
+	 * Uma textura que possui transparência deve ser especificado anteriormente no carregamento da textura, caso contrário não funciona.
+	 * A transparência irá considerar pixels com tonalidade alpha transparentes de acordo com o valor especificado no mesmo.
+	 * @param use true para habilitar o recurso de transparência ou false caso contrário.
 	 */
 
 	public void setTransparency(boolean use)
@@ -243,6 +246,36 @@ public class Texture extends Resource<TextureRoot>
 	public void setFakeLighting(boolean use)
 	{
 		this.useFakeLighting = use;
+	}
+
+	@Override
+	public String getFileExtension()
+	{
+		return root.getFileExtension();
+	}
+
+	@Override
+	public String getFileName()
+	{
+		return root.getFileExtension();
+	}
+
+	@Override
+	public String getFileFullName()
+	{
+		return root.getFileFullName();
+	}
+
+	@Override
+	public String getFileDirectory()
+	{
+		return root.getFileDirectory();
+	}
+
+	@Override
+	public String getFilePath()
+	{
+		return root.getFilePath();
 	}
 
 	@Override

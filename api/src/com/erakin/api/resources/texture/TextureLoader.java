@@ -1,4 +1,4 @@
-package com.erakin.api.resources;
+package com.erakin.api.resources.texture;
 
 import static com.erakin.api.lwjgl.GLUtil.glMaxTextureSize;
 import static com.erakin.api.lwjgl.math.Maths.fold;
@@ -24,14 +24,11 @@ import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 import java.io.FileInputStream;
 import java.nio.ByteBuffer;
 
-import org.diverproject.util.FileUtil;
 import org.diverproject.util.lang.IntUtil;
 
-import com.erakin.api.resources.texture.TextureData;
-import com.erakin.api.resources.texture.TextureException;
-import com.erakin.api.resources.texture.TextureReader;
-import com.erakin.api.resources.texture.TextureReaderFactory;
-import com.erakin.api.resources.texture.TextureRuntimeException;
+import com.erakin.api.resources.DefaultLoader;
+import com.erakin.api.resources.ResourceMap;
+import com.erakin.api.resources.ResourceRoot;
 
 /**
  * <h1>Carregador de Texturas</h1>
@@ -149,11 +146,8 @@ public final class TextureLoader extends DefaultLoader<Texture>
 		if (containResource(path))
 			throw new TextureRuntimeException("textura já existente (%s)", path);
 
-		TextureRoot root = new TextureRoot();
+		TextureRoot root = new TextureRoot(path);
 		root.id = glGenTextures();
-		root.fileName = FileUtil.getFileName(path);
-		root.filePath = FileUtil.getParentPath(path);
-		root.fileExtension = FileUtil.getExtension(path);
 		root.alpha = data.getDepth() == 32;
 		root.depth = data.getDepth();
 		root.width = data.getWidth();
@@ -178,10 +172,10 @@ public final class TextureLoader extends DefaultLoader<Texture>
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_LOD_BIAS, -0.4f);
 
 		logDebug("textura '%s' lida com êxito (width: %d, height: %d, depth: %d, alpha: %s).\n",
-				root.fileName, root.width, root.height, root.depth, root.alpha);
+				root.getFileName(), root.width, root.height, root.depth, root.alpha);
 
 		if (!insertResource(root))
-			logWarning("não foi possível salvar a textura '%s'.\n", root.fileName);
+			logWarning("não foi possível salvar a textura '%s'.\n", root.getFileName());
 
 		return root.genResource();
 	}

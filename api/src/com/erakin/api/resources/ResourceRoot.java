@@ -30,27 +30,12 @@ import org.diverproject.util.collection.Node;
  * @author Andrew
  */
 
-public abstract class ResourceRoot<T extends Resource<?>> implements FolderElement
+public abstract class ResourceRoot<T extends Resource<?>> extends ResourceFile implements FolderElement
 {
 	/**
 	 * Quantos milissegundos um recurso raíz deve ficar vivo no sistema.
 	 */
 	public static final int RESOURCE_LIVE_TIME = 120000;
-
-	/**
-	 * Tipo do arquivo.
-	 */
-	String fileExtension;
-
-	/**
-	 * Nome do recurso do qual foi carregado.
-	 */
-	String fileName;
-
-	/**
-	 * Caminho do recurso em disco sem considerar o diretório para recursos.
-	 */
-	String filePath;
 
 	/**
 	 * Sistema para identificação de operações com recursos.
@@ -73,26 +58,13 @@ public abstract class ResourceRoot<T extends Resource<?>> implements FolderEleme
 	private long last;
 
 	/**
-	 * Constrói um novo recurso raíz para que recursos possam ser instanciados.
-	 * @param filePath referência do arquivo em disco que será considerado.
+	 * Cria uma nova instância de um recurso raíz sendo necessário definir o caminho do arquivo carregado.
+	 * @param filepath caminho do arquivo em disco com os dados do modelo carregado.
 	 */
 
-	ResourceRoot()
+	public ResourceRoot(String filepath)
 	{
-		
-	}
-
-	/**
-	 * Caminho do arquivo determina sua localização em disco contendo os dados do recurso.
-	 * @return aquisição do caminho sem considerar o diretório para recursos.
-	 */
-
-	public String getFilePath()
-	{
-		if (fileExtension.isEmpty())
-			return String.format("%s/%s", filePath, fileName);
-
-		return String.format("%s/%s.%s", filePath, fileName, fileExtension);
+		setFilePath(filepath);
 	}
 
 	/**
@@ -101,7 +73,7 @@ public abstract class ResourceRoot<T extends Resource<?>> implements FolderEleme
 	 * @return true se conseguir adicionar ou false se já tiver sido adicionado.
 	 */
 
-	boolean addReference(T resource)
+	protected boolean addReference(T resource)
 	{
 		if (resource.root != this)
 			return false;
@@ -127,7 +99,7 @@ public abstract class ResourceRoot<T extends Resource<?>> implements FolderEleme
 	 * @return true se conseguir remover ou false caso contrário.
 	 */
 
-	boolean delReference(T resource)
+	public boolean delReference(T resource)
 	{
 		if (references == null)
 			return false;
@@ -205,7 +177,7 @@ public abstract class ResourceRoot<T extends Resource<?>> implements FolderEleme
 	 * @return true se estiver dentro do tempo ou false caso contrário.
 	 */
 
-	boolean isAlive()
+	public boolean isAlive()
 	{
 		return last < RESOURCE_LIVE_TIME;
 	}
@@ -223,7 +195,7 @@ public abstract class ResourceRoot<T extends Resource<?>> implements FolderEleme
 	{
 		ObjectDescription description = new ObjectDescription(getClass());
 
-		description.append("path", String.format("%s/%s.%s", filePath, fileName, fileExtension));
+		description.append(getFilePath());
 		description.append("references", getReferenceCount());
 
 		toString(description);

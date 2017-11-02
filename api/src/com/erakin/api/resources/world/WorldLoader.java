@@ -1,4 +1,4 @@
-package com.erakin.api.resources;
+package com.erakin.api.resources.world;
 
 import static org.diverproject.log.LogSystem.logDebug;
 import static org.diverproject.log.LogSystem.logWarning;
@@ -8,12 +8,9 @@ import java.io.File;
 import org.diverproject.util.FileUtil;
 import org.diverproject.util.ObjectDescription;
 
-import com.erakin.api.resources.world.TerrainDimension;
-import com.erakin.api.resources.world.WorldData;
-import com.erakin.api.resources.world.WorldException;
-import com.erakin.api.resources.world.WorldReader;
-import com.erakin.api.resources.world.WorldReaderFactory;
-import com.erakin.api.resources.world.WorldRuntimeException;
+import com.erakin.api.resources.DefaultLoader;
+import com.erakin.api.resources.ResourceMap;
+import com.erakin.api.resources.ResourceRoot;
 
 /**
  * <h1>Carregador de Mundos</h1>
@@ -146,11 +143,8 @@ public class WorldLoader extends DefaultLoader<World>
 		if (containResource(path))
 			throw new WorldRuntimeException("mundo já existente (%s)", path);
 
-		WorldRoot root = new WorldRoot();
+		WorldRoot root = new WorldRoot(path);
 		root.id = ++count;
-		root.fileName = FileUtil.getFileName(path);
-		root.filePath = FileUtil.getParentPath(path);
-		root.fileExtension = FileUtil.getExtension(path);
 		root.prefix = data.getPrefix();
 		root.width = data.getWidth();
 		root.length = data.getLength();
@@ -162,10 +156,10 @@ public class WorldLoader extends DefaultLoader<World>
 		validateLimits(root);
 
 		logDebug("mapa '%s' lido com êxito (id: %d, width: %d, length: %d).\n",
-				root.fileName, root.id, root.width, root.length);
+				root.getFileName(), root.id, root.width, root.length);
 
 		if (!insertResource(root))
-			logWarning("não foi possível salvar o mapa '%s'.\n", root.fileName);
+			logWarning("não foi possível salvar o mapa '%s'.\n", root.getFileName());
 
 		return root.genResource();
 	}

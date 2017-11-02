@@ -1,6 +1,6 @@
 package com.erakin.api.render;
 
-import com.erakin.api.resources.World;
+import com.erakin.api.resources.world.World;
 
 /**
  * <h1>Mundo Renderizável</h1>

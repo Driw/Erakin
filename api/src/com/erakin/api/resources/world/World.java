@@ -1,4 +1,4 @@
-package com.erakin.api.resources;
+package com.erakin.api.resources.world;
 
 import static com.erakin.api.ErakinAPIUtil.nameOf;
 import static org.diverproject.log.LogSystem.logWarning;
@@ -7,7 +7,7 @@ import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.lang.IntUtil;
 
 import com.erakin.api.render.WorldRender;
-import com.erakin.api.resources.world.TerrainDimension;
+import com.erakin.api.resources.Resource;
 
 /**
  * <h1>Mundo</h1>

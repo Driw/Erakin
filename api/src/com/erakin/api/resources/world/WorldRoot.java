@@ -1,10 +1,10 @@
-package com.erakin.api.resources;
+package com.erakin.api.resources.world;
 
 import java.io.File;
 
 import org.diverproject.util.ObjectDescription;
 
-import com.erakin.api.resources.world.TerrainDimension;
+import com.erakin.api.resources.ResourceRoot;
 
 /**
  * <h1>Mundo Raíz</h1>
@@ -60,6 +60,17 @@ public class WorldRoot extends ResourceRoot<World>
 	 * Dimensão em que todos os terrenos devem seguir para estar nesse mundo.
 	 */
 	TerrainDimension terrainDimension;
+
+	/**
+	 * Construtor em package para permitir apenas que WorldLoader construa um.
+	 * Isso irá garantir que um Mundo Raíz inválido possa ser criado na engine.
+	 * @param filepath caminho do arquivo em disco com os dados do modelo carregado.
+	 */
+
+	WorldRoot(String filepath)
+	{
+		super(filepath);
+	}
 
 	@Override
 	public World genResource()

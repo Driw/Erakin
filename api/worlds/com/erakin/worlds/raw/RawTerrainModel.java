@@ -1,8 +1,8 @@
 package com.erakin.worlds.raw;
 
-import static com.erakin.api.resources.Model.ATTRIB_NORMALS;
-import static com.erakin.api.resources.Model.ATTRIB_TEXTURE_COORDS;
-import static com.erakin.api.resources.Model.ATTRIB_VERTICES;
+import static com.erakin.api.resources.model.Model.ATTRIB_NORMALS;
+import static com.erakin.api.resources.model.Model.ATTRIB_TEXTURE_COORDS;
+import static com.erakin.api.resources.model.Model.ATTRIB_VERTICES;
 import static org.diverproject.util.Util.format;
 
 import org.diverproject.util.ObjectDescription;
@@ -12,11 +12,11 @@ import org.lwjgl.util.vector.Vector3f;
 import com.erakin.api.lwjgl.VAO;
 import com.erakin.api.lwjgl.math.enumeration.DrawElement;
 import com.erakin.api.render.ModelRender;
-import com.erakin.api.resources.Model;
-import com.erakin.api.resources.ModelLoader;
-import com.erakin.api.resources.Texture;
+import com.erakin.api.resources.model.Model;
 import com.erakin.api.resources.model.ModelData;
 import com.erakin.api.resources.model.ModelDataDefault;
+import com.erakin.api.resources.model.ModelLoader;
+import com.erakin.api.resources.texture.Texture;
 import com.erakin.api.resources.world.TerrainRuntimeException;
 
 /**

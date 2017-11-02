@@ -5,7 +5,7 @@ import static com.erakin.api.ErakinAPIUtil.objectString;
 import org.diverproject.util.ObjectDescription;
 import org.lwjgl.util.vector.Vector3f;
 
-import com.erakin.api.resources.Model;
+import com.erakin.api.resources.model.Model;
 
 /**
  * <h1>Entidade Padrão</h1>

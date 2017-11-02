@@ -3,7 +3,7 @@ package com.erakin.worlds.wds;
 import java.io.File;
 
 import com.erakin.api.buffer.Buffer;
-import com.erakin.api.resources.TerrainLoader;
+import com.erakin.api.resources.world.TerrainLoader;
 import com.erakin.api.resources.world.WorldData;
 import com.erakin.api.resources.world.WorldDataDefault;
 import com.erakin.api.resources.world.WorldException;

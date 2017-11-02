@@ -2,7 +2,7 @@ package com.erakin.api.render;
 
 import org.diverproject.util.collection.List;
 
-import com.erakin.api.resources.Texture;
+import com.erakin.api.resources.texture.Texture;
 
 /**
  * <h1>Terreno Renderizável</h1>

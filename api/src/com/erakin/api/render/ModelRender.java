@@ -2,7 +2,7 @@ package com.erakin.api.render;
 
 import com.erakin.api.lwjgl.GLBind;
 import com.erakin.api.lwjgl.math.enumeration.DrawElement;
-import com.erakin.api.resources.Texture;
+import com.erakin.api.resources.texture.Texture;
 
 /**
  * <h1>Modelo Renderizável</h1>

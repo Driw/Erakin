@@ -1,4 +1,4 @@
-package com.erakin.api.resources;
+package com.erakin.api.resources.shader;
 
 import static org.diverproject.log.LogSystem.logDebug;
 import static org.diverproject.log.LogSystem.logWarning;
@@ -16,14 +16,10 @@ import static org.lwjgl.opengl.GL20.glShaderSource;
 
 import java.io.File;
 
-import org.diverproject.util.FileUtil;
 import org.diverproject.util.stream.implementation.input.InputByteArray;
 
-import com.erakin.api.resources.shader.ShaderData;
-import com.erakin.api.resources.shader.ShaderException;
-import com.erakin.api.resources.shader.ShaderReader;
-import com.erakin.api.resources.shader.ShaderReaderFactory;
-import com.erakin.api.resources.shader.ShaderRuntimeException;
+import com.erakin.api.resources.DefaultLoader;
+import com.erakin.api.resources.ResourceRoot;
 
 public class ShaderLoader extends DefaultLoader<Shader>
 {
@@ -92,21 +88,18 @@ public class ShaderLoader extends DefaultLoader<Shader>
 		if (containResource(path))
 			throw new ShaderRuntimeException("programa já existente (%s)", path);
 
-		ShaderRoot root = new ShaderRoot();
+		ShaderRoot root = new ShaderRoot(path);
 		root.id = glCreateProgram();
 		root.vertex = createShaderProgram(data.getVertexProgram(), GL_VERTEX_SHADER);
 		root.fragment = createShaderProgram(data.getFragmentProgram(), GL_FRAGMENT_SHADER);
-		root.fileName = FileUtil.getFileName(path);
-		root.filePath = FileUtil.getParentPath(path);
-		root.fileExtension = FileUtil.getExtension(path);
 
 		glAttachShader(root.id, root.vertex);
 		glAttachShader(root.id, root.fragment);
 
-		logDebug("shader '%s' lida com êxito (id: %d, vertex: %d, fragment: %d).\n", root.fileName, root.id, root.vertex, root.fragment);
+		logDebug("shader '%s' lida com êxito (id: %d, vertex: %d, fragment: %d).\n", root.getFileName(), root.id, root.vertex, root.fragment);
 
 		if (!insertResource(root))
-			logWarning("não foi possível o shader '%s'.\n", root.fileName);
+			logWarning("não foi possível o shader '%s'.\n", root.getFileName());
 
 		return root.genResource();
 	}

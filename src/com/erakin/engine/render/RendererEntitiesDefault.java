@@ -9,7 +9,7 @@ import org.diverproject.util.collection.Queue;
 import org.diverproject.util.collection.abstraction.DynamicMap;
 import org.diverproject.util.collection.abstraction.DynamicQueue;
 
-import com.erakin.api.resources.Model;
+import com.erakin.api.resources.model.Model;
 import com.erakin.engine.camera.Camera;
 import com.erakin.engine.entity.Entity;
 import com.erakin.engine.world.light.Light;

@@ -14,7 +14,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.erakin.api.resources.TerrainLoader;
+import com.erakin.api.resources.world.TerrainLoader;
 import com.erakin.api.resources.world.WorldData;
 import com.erakin.api.resources.world.WorldDataDefault;
 import com.erakin.api.resources.world.WorldException;

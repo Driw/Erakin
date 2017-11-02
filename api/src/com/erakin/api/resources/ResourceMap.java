@@ -67,7 +67,7 @@ public class ResourceMap<T extends Resource<?>> extends VirtualFolder<ResourceRo
 			@Override
 			public void resourceRelease()
 			{
-				map.remove(root.filePath);
+				map.remove(root.getFilePath());
 			}
 		};
 	}

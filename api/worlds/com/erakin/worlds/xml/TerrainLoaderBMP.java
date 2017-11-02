@@ -12,16 +12,16 @@ import javax.imageio.ImageIO;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import com.erakin.api.resources.Model;
-import com.erakin.api.resources.ModelLoader;
-import com.erakin.api.resources.Terrain;
-import com.erakin.api.resources.TerrainLoader;
-import com.erakin.api.resources.Texture;
-import com.erakin.api.resources.TextureLoader;
-import com.erakin.api.resources.World;
+import com.erakin.api.resources.model.Model;
 import com.erakin.api.resources.model.ModelDataDefault;
+import com.erakin.api.resources.model.ModelLoader;
+import com.erakin.api.resources.texture.Texture;
 import com.erakin.api.resources.texture.TextureException;
+import com.erakin.api.resources.texture.TextureLoader;
+import com.erakin.api.resources.world.Terrain;
+import com.erakin.api.resources.world.TerrainLoader;
 import com.erakin.api.resources.world.TerrainRuntimeException;
+import com.erakin.api.resources.world.World;
 
 /**
  * <h1>Carregador de Terreno com Bitmap</h1>

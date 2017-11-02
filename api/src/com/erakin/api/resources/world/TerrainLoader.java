@@ -1,4 +1,4 @@
-package com.erakin.api.resources;
+package com.erakin.api.resources.world;
 
 /**
  * <h1>Carregador de Terreno</h1>

@@ -1,4 +1,4 @@
-package com.erakin.api.resources;
+package com.erakin.api.resources.world;
 
 import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.collection.List;
@@ -7,6 +7,7 @@ import org.diverproject.util.lang.IntUtil;
 import com.erakin.api.lwjgl.GLBind;
 import com.erakin.api.render.ModelRender;
 import com.erakin.api.render.TerrainRender;
+import com.erakin.api.resources.texture.Texture;
 
 /**
  * <h1>Terreno</h1>

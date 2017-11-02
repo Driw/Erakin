@@ -1,6 +1,8 @@
-package com.erakin.api.resources;
+package com.erakin.api.resources.texture;
 
 import org.diverproject.util.ObjectDescription;
+
+import com.erakin.api.resources.ResourceRoot;
 
 /**
  * <h1>Textura Raíz</h1>
@@ -42,13 +44,14 @@ public class TextureRoot extends ResourceRoot<Texture>
 	boolean alpha;
 
 	/**
-	 * Constrói uma nova textura raíz a partir de um caminho em disco especificado.
-	 * Esse caminho deverá ser respectivo ao diretório de recursos e da textura.
+	 * Construtor em package para permitir apenas que TextureLoader construa um.
+	 * Isso irá garantir que uma Textura Raíz inválida possa ser criada na engine.
+	 * @param filepath caminho do arquivo em disco com os dados da textura carregado.
 	 */
 
-	TextureRoot()
+	TextureRoot(String filepath)
 	{
-		
+		super(filepath);
 	}
 
 	/**

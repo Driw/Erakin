@@ -1,8 +1,9 @@
-package com.erakin.api.resources;
+package com.erakin.api.resources.model;
 
 import org.diverproject.util.ObjectDescription;
 
 import com.erakin.api.lwjgl.VAO;
+import com.erakin.api.resources.ResourceRoot;
 
 /**
  * <h1>Modelo Raíz</h1>
@@ -39,12 +40,15 @@ public class ModelRoot extends ResourceRoot<Model>
 	float defaultShineDamping;
 
 	/**
-	 * Construtor em package para permitir apenas que ResourceManager construa um.
-	 * Isso irá garantir que um Modelo Raíz inválido possa ser criado no engine.
+	 * Construtor em package para permitir apenas que ModelLoader construa um.
+	 * Isso irá garantir que um Modelo Raíz inválido possa ser criado na engine.
+	 * @param filepath caminho do arquivo em disco com os dados do modelo carregado.
 	 */
 
-	ModelRoot()
+	ModelRoot(String filepath)
 	{
+		super(filepath);
+
 		defaultReflectivity = 0f;
 		defaultShineDamping = 1f;
 	}
@@ -74,7 +78,10 @@ public class ModelRoot extends ResourceRoot<Model>
 	@Override
 	public Model genResource()
 	{
-		return new Model(this);
+		Model model = new Model(this);
+		addReference(model);
+
+		return model;
 	}
 
 	@Override

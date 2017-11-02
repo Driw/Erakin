@@ -1,4 +1,4 @@
-package com.erakin.api.resources;
+package com.erakin.api.resources.shader;
 
 import static org.lwjgl.opengl.GL20.glDeleteShader;
 import static org.lwjgl.opengl.GL20.glDetachShader;
@@ -8,7 +8,8 @@ import static org.lwjgl.opengl.GL20.glUseProgram;
 
 import org.diverproject.util.ObjectDescription;
 
-import com.erakin.api.resources.shader.ShaderRender;
+import com.erakin.api.resources.Resource;
+import com.erakin.api.resources.ResourceFileLocation;
 
 /**
  * <h1>Computação Gráfica</h1>
@@ -21,7 +22,7 @@ import com.erakin.api.resources.shader.ShaderRender;
  * @author Andrew
  */
 
-public class Shader extends Resource<ShaderRoot>
+public class Shader extends Resource<ShaderRoot> implements ResourceFileLocation
 {
 	/**
 	 * Código de identificação para desativar o uso de computação gráfica.
@@ -39,19 +40,21 @@ public class Shader extends Resource<ShaderRoot>
 	}
 
 	/**
-	 * Caminho da textura determina de onde a imagem foi carregada em disco.
-	 * @return string contendo o caminho da imagem usada para essa textura.
+	 * O programa de vértices é responsável por posicionar o vértice no espaço e outros cálculos.
+	 * Como por exemplo em caso de gráficos com brilhos a intensidade do brilho é calculado aqui.
+	 * @return aquisição do código de identificação do programa de vértices.
 	 */
-
-	public String getPath()
-	{
-		return root == null ? null : root.filePath;
-	}
 
 	public int getVertexID()
 	{
 		return root == null ? 0 : root.vertex;
 	}
+
+	/**
+	 * O programa de fragmentos é responsável por realizar a texturização dos vértices.
+	 * Responsável por processar cada pixel que será renderizado de um objeto na tela.
+	 * @return aquisição do código de identificação do programa de fragmentos.
+	 */
 
 	public int getFragmentID()
 	{
@@ -100,6 +103,42 @@ public class Shader extends Resource<ShaderRoot>
 		return	glIsShader(getVertexID()) &&
 				glIsShader(getFragmentID()) &&
 				glIsProgram(getID());
+	}
+
+	@Override
+	public String getFileExtension()
+	{
+		return root.getFileExtension();
+	}
+
+	@Override
+	public String getFileName()
+	{
+		return root.getFileExtension();
+	}
+
+	@Override
+	public String getFileFullName()
+	{
+		return root.getFileFullName();
+	}
+
+	@Override
+	public String getFileDirectory()
+	{
+		return root.getFileDirectory();
+	}
+
+	@Override
+	public String getFilePath()
+	{
+		return root.getFilePath();
+	}
+
+	@Override
+	protected Shader clone()
+	{
+		return root.genResource();
 	}
 
 	@Override

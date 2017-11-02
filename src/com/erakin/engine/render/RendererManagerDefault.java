@@ -4,7 +4,7 @@ import static com.erakin.api.ErakinAPIUtil.nameOf;
 
 import org.diverproject.util.ObjectDescription;
 
-import com.erakin.api.resources.World;
+import com.erakin.api.resources.world.World;
 import com.erakin.engine.entity.Entity;
 
 /**

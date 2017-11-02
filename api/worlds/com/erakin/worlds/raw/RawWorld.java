@@ -12,7 +12,7 @@ import org.diverproject.util.lang.IntUtil;
 import com.erakin.api.lwjgl.math.MathsWorld;
 import com.erakin.api.render.TerrainRender;
 import com.erakin.api.render.WorldRender;
-import com.erakin.api.resources.Texture;
+import com.erakin.api.resources.texture.Texture;
 import com.erakin.api.resources.world.TerrainDimension;
 import com.erakin.api.resources.world.TerrainRuntimeException;
 

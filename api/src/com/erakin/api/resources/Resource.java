@@ -38,14 +38,14 @@ public abstract class Resource<T extends ResourceRoot<?>> implements GLBind
 	/**
 	 * Referência do recurso raíz que será usado por esse recurso.
 	 */
-	T root;
+	protected T root;
 
 	/**
 	 * Constrói um novo recurso sendo necessário definir sua raíz.
 	 * @param root referência do recurso raíz que será usado.
 	 */
 
-	Resource(T root)
+	protected Resource(T root)
 	{
 		this.root = root;
 	}

@@ -2,7 +2,7 @@ package com.erakin.engine.entity;
 
 import org.lwjgl.util.vector.Vector3f;
 
-import com.erakin.api.resources.Model;
+import com.erakin.api.resources.model.Model;
 import com.erakin.engine.Updatable;
 
 /**
