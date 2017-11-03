@@ -108,6 +108,7 @@ public abstract class TextureReaderDefault implements TextureReader
 		data.width = getWidth();
 		data.height = getHeight();
 		data.pixels = pixels;
+		pixels.flip();
 
 		return data;
 	}

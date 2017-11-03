@@ -14,15 +14,6 @@ import com.erakin.api.lwjgl.math.Vector3i;
 public class APIGLUtil
 {
 	/**
-	 * Construtor privado, pois todos os métodos serão estáticos (classe utilitária).
-	 */
-
-	private APIGLUtil()
-	{
-		
-	}
-
-	/**
 	 * Passa os valores de um vetor de 3 pontos flutuantes para um vetor de 3 pontos inteiros.
 	 * @param vector referência do vetor contendo os 3 pontos flutuantes.
 	 * @return vetor de 3 pontos especificados como X, Y e Z do tipo inteiro.
@@ -42,5 +33,14 @@ public class APIGLUtil
 	public static Vector3f convert3i3f(Vector3i vector)
 	{
 		return new Vector3f(vector.x, vector.y, vector.z);
+	}
+
+	/**
+	 * Construtor privado, pois todos os métodos serão estáticos (classe utilitária).
+	 */
+
+	private APIGLUtil()
+	{
+		
 	}
 }

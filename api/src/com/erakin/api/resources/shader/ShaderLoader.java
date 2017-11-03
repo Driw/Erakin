@@ -19,15 +19,49 @@ import java.io.File;
 import org.diverproject.util.stream.implementation.input.InputByteArray;
 
 import com.erakin.api.resources.DefaultLoader;
+import com.erakin.api.resources.ResourceMap;
 import com.erakin.api.resources.ResourceRoot;
+
+/**
+ * <h1>Carregador de Programas</h1>
+ *
+ * <p>Usada para fazer um gerenciamento avançado dos programas de computação gráfica carregados a partir de arquivos.
+ * Além de carregar, salva as informações em uma pasta virtual em memória para que não seja carregada duas vezes.</p>
+ *
+ * <p>Por exemplo, um programa chamado <b>effect</b> irá verificar se o programa já foi carregado no sistema,
+ * caso ele já tenha sido carregado, irá usar as informações do mesmo ao invés de carregar novamente.
+ * Esse sistema permite além de economizar tempo de processamento evitar consumo de memória desnecessário.</p>
+ *
+ * <p>Por padrão o formato dos dados básicos de um programa são armazenados em um arquivo <b>glsl</b>.
+ * Esse arquivo deve conter o código do programa de vértices e programa de fragmentos, separado por tags.</p>
+ *
+ * @see ResourceMap
+ * @see ShaderReader
+ * @see ShaderReaderFactory
+ *
+ * @author Andrew Mello
+ */
 
 public class ShaderLoader extends DefaultLoader<Shader>
 {
+	/**
+	 * Instância para carregador de programas no padrão de projetos Singleton.
+	 */
 	private static final ShaderLoader INSTANCE = new ShaderLoader();
+
+	/**
+	 * Nome padrão para mapeamento de mundos.
+	 */
+	public static final String DEFAULT_PATH = "shaders";
+
+	/**
+	 * Construtor privado para evitar múltiplas instâncias para o carregador de programas.
+	 * Inicializa o mapeador de recursos definindo o seu nome por padrão <code>DEFAULT_PATH</code>.
+	 */
 
 	private ShaderLoader()
 	{
-		super("shaders");
+		super(DEFAULT_PATH);
 	}
 
 	/**
@@ -68,6 +102,15 @@ public class ShaderLoader extends DefaultLoader<Shader>
 			throw new ShaderException(e);
 		}
 	}
+
+	/**
+	 * Permite construir um novo programa para computação gráfica a partir das informações abaixo.
+	 * Caso o caminho de alocação já esteja sendo usado por outro não será possível criar.
+	 * Se for possível criar, o programa raíz será armazenado e gerado um temporário.
+	 * @param path caminho onde foi localizado o programa, onde deve ser alocado.
+	 * @param data objeto contendo o código do programa para armazenamento.
+	 * @return aquisição de um programa de uso temporário.
+	 */
 
 	public Shader createShader(String path, ShaderData data)
 	{
@@ -126,6 +169,12 @@ public class ShaderLoader extends DefaultLoader<Shader>
 
 		return shaderID;
 	}
+
+	/**
+	 * Procedimento que permite obter a única instância do carregador de programas.
+	 * Utiliza o padrão Singleton para evitar a existência de mais instâncias.
+	 * @return aquisição da instância para utilização do carregador de programas.
+	 */
 
 	public static ShaderLoader getInstance()
 	{

@@ -41,14 +41,19 @@ public class WorldLoader extends DefaultLoader<World>
 	private static final WorldLoader INSTANCE = new WorldLoader();
 
 	/**
+	 * Nome padrão para mapeamento de mundos.
+	 */
+	public static final String DEFAULT_PATH = "worlds";
+
+	/**
 	 * Dimensão mínima para definir o tamanho de latitude ou longitude em terrenos de um mundo.
 	 */
-	private static final int MIN_MAP_SIZE = 1;
+	public static final int MIN_MAP_SIZE = 1;
 
 	/**
 	 * Dimensão máxima para definir o tamanho de latitude ou longitude em terrenos de um mundo.
 	 */
-	private static final int MAX_MAP_SIZE = 1024;
+	public static final int MAX_MAP_SIZE = 1024;
 
 
 	/**
@@ -58,13 +63,12 @@ public class WorldLoader extends DefaultLoader<World>
 
 	/**
 	 * Construtor privado para evitar múltiplas instâncias para o carregador de mapas.
-	 * Inicializa o mapeador de recursos definindo o seu nome de acordo com as preferências.
-	 * A preferência aqui utilizada é <code>worlds</code>, pasta para arquivos de mapas.
+	 * Inicializa o mapeador de recursos definindo o seu nome por padrão <code>DEFAULT_PATH</code>.
 	 */
 
 	private WorldLoader()
 	{
-		super("worlds");
+		super(DEFAULT_PATH);
 	}
 
 	/**

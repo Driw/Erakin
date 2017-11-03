@@ -22,7 +22,6 @@ import static org.lwjgl.opengl.GL14.GL_TEXTURE_LOD_BIAS;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 
 import java.io.FileInputStream;
-import java.nio.ByteBuffer;
 
 import org.diverproject.util.lang.IntUtil;
 
@@ -54,6 +53,11 @@ import com.erakin.api.resources.ResourceRoot;
 public final class TextureLoader extends DefaultLoader<Texture>
 {
 	/**
+	 * Instância para carregador de texturas no padrão de projetos Singleton.
+	 */
+	private static final TextureLoader instance = new TextureLoader();
+
+	/**
 	 * Tamanho mínimo que uma textura terá.
 	 */
 	private static final int MIN_TEXTURE_SIZE = 16;
@@ -64,19 +68,18 @@ public final class TextureLoader extends DefaultLoader<Texture>
 	private static final int MAX_TEXTURE_SIZE = glMaxTextureSize();
 
 	/**
-	 * Instância para carregador de texturas no padrão de projetos Singleton.
+	 * Nome padrão para mapeamento de mundos.
 	 */
-	private static final TextureLoader instance = new TextureLoader();
+	public static final String DEFAULT_PATH = "textures";
 
 	/**
 	 * Construtor privado para evitar múltiplas instâncias para o carregador de texturas.
-	 * Inicializa o mapeador de recursos definindo o seu nome de acordo com as preferências.
-	 * A preferência aqui utilizada é <code>textures</code>, pasta para arquivos de texturas.
+	 * Inicializa o mapeador de recursos definindo o seu nome por padrão <code>DEFAULT_PATH</code>.
 	 */
 
 	private TextureLoader()
 	{
-		super("textures");
+		super(DEFAULT_PATH);
 	}
 
 	/**
@@ -155,16 +158,12 @@ public final class TextureLoader extends DefaultLoader<Texture>
 
 		validateLimits(root);
 
-		ByteBuffer pixels = data.getPixels();
-		pixels.flip();
-
 		int format = data.getDepth() == 32 ? GL_RGBA : GL_RGB;
-
 		int width = fold(data.getTexWidth());
 		int height = fold(data.getTexHeight());
 
 		glBindTexture(GL_TEXTURE_2D, root.id);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, pixels);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, data.getPixels());
 
 		glGenerateMipmap(GL_TEXTURE_2D);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);

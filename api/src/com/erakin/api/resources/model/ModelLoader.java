@@ -43,14 +43,18 @@ public final class ModelLoader extends DefaultLoader<Model>
 	private static final ModelLoader instance = new ModelLoader();
 
 	/**
+	 * Nome padrão para mapeamento de mundos.
+	 */
+	public static final String DEFAULT_PATH = "models";
+
+	/**
 	 * Construtor privado para evitar múltiplas instâncias para o carregador de modelagens.
-	 * Inicializa o mapeador de recursos definindo o seu nome de acordo com as preferências.
-	 * A preferência aqui utilizada é <code>models</code>, pasta para arquivos de modelagem.
+	 * Inicializa o mapeador de recursos definindo o seu nome por padrão <code>DEFAULT_PATH</code>.
 	 */
 
 	private ModelLoader()
 	{
-		super("models");
+		super(DEFAULT_PATH);
 	}
 
 	/**
