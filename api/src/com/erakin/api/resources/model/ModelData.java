@@ -17,47 +17,49 @@ package com.erakin.api.resources.model;
 public interface ModelData
 {
 	/**
-	 * Vetor de posição irá guardar informações da localização de cada vértice no espaço.
-	 * Essa localização concite em determinar todos os três pontos no espaço, X, Y e Z.
-	 * @return aquisição do vetor contendo as posições de cada vértice do modelo.
+	 * Quantidade padrão de dados para formar um vértice.
 	 */
-
-	float[] getVertices();
+	public static final int DEFAULT_VERTEX_SIZE = 3;
 
 	/**
-	 * Vetor de coordenada das texturas irá indicar qual a parte da textura que será usada
-	 * para preencher cada face do modelo, informando as coordenadas em relação a X e Y.
-	 * As informações nesse contida é feito através de valores flutuantes que variam entre
-	 * 0.0 até 1.0, assim sendo, as coordenadas são em porcentagem e não em pixels.
-	 * @return aquisição do vetor contendo as coordenadas da textura para as faces.
+	 * Quantidade padrão de coordenadas de textura por vértice.
 	 */
-
-	float[] getTextureCoords();
+	public static final int DEFAULT_UV_SIZE = 2;
 
 	/**
-	 * Normalização é indica uma falsa iluminação para simular colisões e cavidades.
-	 * Isso será usado um vetor contendo os valores flutuantes em relação a X, Y e Z.
-	 * Para cada relação dessa será aplicado a um único vértice que forma a modelagem.
-	 * @return aquisição do vetor contendo a normalização das faces formadas.
+	 * Quantidade padrão de normalizações por vértice.
 	 */
-
-	float[] getNormals();
+	public static final int DEFAULT_NORMAL_SIZE = 3;
 
 	/**
-	 * Vetor de índices permite identificar quais as conexões entre os vértices.
-	 * Cada face do modelo é conectada por três vértices, que serão identificados
-	 * através desses índices, assim sendo, cada três posições se refere a uma face.
-	 * @return aquisição do vetor contendo a conexão dos vértices.
+	 * Quantidade padrão de índice de texturas por vértice.
 	 */
+	public static final int DEFAULT_TEXTURE_SIZE = 1;
 
-	int[] getIndices();
 
 	/**
-	 * Vetor de índice de texturas permite identificar quais texturas usar para cada conexão de vértices.
-	 * Cada três vértices conectados poderá ter uma textura diferente utilizada se necessário,
-	 * essa identificação deve ser especificada aqui, caso seja apenas uma textura não terá valores.
-	 * @return aquisição do vetor contendo a textura por conexão de vértice.
+	 * Modelos as vezes se tornam grandes de mais e uma forma de reduzir o esforço de processamento e por índices.
+	 * Nem todos os modelos podem requisitar o uso de índices, se não for definido não será usado como atributo.
+	 * @return aquisição do atributo para modelo que contenha a ligação dos vértices através de índices.
 	 */
 
-	float[] getTextureIndex();
+	ModelIndiceAttribute getIndices();
+
+	/**
+	 * Um modelo pode possuir diversas informações necessárias para que a sua forma seja criada.
+	 * Os dados são separados por atributos e cada um destes vai guardar esse tipo de informação.
+	 * Por tanto a posição dos vértices é um atributo em quanto as coordenadas de textura são outro.
+	 * Se houver normalização ou textura múltipla, eles serão alocados em outro atributo também.
+	 * @return aquisição de todos os atributos necessários para formar o modelo em questão.
+	 */
+
+	ModelAttribute[] getAttributes();
+
+	/**
+	 * Sempre que os dados do modelo são carregados um mensagem de registro é feita no console detalhando o resumo dos dados.
+	 * Esse resumo deve especificar por exemplo a quantidade de vértices ou então de coordenadas de textura se houver.
+	 * @return aquisição de uma {@link String} que especifique a quantidade de informações de cada atributo existente.
+	 */
+
+	String toStringDetails();
 }

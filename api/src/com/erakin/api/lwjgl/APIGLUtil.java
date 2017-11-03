@@ -14,6 +14,31 @@ import com.erakin.api.lwjgl.math.Vector3i;
 public class APIGLUtil
 {
 	/**
+	 * Quantidade de bytes liberados necessários para chamar o Garbage Collector.
+	 */
+	private static final int RELEASE_MEMORY_SIZE = 16 * (1024 * 1024);
+
+	/**
+	 * Quantidade da bytes já liberados na Engine.
+	 */
+	private static int releasedMemory;
+
+	/**
+	 * Registra quantos bytes foram liberados na Engine para serem contabilizados.
+	 * Quando atingido <code>RELEASE_MEMORY_SIZE</code> vai chamar manualmente o Garbage Collector.
+	 * @param bytes quantidade de bytes que foram liberados de um objeto.
+	 */
+
+	public static void releasedMemory(int bytes)
+	{
+		if ((releasedMemory += bytes) >= RELEASE_MEMORY_SIZE)
+		{
+			System.gc();
+			releasedMemory -= RELEASE_MEMORY_SIZE;
+		}
+	}
+
+	/**
 	 * Passa os valores de um vetor de 3 pontos flutuantes para um vetor de 3 pontos inteiros.
 	 * @param vector referência do vetor contendo os 3 pontos flutuantes.
 	 * @return vetor de 3 pontos especificados como X, Y e Z do tipo inteiro.

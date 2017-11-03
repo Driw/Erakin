@@ -1,8 +1,5 @@
 package com.erakin.worlds.raw;
 
-import static com.erakin.api.resources.model.Model.ATTRIB_NORMALS;
-import static com.erakin.api.resources.model.Model.ATTRIB_TEXTURE_COORDS;
-import static com.erakin.api.resources.model.Model.ATTRIB_VERTICES;
 import static org.diverproject.util.Util.format;
 
 import org.diverproject.util.ObjectDescription;
@@ -13,6 +10,7 @@ import com.erakin.api.lwjgl.VAO;
 import com.erakin.api.lwjgl.math.enumeration.DrawElement;
 import com.erakin.api.render.ModelRender;
 import com.erakin.api.resources.model.Model;
+import com.erakin.api.resources.model.ModelAttribute;
 import com.erakin.api.resources.model.ModelData;
 import com.erakin.api.resources.model.ModelDataDefault;
 import com.erakin.api.resources.model.ModelLoader;
@@ -127,7 +125,10 @@ public class RawTerrainModel implements ModelRender
 		int normalCount = unitCount * 4;
 
 		ModelDataDefault data = new ModelDataDefault();
-		data.init(vertexCount, textureCount, normalCount, faceCount);
+		data.initVertices(vertexCount);
+		data.initUVTextures(textureCount);
+		data.initNormals(normalCount);
+		data.initIndexes(faceCount);
 		sizeof = data.sizeof();
 
 		generateCellVertex(data);
@@ -252,12 +253,10 @@ public class RawTerrainModel implements ModelRender
 		ModelData data = createModelData();
 
 		VAO vao = new VAO(model.getID());
-		vao.bind();
-		vao.setIndices(data.getIndices());
-		vao.setAttribute(ATTRIB_VERTICES, 3, data.getVertices());
-		vao.setAttribute(ATTRIB_TEXTURE_COORDS, 2, data.getTextureCoords());
-		vao.setAttribute(ATTRIB_NORMALS, 3, data.getNormals());
-		vao.unbind();
+		data.getIndices().storeInVAO(vao);
+
+		for (ModelAttribute attribute : data.getAttributes())
+			attribute.storeInVAO(vao);
 	}
 
 	/**

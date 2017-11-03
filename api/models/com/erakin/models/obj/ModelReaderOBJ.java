@@ -49,7 +49,7 @@ public class ModelReaderOBJ extends ModelReaderDefault
 	/**
 	 * Lista contendo todos as coordenadas de textura que podem ser lidas.
 	 */
-	private List<Vector2f> textures;
+	private List<Vector2f> uvTextures;
 
 	/**
 	 * Lista contendo todos as normalizações que podem ser lidos.
@@ -70,7 +70,7 @@ public class ModelReaderOBJ extends ModelReaderDefault
 	public ModelReaderOBJ()
 	{
 		vertices = new DynamicList<Vector3f>();
-		textures = new DynamicList<Vector2f>();
+		uvTextures = new DynamicList<Vector2f>();
 		normals = new DynamicList<Vector3f>();
 		faces = new DynamicQueue<Vector3i>();
 	}
@@ -143,7 +143,7 @@ public class ModelReaderOBJ extends ModelReaderDefault
 		Vector2f texture = new Vector2f();
 		texture.x = Float.parseFloat(columns[1]);
 		texture.y = Float.parseFloat(columns[2]);
-		textures.add(texture);
+		uvTextures.add(texture);
 	}
 
 	/**
@@ -194,7 +194,10 @@ public class ModelReaderOBJ extends ModelReaderDefault
 
 	private ModelDataDefault initiateModel() throws ModelException
 	{
-		data.init(vertices.size(), vertices.size(), vertices.size(), faces.size());
+		data.initVertices(vertices.size());
+		data.initUVTextures(vertices.size());
+		data.initNormals(vertices.size());
+		data.initIndexes(faces.size());
 
 		for (int i = 0; i < vertices.size(); i++)
 		{
@@ -210,7 +213,7 @@ public class ModelReaderOBJ extends ModelReaderDefault
 			int textureIndex = face.y - 1;
 			int normalIndex = face.z - 1;
 
-			Vector2f texture = textures.get(textureIndex);
+			Vector2f texture = uvTextures.get(textureIndex);
 
 			if (texture == null)
 				throw new ModelException("coordenada de textura não encontrada (%d)", textureIndex);

@@ -1,5 +1,10 @@
 package com.erakin.api.resources.model;
 
+import static com.erakin.api.resources.model.ModelAttribute.ATTRIB_NORMAL;
+import static com.erakin.api.resources.model.ModelAttribute.ATTRIB_TEXTURES;
+import static com.erakin.api.resources.model.ModelAttribute.ATTRIB_UV_TEXTURE;
+import static com.erakin.api.resources.model.ModelAttribute.ATTRIB_VERTEX;
+
 import org.diverproject.util.ObjectDescription;
 import org.lwjgl.util.vector.Vector3f;
 
@@ -20,72 +25,138 @@ import org.lwjgl.util.vector.Vector3f;
 public class ModelDataDefault implements ModelData
 {
 	/**
+	 * Conexão de cada vértice para formação das faces.
+	 */
+	protected ModelIndiceAttribute indexes;
+
+	/**
 	 * Posicionamento dos vértices no espaço.
 	 */
-	protected float vertexPositions[];
+	protected ModelFloatAttribute vertices;
 
 	/**
 	 * Coordenada da textura usada para cada vértice.
 	 */
-	protected float textureCoords[];
+	protected ModelFloatAttribute uvTextures;
 
 	/**
 	 * Regularização para as superfícies.
 	 */
-	protected float vertexNormals[];
-
-	/**
-	 * Conexão de cada vértice para formação das faces.
-	 */
-	protected int indices[];
+	protected ModelFloatAttribute normals;
 
 	/**
 	 * Identificação de textura para cada conexão de vértice.
 	 */
-	protected float textureIndex[];
+	protected ModelFloatAttribute textures;
 
 	/**
-	 * Cria uma nova instância de um objeto de armazenamento dos dados para criação de um modelo 3D.
-	 * Inicializa todos os vetores com tamanho zero para evitar NullPointerException.
+	 * Inicializa o atributo para modelo que determina a ligação dos vértices por índice.
+	 * @param indicesCount quantidade de ligações de vértices necessários para formar o modelo.
 	 */
 
-	public ModelDataDefault()
+	public void initIndexes(int indicesCount)
 	{
-		vertexPositions = new float[0];
-		vertexNormals = new float[0];
-		textureCoords = new float[0];
-		indices = new int[0];
-		textureIndex = new float[0];
+		indexes = new ModelIndiceAttribute(indicesCount);
 	}
 
 	/**
-	 * Procedimento chamado fazer a inicialização do vetor dos dados do modelo.
-	 * Irá considerar que a quantidade de vértices é o mesmo definido em vertexCount.
-	 * @param vertexCount quantidade de vértices no espaço que existem no modelo.
-	 * @param textureCount quantidade de coordenadas de textura que existem no modelo.
-	 * @param normalCount quantidade de normalização da iluminação que existem no modelo.
-	 * @param faceCount quantidade de faces que existem no modelo.
+	 * Inicializa o atributo para modelo que determina o posicionamento dos vértices no espaço.
+	 * Nesse método será considerado que cada vértice possui <code>DEFAULT_VERTEX_SIZE</code> dados.
+	 * @param vertexCount quantidade de vértices necessários para formar o modelo.
 	 */
 
-	public void init(int vertexCount, int textureCount, int normalCount, int faceCount)
+	public void initVertices(int vertexCount)
 	{
-		vertexPositions = new float[vertexCount * 3];
-		vertexNormals = new float[normalCount * 3];
-		textureCoords = new float[textureCount * 2];
-		indices = new int[faceCount];		
-
-		textureIndex = new float[0];
+		initVertices(DEFAULT_VERTEX_SIZE, vertexCount);
 	}
 
 	/**
-	 * Determina que o modelo irá utilizar múltiplas texturas durante a texturização do mesmo.
-	 * Será necessário definir a textura utilizada para cada uma das faces existentes no modelo.
-	 * @param triangleCount quantidade de triângulos formado a conectividade do modelo.
+	 * Inicializa o atributo para modelo que determina o posicionamento dos vértices no espaço.
+	 * @param vertexSize quantidade de dados necessários para formar cada vértice.
+	 * @param vertexCount quantidade de vértices necessários para formar o modelo.
 	 */
 
-	public void setMultipleTextures(int triangleCount)
+	public void initVertices(int vertexSize, int vertexCount)
 	{
-		textureIndex = new float[triangleCount];
+		vertices = new ModelFloatAttribute(ATTRIB_VERTEX, vertexSize, vertexCount);		
+	}
+
+	/**
+	 * Inicializa o atributo para modelo que determina as coordenadas de textura por vértice.
+	 * Nesse método será considerado que cada vértice possui <code>DEFAULT_UV_SIZE</code> dados.
+	 * @param uvCount quantidade de coordenadas de textura necessários para formar o modelo.
+	 */
+
+	public void initUVTextures(int uvCount)
+	{
+		initUVTextures(DEFAULT_UV_SIZE, uvCount);
+	}
+
+	/**
+	 * Inicializa o atributo para modelo que determina o posicionamento dos vértices no espaço.
+	 * @param uvSize quantidade de dados necessários para formar cada coordenada UV.
+	 * @param uvCount quantidade de coordenadas de textura necessários para formar o modelo.
+	 */
+
+	public void initUVTextures(int uvSize, int uvCount)
+	{
+		uvTextures = new ModelFloatAttribute(ATTRIB_UV_TEXTURE, uvSize, uvCount);		
+	}
+
+	/**
+	 * Inicializa o atributo para modelo que determina as normalizações de cada vértice.
+	 * Nesse método será considerado que cada vértice possui <code>DEFAULT_NORMAL_SIZE</code> dados.
+	 * @param normalCount quantidade de normalizações necessárias para formar o modelo.
+	 */
+
+	public void initNormals(int normalCount)
+	{
+		initNormals(DEFAULT_NORMAL_SIZE, normalCount);
+	}
+
+	/**
+	 * Inicializa o atributo para modelo que determina as normalizações de cada vértice.
+	 * @param normalSize quantidade de dados necessários para formar cada normalização.
+	 * @param normalCount quantidade de normalizações necessárias para formar o modelo.
+	 */
+
+	public void initNormals(int normalSize, int normalCount)
+	{
+		normals = new ModelFloatAttribute(ATTRIB_NORMAL, normalSize, normalCount);
+	}
+
+	/**
+	 * Inicializa o atributo para modelo que determina as texturas utilizadas por cada vértice.
+	 * Nesse método será considerado que cada vértice possui <code>DEFAULT_TEXTURE_SIZE</code> dados.
+	 * @param textureCount quantidade de texturas utilizadas necessárias para formar o modelo.
+	 */
+
+	public void initTextures(int textureCount)
+	{
+		initTextures(DEFAULT_TEXTURE_SIZE, textureCount);
+	}
+
+	/**
+	 * Inicializa o atributo para modelo que determina as texturas utilizadas por cada vértice.
+	 * @param textureSize quantidade da dos necessários para formar cada textura utilizada.
+	 * @param textureCount quantidade de texturas utilizadas necessárias para formar o modelo.
+	 */
+
+	public void initTextures(int textureSize, int textureCount)
+	{
+		textures = new ModelFloatAttribute(ATTRIB_TEXTURES, textureSize, textureCount);
+	}
+
+	/**
+	 * Deve definir as informações de uma determinada face encontrada no modelo.
+	 * Para cada três vértices será considerado o conjunto de dados de uma face.
+	 * @param index índice do vértice no vetor de índices a ser definido.
+	 * @param vertex índice do vértice que será alocado no índice acima.
+	 */
+
+	public void setIndice(int index, int vertex)
+	{
+		indexes.setValue(index, vertex);
 	}
 
 	/**
@@ -98,9 +169,7 @@ public class ModelDataDefault implements ModelData
 
 	public void setVertice(int vertex, float x, float y, float z)
 	{
-		vertexPositions[(vertex * 3) + 0] = x;
-		vertexPositions[(vertex * 3) + 1] = y;
-		vertexPositions[(vertex * 3) + 2] = z;
+		vertices.setValue(vertex, x, y, z);
 	}
 
 	/**
@@ -111,9 +180,7 @@ public class ModelDataDefault implements ModelData
 
 	public void setVertice(int vertex, Vector3f vector)
 	{
-		vertexPositions[(vertex * 3) + 0] = vector.x;
-		vertexPositions[(vertex * 3) + 1] = vector.y;
-		vertexPositions[(vertex * 3) + 2] = vector.z;
+		vertices.setValue(vertex, vector.x, vector.y, vector.z);
 	}
 
 	/**
@@ -125,21 +192,7 @@ public class ModelDataDefault implements ModelData
 
 	public void setTexture(int vertex, float x, float y)
 	{
-		textureCoords[(vertex * 2) + 0] = x;
-		textureCoords[(vertex * 2) + 1] = y;
-	}
-
-	/**
-	 * Deve definir as propriedades para regularização das superfícies.
-	 * @param vertex índice do vértice que será definido sua regularização.
-	 * @param vector vetor com os valores de normalização (x, y e z).
-	 */
-
-	public void setNormal(int vertex, Vector3f vector)
-	{
-		vertexNormals[(vertex * 3) + 0] = vector.x;
-		vertexNormals[(vertex * 3) + 1] = vector.y;
-		vertexNormals[(vertex * 3) + 2] = vector.z;
+		uvTextures.setValue(vertex, x, y);
 	}
 
 	/**
@@ -152,21 +205,18 @@ public class ModelDataDefault implements ModelData
 
 	public void setNormal(int vertex, float x, float y, float z)
 	{
-		vertexNormals[(vertex * 3) + 0] = x;
-		vertexNormals[(vertex * 3) + 1] = y;
-		vertexNormals[(vertex * 3) + 2] = z;
+		normals.setValue(vertex, x, y, z);
 	}
 
 	/**
-	 * Deve definir as informações de uma determinada face encontrada no modelo.
-	 * Para cada três vértices será considerado o conjunto de dados de uma face.
-	 * @param index índice do vértice no vetor de índices a ser definido.
-	 * @param vertex índice do vértice que será alocado no índice acima.
+	 * Deve definir as propriedades para regularização das superfícies.
+	 * @param vertex índice do vértice que será definido sua regularização.
+	 * @param vector vetor com os valores de normalização (x, y e z).
 	 */
 
-	public void setIndice(int index, int vertex)
+	public void setNormal(int vertex, Vector3f vector)
 	{
-		indices[index] = vertex;
+		normals.setValue(vertex, vector.x, vector.y);
 	}
 
 	/**
@@ -177,7 +227,7 @@ public class ModelDataDefault implements ModelData
 
 	public void setTextureIndex(int index, int textureID)
 	{
-		textureIndex[index] = textureID;
+		textures.setValue(index, textureID);
 	}
 
 	/**
@@ -187,41 +237,63 @@ public class ModelDataDefault implements ModelData
 
 	public int sizeof()
 	{
-		return	(vertexPositions.length * Float.BYTES) +
-				(textureCoords.length * Float.BYTES) + 
-				(vertexNormals.length * Float.BYTES) +
-				(indices.length * Integer.BYTES) +
-				(textureIndex.length * Float.BYTES);
+		int count = 0;
+
+		if (indexes != null) count += indexes.sizeof();
+		if (vertices != null) count += vertices.sizeof();
+		if (uvTextures != null) count += uvTextures.sizeof();
+		if (normals != null) count += normals.sizeof();
+		if (textures != null) count += textures.sizeof();
+
+		return count;
+	}
+
+	private int getAttributesCount()
+	{
+		int count = 0;
+
+		if (vertices != null) count++;
+		if (uvTextures != null) count++;
+		if (normals != null) count++;
+		if (textures != null) count++;
+
+		return count;
 	}
 
 	@Override
-	public float[] getVertices()
+	public ModelIndiceAttribute getIndices()
 	{
-		return vertexPositions;
+		return indexes;
 	}
 
 	@Override
-	public float[] getTextureCoords()
+	public ModelAttribute[] getAttributes()
 	{
-		return textureCoords;
+		int length = getAttributesCount();
+		int offset = 0;
+
+		ModelAttribute attributes[] = new ModelAttribute[length];
+
+		if (vertices != null) attributes[offset++] = vertices;
+		if (uvTextures != null) attributes[offset++] = uvTextures;
+		if (normals != null) attributes[offset++] = normals;
+		if (textures != null) attributes[offset++] = textures;
+
+		return attributes;
 	}
 
 	@Override
-	public float[] getNormals()
+	public String toStringDetails()
 	{
-		return vertexNormals;
-	}
+		ObjectDescription description = new ObjectDescription(null);
 
-	@Override
-	public int[] getIndices()
-	{
-		return indices;
-	}
+		if (indexes != null) description.append("indnices", indexes.length());
+		if (vertices != null) description.append("vertex", vertices.length());
+		if (uvTextures != null) description.append("uv", uvTextures.length());
+		if (normals != null) description.append("normal", normals.length());
+		if (textures != null) description.append("textures", textures.length());
 
-	@Override
-	public float[] getTextureIndex()
-	{
-		return textureIndex;
+		return description.toString();
 	}
 
 	@Override
@@ -229,12 +301,11 @@ public class ModelDataDefault implements ModelData
 	{
 		ObjectDescription description = new ObjectDescription(getClass());
 
-		description.append("vertex", vertexPositions.length / 2);
-		description.append("textures", textureCoords.length / 2);
-		description.append("normals", vertexNormals.length / 3);
-		description.append("indices", indices.length);
-		description.append("textureIndex", textureIndex.length / 2);
-		description.append("sizeof", sizeof());
+		if (indexes != null) description.append("indnices", indexes.length());
+		if (vertices != null) description.append("vertex", vertices.length());
+		if (uvTextures != null) description.append("uv", uvTextures.length());
+		if (normals != null) description.append("normal", normals.length());
+		if (textures != null) description.append("textures", textures.length());
 
 		return description.toString();
 	}

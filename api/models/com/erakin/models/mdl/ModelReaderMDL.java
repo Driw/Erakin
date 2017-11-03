@@ -37,11 +37,14 @@ public class ModelReaderMDL extends ModelReaderDefault
 			throw new ModelException("formato inválido");
 
 		int vertexCount = buffer.getInt();
-		int textureCount = buffer.getInt();
+		int uvTextureCount = buffer.getInt();
 		int normalCount = buffer.getInt();
-		int indiceCount = buffer.getInt();
+		int indexCount = buffer.getInt();
 
-		model.init(vertexCount, textureCount, normalCount, indiceCount);
+		model.initIndexes(indexCount);
+		model.initVertices(vertexCount);
+		model.initUVTextures(uvTextureCount);
+		model.initNormals(normalCount);
 
 		for (int i = 0; i < vertexCount; i++)
 		{
@@ -69,7 +72,7 @@ public class ModelReaderMDL extends ModelReaderDefault
 			model.setNormal(i, x, y, z);
 		}
 
-		for (int i = 0; i < indiceCount; i++)
+		for (int i = 0; i < indexCount; i++)
 		{
 			int vertex = buffer.getInt();
 

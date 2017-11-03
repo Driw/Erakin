@@ -34,26 +34,6 @@ import com.erakin.api.resources.texture.Texture;
 public class Model extends Resource<ModelRoot> implements ModelRender, ResourceFileLocation
 {
 	/**
-	 * Código de atribuir um VBO de vértices no espaço para um modelo.
-	 */
-	public static final int ATTRIB_VERTICES = 0;
-
-	/**
-	 * Código de atribuir um VBO de coordenada de textura para um modelo.
-	 */
-	public static final int ATTRIB_TEXTURE_COORDS = 1;
-
-	/**
-	 * Código de atribuir um VBO de normalização para um modelo.
-	 */
-	public static final int ATTRIB_NORMALS = 2;
-
-	/**
-	 * Código de atribuir um VBO de conectividade das texturas.
-	 */
-	public static final int ATTRIB_TEXTURE_INDEX = 3;
-
-	/**
 	 * Textura que está sendo usada pelo modelo.
 	 */
 	private Texture texture;
@@ -124,14 +104,10 @@ public class Model extends Resource<ModelRoot> implements ModelRender, ResourceF
 		if (!valid())
 			return;
 
-		ModelRoot model = root;
+		root.vao.bind();
 
-		VAO vao = model.vao;
-		vao.bind();
-		vao.enable(ATTRIB_VERTICES);
-		vao.enable(ATTRIB_TEXTURE_COORDS);
-		vao.enable(ATTRIB_NORMALS);
-		vao.enable(ATTRIB_TEXTURE_INDEX);
+		for (int attribute : root.attributes)
+			root.vao.enable(attribute);
 	}
 
 	@Override
@@ -140,23 +116,16 @@ public class Model extends Resource<ModelRoot> implements ModelRender, ResourceF
 		if (!valid())
 			return;
 
-		ModelRoot model = root;
+		for (int attribute : root.attributes)
+			root.vao.disable(attribute);
 
-		VAO vao = model.vao;
-		vao.disable(ATTRIB_VERTICES);
-		vao.disable(ATTRIB_TEXTURE_COORDS);
-		vao.disable(ATTRIB_NORMALS);
-		vao.disable(ATTRIB_TEXTURE_INDEX);
-		vao.unbind();
+		root.vao.unbind();
 	}
 
 	@Override
 	public void draw(DrawElement mode)
 	{
-		ModelRoot model = root;
-
-		VAO vao = model.vao;
-		vao.draw(mode);
+		root.vao.draw(mode);
 	}
 
 	@Override

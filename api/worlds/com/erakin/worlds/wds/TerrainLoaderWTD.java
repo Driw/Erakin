@@ -91,7 +91,10 @@ public class TerrainLoaderWTD implements TerrainLoader
 		Buffer.load(buffer, faces);
 
 		ModelDataDefault data = new ModelDataDefault();
-		data.init(vertexCount, textureCount, normalCount, faceCount);
+		data.initIndexes(faceCount);
+		data.initVertices(vertexCount);
+		data.initUVTextures(textureCount);
+		data.initNormals(normalCount);
 
 		for (int vertex = 0, offset = 0; vertex < vertexCount; vertex++, offset += 3)
 			data.setVertice(vertexCount, vertices[offset], vertices[offset + 1], vertices[offset + 2]);

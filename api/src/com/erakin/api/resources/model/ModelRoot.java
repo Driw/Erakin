@@ -40,6 +40,11 @@ public class ModelRoot extends ResourceRoot<Model>
 	float defaultShineDamping;
 
 	/**
+	 * Vetor especificando os atributos usados pelo modelo.
+	 */
+	int attributes[];
+
+	/**
 	 * Construtor em package para permitir apenas que ModelLoader construa um.
 	 * Isso irá garantir que um Modelo Raíz inválido possa ser criado na engine.
 	 * @param filepath caminho do arquivo em disco com os dados do modelo carregado.
@@ -49,6 +54,7 @@ public class ModelRoot extends ResourceRoot<Model>
 	{
 		super(filepath);
 
+		attributes = new int[0];
 		defaultReflectivity = 0f;
 		defaultShineDamping = 1f;
 	}

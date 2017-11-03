@@ -1,7 +1,5 @@
 package com.erakin.worlds.xml;
 
-import static org.diverproject.log.LogSystem.logWarning;
-
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBuffer;
 import java.awt.image.WritableRaster;
@@ -153,7 +151,10 @@ public class TerrainLoaderBMP implements TerrainLoader
 		int faceCount = width * length * 6;
 
 		ModelDataDefault data = new ModelDataDefault();
-		data.init(vertexCount, textureCount, normalCount, faceCount);
+		data.initIndexes(faceCount);
+		data.initVertices(vertexCount);
+		data.initUVTextures(textureCount);
+		data.initNormals(normalCount);
 
 		generateVertices(world, data, world.getUnitSize());
 		generateNormals(world, data);
@@ -185,10 +186,6 @@ public class TerrainLoaderBMP implements TerrainLoader
 				data.setVertice(offset++, x, y, z);
 				terrain.setHeight(wx, wz, y);
 			}
-
-		if (data.getVertices().length != offset * 3)
-			logWarning("vertices sobrando (vertices: %d, offset: %d)",
-					data.getVertices().length, offset * 3);
 	}
 
 	/**
@@ -216,10 +213,6 @@ public class TerrainLoaderBMP implements TerrainLoader
 
 				data.setNormal(offset++, normal.x, normal.y, normal.z);
 			}
-
-		if (data.getNormals().length != offset * 3)
-			logWarning("normalização sobrando (normals: %d, offset: %d)",
-					data.getNormals().length, offset * 3);
 	}
 
 	/**
@@ -242,10 +235,6 @@ public class TerrainLoaderBMP implements TerrainLoader
 
 				data.setTexture(offset++, x, y);
 			}
-
-		if (data.getTextureCoords().length != offset * 2)
-			logWarning("coordenada de textura sobrando (textureCoords: %d, offset: %d)",
-					data.getTextureCoords().length, offset * 2);
 	}
 
 	/**
@@ -274,9 +263,6 @@ public class TerrainLoaderBMP implements TerrainLoader
 				data.setIndice(offset++, bottomLeft);
 				data.setIndice(offset++, bottomRight);
 			}
-
-		if (data.getIndices().length != offset)
-			logWarning("índices sobrando (indices: %d, offset: %d)", data.getIndices().length, offset);
 	}
 
 	/**

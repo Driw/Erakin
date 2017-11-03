@@ -144,6 +144,7 @@ public class VAO implements GLBind
 		indices = new VBO(ELEMENT_ARRAY_BUFFER);
 		indices.bind();
 		indices.bufferData(buffer);
+		indices.unbind();
 
 		vertexCount = buffer.capacity();
 
@@ -177,10 +178,11 @@ public class VAO implements GLBind
 
 	public int setAttribute(int index, int size, IntBuffer buffer)
 	{
-		if (vbos.isFull())
-			return 0;
+		VBO vbo = vbos.get(index);
 
-		VBO vbo = new VBO(ARRAY_BUFFER);
+		if (vbo == null)
+			vbo = new VBO(ARRAY_BUFFER);
+
 		vbo.bind();
 		vbo.bufferData(buffer);
 		vbo.attribPointerInt(index, size);
@@ -218,10 +220,11 @@ public class VAO implements GLBind
 
 	public int setAttribute(int index, int size, FloatBuffer buffer)
 	{
-		if (vbos.isFull())
-			return 0;
+		VBO vbo = vbos.get(index);
 
-		VBO vbo = new VBO(ARRAY_BUFFER);
+		if (vbo == null)
+			vbo = new VBO(ARRAY_BUFFER);
+
 		vbo.bind();
 		vbo.bufferData(buffer);
 		vbo.attribPointerFloat(index, size);

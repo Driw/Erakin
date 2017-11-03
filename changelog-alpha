@@ -26,6 +26,15 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+03.11.2016 - 0.0.3.30
+- Modificando o formato de ModelData para que seja mais dinâmico, tornando possível definir atributos ao modelo.
+	- Agora é possível incrementar atributos a um modelo sem precisar alterar ModelData ou ModelLoader.
+	- ModelLoader vai poder aceitar qualquer modelo e com qualquer atributo disponível.
+	- ModelRoot terá definido um vetor de quais atributos foram definidos ao mesmo, habilitando apenas o necessário.
+- Agora setAttribute() faz mais sentido, não verifica se já foi tudo definido, por que os valores podem ser alterados.
+- Removido tipos de atributos disponíveis em Model, movidos para ModelData e renomeados adequadamente.
+- ModelDataDefault foi parcialmente alterado, aonde os dados são salvos foi modificado mas a lógica é a mesma.
+
 03.11.2016 - 0.0.2.29
 - Adicionado métodos de setIndices() e setAttribute() passando IntBuffer e FlaotBuffer.
 - Removido chamado de bind() internamente de VBO, já que é só usado no VAO que seja feito nele.
