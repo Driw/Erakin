@@ -1,5 +1,9 @@
 package com.erakin.api.resources.shader;
 
+import static org.lwjgl.opengl.GL20.glDeleteShader;
+import static org.lwjgl.opengl.GL20.glDetachShader;
+import static org.lwjgl.opengl.GL20.glUseProgram;
+
 import org.diverproject.util.ObjectDescription;
 
 import com.erakin.api.resources.ResourceRoot;
@@ -50,6 +54,19 @@ public class ShaderRoot extends ResourceRoot<Shader>
 		addReference(shader);
 
 		return shader;
+	}
+
+	@Override
+	public void release()
+	{
+		super.release();
+
+		glUseProgram(0);
+		glDetachShader(id, vertex);
+		glDetachShader(id, fragment);
+		glDeleteShader(id);
+		glDeleteShader(vertex);
+		glDeleteShader(fragment);
 	}
 
 	@Override

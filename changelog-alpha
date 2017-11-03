@@ -26,6 +26,18 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+03.11.2016 - 0.0.4.35
+- ModelReaderMDL não estava funcionando corretamente conforme esperado e sempre haveria dados para atribuir ao modelo.
+- Movido parte da lógica de createTransformationMatrix() para updateTransformationMatrix() afim de deixar mais dinâmico.
+- A liberação de um VAO deve ser feito somente após a liberação de todos os VBO?.
+- Um Model quanda era liberado não exlcuia a sua referência de seu ModelRoot e clone() não era public.
+- Renomeado setTexture() para setUVTexture() afim de manter um padrão de nomes na Engine, ModelDataDefault.
+- ModelRoot.release() não considerava a liberação dos dados de seu modelo através de VAO.
+- Shader.release() estava fazendo a função de ShaderRoot.release(), Shader deve apenas excluir a referência no ShaderRoot.
+	- A mesma coisa foi encontrada respectivamente a Texture e TextureRoot.
+- A Engine passa a considerar a liberação automática de recursos não mais utilizados através de DefaultLoader.update().
+- Implementação do renderizador de céus, RendererSkybox através de SkyboxRender.
+
 03.11.2016 - 0.0.3.34
 - Removido a necessidade do tamanho e depth de texturas cúbicas sempre sempre os mesmos.
 	- Cada uma das faces será processada com as informações que lhes pertencem.

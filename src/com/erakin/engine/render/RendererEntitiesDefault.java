@@ -88,7 +88,7 @@ public abstract class RendererEntitiesDefault implements RendererEntities
 			return;
 
 		beforeRender(delay);
-		renderEntities(entities);
+		renderEntities(getMapEntities());
 		afterRender(delay);
 	}
 
@@ -136,7 +136,7 @@ public abstract class RendererEntitiesDefault implements RendererEntities
 
 	/**
 	 * Chamado internamente quando for dito ao renderizador de entidades para ser iniciado.
-	 * Irá definir um atributo como inicializado de modo a facilitar a implementação do mesmo.
+	 * Após definir um atributo como inicializado de modo a facilitar a implementação do mesmo.
 	 */
 
 	protected abstract void subInitiate();

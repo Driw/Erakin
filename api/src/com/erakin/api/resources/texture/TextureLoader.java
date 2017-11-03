@@ -380,7 +380,7 @@ public final class TextureLoader extends DefaultLoader<Texture>
 	 * @return aquisição da instância para utilização do carregador de texturas.
 	 */
 
-	public static TextureLoader getIntance()
+	public static TextureLoader getInstance()
 	{
 		return instance;
 	}

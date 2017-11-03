@@ -23,6 +23,9 @@ import org.lwjgl.opengl.Display;
 
 import com.erakin.api.ErakinException;
 import com.erakin.api.input.InputManager;
+import com.erakin.api.resources.model.ModelLoader;
+import com.erakin.api.resources.texture.TextureLoader;
+import com.erakin.api.resources.world.WorldLoader;
 import com.erakin.engine.render.RendererManager;
 import com.erakin.engine.scene.SceneManager;
 
@@ -283,6 +286,9 @@ public class Engine implements Tickable
 		}
 
 		ServiceSystem.getInstance().update(delay);
+		TextureLoader.getInstance().update(delay);
+		ModelLoader.getInstance().update(delay);
+		WorldLoader.getInstance().update(delay);
 	}
 
 	@Override

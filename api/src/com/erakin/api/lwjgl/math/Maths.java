@@ -52,14 +52,30 @@ public class Maths
 	public static Matrix4f createTransformationMatrix(Vector3f position, Vector3f rotation, Vector3f scale)
 	{
 		Matrix4f matrix = new Matrix4f();
+		updateTransformationMatrix(matrix, position, rotation, scale);
 
+		return matrix;
+	}
+
+	/**
+	 * A matriz de transformação tem como objetivo determinar uma transformação para alguns valores abaixo.
+	 * Essa transformação permite que os vértices de uma modelagem que são estáticos sejam "dinâmicos".
+	 * Por exemplo, um cubo que tenha 1f em todos os lados, pode passar a ter 2f ou 0.7f como ainda também,
+	 * será possível reposicionar e rotacionar em todos os três eixos do tri-dimensional (X, Y e Z).
+	 * @param matrix matriz 4x4 contendo informações de transformação para reposicionar os vértices se necessário,
+	 * de acordo com as informações de posicionamento, rotação e escala definidas a cima.
+	 * @param position vetor da posição para calcular o novo posicionamento dos vértices.
+	 * @param rotation vetor da rotação para calcular o novo posicionamento dos vértices.
+	 * @param scale vetor da escala para calcular o novo posicionamento dos vértices.
+	 */
+
+	public static void updateTransformationMatrix(Matrix4f matrix, Vector3f position, Vector3f rotation, Vector3f scale)
+	{
 		Matrix4f.translate(position, matrix, matrix);
 		Matrix4f.rotate((float) Math.toRadians(rotation.x), new Vector3f(1, 0 ,0), matrix, matrix);
 		Matrix4f.rotate((float) Math.toRadians(rotation.y), new Vector3f(0, 1 ,0), matrix, matrix);
 		Matrix4f.rotate((float) Math.toRadians(rotation.z), new Vector3f(0, 0 ,1), matrix, matrix);
 		Matrix4f.scale(scale, matrix, matrix);
-
-		return matrix;
 	}
 
 	/**

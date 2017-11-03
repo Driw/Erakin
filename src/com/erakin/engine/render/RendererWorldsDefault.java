@@ -38,7 +38,12 @@ import com.erakin.engine.world.light.Light;
 public abstract class RendererWorldsDefault implements RendererWorlds
 {
 	/**
-	 * Define se o renderizador de entidades já foi iniciado.
+	 * Quantidade de unidades de terreno padrão do alcance de visão.
+	 */
+	public static final int DEFAULT_RENDER_RANGE = 64;
+
+	/**
+	 * Define se o renderizador de mundos já foi iniciado.
 	 */
 	private boolean initiate;
 
@@ -69,7 +74,8 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 
 	public RendererWorldsDefault()
 	{
-		range = 64;
+		setRenderRange(DEFAULT_RENDER_RANGE);
+
 		position = new Vector3i();
 		terrains = new DynamicQueue<TerrainRender>();
 	}
@@ -103,11 +109,11 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	@Override
 	public final void render(long delay)
 	{
-		if (getCamera() == null || getLight() == null || world == null)
+		if (getCamera() == null || getLight() == null || getWorld() == null)
 			return;
 
 		beforeRender(delay);
-		renderWorld(world);
+		renderWorld(getWorld());
 		afterRender(delay);
 	}
 
@@ -123,9 +129,10 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	}
 
 	@Override
-	public void setRenderPosition(Vector3i position)
+	public final void setWorld(WorldRender world)
 	{
-		this.position.set(position.x, position.y, position.z);
+		if (world != null)
+			this.world = world;
 	}
 
 	/**
@@ -141,10 +148,9 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	}
 
 	@Override
-	public void setRenderRange(int distance)
+	public void setRenderPosition(Vector3i position)
 	{
-		if (distance > 0)
-			range = distance;
+		this.position.set(position.x, position.y, position.z);
 	}
 
 	/**
@@ -159,10 +165,10 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	}
 
 	@Override
-	public final void setWorld(WorldRender world)
+	public void setRenderRange(int distance)
 	{
-		if (world != null)
-			this.world = world;
+		if (distance > 0)
+			range = distance;
 	}
 
 	/**
@@ -172,7 +178,7 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	 * @param world referência do mundo renderizável do qual será utilizado.
 	 */
 
-	private void renderWorld(WorldRender world)
+	protected void renderWorld(WorldRender world)
 	{
 		int realRange = (int) (range * world.getUnitSize());
 
@@ -230,35 +236,33 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	}
 
 	/**
-	 * Chamado internamente quando for dito ao renderizador de entidades para ser iniciado.
-	 * Irá definir um atributo como inicializado de modo a facilitar a implementação do mesmo.
+	 * Chamado internamente quando for dito ao renderizador de mundos para ser iniciado.
+	 * Após definir um atributo como inicializado de modo a facilitar a implementação do mesmo.
 	 */
 
 	protected abstract void subInitiate();
 
 	/**
-	 * Durante a renderização de entidades, o grupo de entidades com o mesmo modelo são chamados para renderizar.
-	 * Após fazer a ativação (habilitar uso) da modelagem esse método será chamado uma única vez por cada entidade.
-	 * Deverá garantir que as entidades sejam renderizadas na tela utilizando sua textura e shader adequados.
+	 * Antes de fazer a renderização do terreno, é necessário habilitar no OpenGL uma modelagem para ser usada.
+	 * Esse procedimento pode ainda usar o shader adequadamente de acordo com as informações da modelagem.
+	 * @param model referência do modelo renderizável do terreno que está sendo renderizado.
+	 */
+
+	protected abstract void beforeRenderTerrain(ModelRender model);
+
+	/**
+	 * Durante a renderização de terreno, é listado todos os terrenos que devem ser renderizados conforme o alcance de visão.
+	 * Deverá garantir que o terreno seja renderizado na tela utilizando sua(s) textura(s) e shader adequados.
 	 * @param terrain referência do terreno renderizável do qual está sendo chamada para renderizar.
 	 */
 
 	protected abstract void renderTerrain(TerrainRender terrain);
 
 	/**
-	 * Antes de fazer a renderização das entidades, é necessário habilitar no OpenGL uma modelagem para ser usada.
-	 * Assim que essa for habilitada, as entidades que usam esse modelo serão chamadas para serem renderizadas.
-	 * Esse procedimento pode ainda usar o shader adequadamente de acordo com as informações da modelagem.
-	 * @param model referência do modelo renderizável do próximo conjunto de entidades a ser renderizada.
-	 */
-
-	protected abstract void beforeRenderTerrain(ModelRender model);
-
-	/**
-	 * Após fazer a renderização de um conjunto de entidades especificados, esse procedimento será chamado.
-	 * Esse conjunto de entidades tem em comum a sua modelagem tri-dimensional usada, <b>model</b>.
+	 * Após fazer a renderização da lista de terrenos especificados, esse procedimento será chamado.
+	 * Esse conjunto de terrenos tem em comum a sua modelagem tri-dimensional usada, <b>model</b>.
 	 * Deve dizer ao OpenGL para desabilitar o uso dessa modelagem ou informações do shader se necessário.
-	 * @param model referência do modelo renderizável do conjunto de entidades que foram renderizada.
+	 * @param model referência do modelo renderizável da lista de terrenos que foram renderizada.
 	 */
 
 	protected abstract void afterRenderTerrain(ModelRender model);
@@ -273,7 +277,7 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	protected abstract void beforeRender(long delay);
 
 	/**
-	 * Procedimento chamado somente após o renderizador ter renderizado todas as entidades.
+	 * Procedimento chamado somente após o renderizador ter renderizado todos os terrenos.
 	 * Espera-se que seja feito toda a finalização necessária para concluir a renderização.
 	 * Por exemplo parar a programação shader evitando uso desnecessário ou incorreto.
 	 * @param delay quantos milissegundos se passaram desde a última renderização.
@@ -291,7 +295,7 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 
 	/**
 	 * Essa luz deve ser a luz ambiente, como por exemplo a iluminação do sol em campos abertos.
-	 * Será aplicada a toda e qualquer entidade que for chamada para ser renderizada.
+	 * Será aplicada a todo e qualquer terreno que for chamado para ser renderizada.
 	 * @return aquisição da iluminação ambiente usada por esse renderizador.
 	 */
 

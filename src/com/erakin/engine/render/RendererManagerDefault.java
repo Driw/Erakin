@@ -4,7 +4,8 @@ import static com.erakin.api.ErakinAPIUtil.nameOf;
 
 import org.diverproject.util.ObjectDescription;
 
-import com.erakin.api.resources.world.World;
+import com.erakin.api.render.SkyboxRender;
+import com.erakin.api.render.WorldRender;
 import com.erakin.engine.entity.Entity;
 
 /**
@@ -19,6 +20,8 @@ import com.erakin.engine.entity.Entity;
  *
  * @see RendererManager
  * @see RendererEntities
+ * @see RendererWorlds
+ * @see RendererSkybox
  *
  * @author Andrew Mello
  */
@@ -40,6 +43,11 @@ public abstract class RendererManagerDefault implements RendererManager
 	 */
 	private RendererWorlds rendererWorlds;
 
+	/**
+	 * Renderizador de Céus que está sendo usado.
+	 */
+	private RendererSkybox rendererSkybox;
+
 	@Override
 	public void update(long delay)
 	{
@@ -48,6 +56,9 @@ public abstract class RendererManagerDefault implements RendererManager
 
 		if (rendererEntities != null)
 			rendererEntities.update(delay);
+
+		if (rendererSkybox != null)
+			rendererSkybox.update(delay);
 	}
 
 	@Override
@@ -58,6 +69,9 @@ public abstract class RendererManagerDefault implements RendererManager
 
 		if (rendererEntities != null)
 			rendererEntities.render(delay);
+
+		if (rendererSkybox != null)
+			rendererSkybox.render(delay);
 	}
 
 	@Override
@@ -68,6 +82,9 @@ public abstract class RendererManagerDefault implements RendererManager
 
 		if (rendererEntities != null)
 			rendererEntities.cleanup();
+
+		if (rendererSkybox != null)
+			rendererSkybox.cleanup();
 	}
 
 	@Override
@@ -79,6 +96,7 @@ public abstract class RendererManagerDefault implements RendererManager
 
 		rendererWorlds.initiate();
 		rendererEntities.initiate();
+		rendererSkybox.initiate();
 	}
 
 	@Override
@@ -88,10 +106,9 @@ public abstract class RendererManagerDefault implements RendererManager
 	}
 
 	/**
-	 * O renderizador de entidades é responsável por renderizar qualquer objeto de interface <code>Entity</code>.
+	 * O renderizador de entidades é responsável por renderizar qualquer objeto de interface {@link Entity}.
 	 * As entidades podem ser simples objetos até construções, jogadores, monstros, npcs e outros.
 	 * @return aquisição do atual renderizador de entidades utilizado, por padrão nenhum definido.
-	 * @see Entity
 	 */
 
 	public RendererEntities getRendererEntities()
@@ -117,10 +134,9 @@ public abstract class RendererManagerDefault implements RendererManager
 	}
 
 	/**
-	 * O renderizador de mundos é responsável por renderizar qualquer objeto de interface <code>World</code>.
+	 * O renderizador de mundos é responsável por renderizar qualquer objeto de interface {@link WorldRender}.
 	 * Os mundos são conjuntos de chunks que irão formar toda a área para que as entidades possam percorrer.
-	 * @return aquisição  do atual renderizador de mundos utilizado, por padrão nenhum definido.
-	 * @see World
+	 * @return aquisição do atual renderizador de mundos utilizado, por padrão nenhum definido.
 	 */
 
 	public RendererWorlds getRendererWorlds()
@@ -146,6 +162,34 @@ public abstract class RendererManagerDefault implements RendererManager
 	}
 
 	/**
+	 * O renderizador de céu é responsável por renderizar qualquer objeto de interface {@link SkyboxRender}.
+	 * O céu é uma caixa tri-dimensional que quando texturizado causa um efeito de existência do céu nos horizontes.
+	 * @return aquisição do atual renderizador de céu utilizado, por padrão nenhum definido.
+	 */
+
+	public RendererSkybox getRendererSkybox()
+	{
+		return rendererSkybox;
+	}
+
+	/**
+	 * Permite definir qual será o renderizador de céus do qual será usado pelo gerenciador de renderização.
+	 * Caso o novo gerenciador seja diferente do antigo, irá garantir que esse seja inicializado internamente.
+	 * @param rendererSkybox referência do novo renderizador de céus do qual deve ser usado.
+	 */
+
+	public void setRendererSkybox(RendererSkybox rendererSkybox)
+	{
+		if (rendererSkybox != null)
+		{
+			if (!rendererSkybox.isInitiate() && isInitiate())
+				rendererSkybox.initiate();
+
+			this.rendererSkybox = rendererSkybox;
+		}
+	}
+
+	/**
 	 * Chamado internamente quando for dito ao gerenciador de renderização para ser iniciado.
 	 * Irá definir um atributo como inicializado de modo a facilitar a implementação do mesmo.
 	 */
@@ -160,6 +204,7 @@ public abstract class RendererManagerDefault implements RendererManager
 		description.append("initiate", initiate);
 		description.append("entities", nameOf(rendererEntities));
 		description.append("worlds", nameOf(rendererWorlds));
+		description.append("skybox", nameOf(rendererSkybox));
 
 		return description.toString();
 	}

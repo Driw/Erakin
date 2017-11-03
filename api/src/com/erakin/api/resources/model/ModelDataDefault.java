@@ -190,7 +190,7 @@ public class ModelDataDefault implements ModelData
 	 * @param y coordenada da textura que será usada no eixo vertical.
 	 */
 
-	public void setTexture(int vertex, float x, float y)
+	public void setUVTexture(int vertex, float x, float y)
 	{
 		uvTextures.setValue(vertex, x, y);
 	}

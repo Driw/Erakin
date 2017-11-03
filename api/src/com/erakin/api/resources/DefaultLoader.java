@@ -121,6 +121,27 @@ public class DefaultLoader<T extends Resource<?>>
 		return resources.getName();
 	}
 
+	/**
+	 * Itera cada um dos recursos raízes salvos no carregador para que seja atualizado o seu tempo de vida útil.
+	 * Caso seu tempo de vida útil tenha acabo o seu conteúdo será liberado completamente do carregador.
+	 * <i>Um recurso raíz removido não terá mais utilidade pra nenhum recurso referente a ele, porém pode ser recarregado.</i>.
+	 * @param delay
+	 */
+
+	public void update(long delay)
+	{
+		for (ResourceRoot<T> resource : resources)
+		{
+			resource.update(delay);
+
+			if (!resource.isAlive())
+			{
+				resource.release();
+				removeResource(resource.getFilePath());
+			}
+		}
+	}
+
 	protected void toString(ObjectDescription description)
 	{
 		

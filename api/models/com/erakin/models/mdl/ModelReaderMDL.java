@@ -33,50 +33,68 @@ public class ModelReaderMDL extends ModelReaderDefault
 		ModelDataDefault model = new ModelDataDefault();
 		Buffer buffer = new BufferInput(stream);
 
-		if (buffer.getChar() != 'M' && buffer.getChar() != 'D')
+		if (buffer.getChar() != 'M' || buffer.getChar() != 'D')
+		{
+			buffer.close();
 			throw new ModelException("formato inválido");
+		}
 
 		int vertexCount = buffer.getInt();
 		int uvTextureCount = buffer.getInt();
 		int normalCount = buffer.getInt();
 		int indexCount = buffer.getInt();
 
-		model.initIndexes(indexCount);
-		model.initVertices(vertexCount);
-		model.initUVTextures(uvTextureCount);
-		model.initNormals(normalCount);
-
-		for (int i = 0; i < vertexCount; i++)
+		if (vertexCount > 0)
 		{
-			float x = buffer.getFloat();
-			float y = buffer.getFloat();
-			float z = buffer.getFloat();
+			model.initVertices(vertexCount);
 
-			model.setVertice(i, x, y, z);
+			for (int i = 0; i < vertexCount; i++)
+			{
+				float x = buffer.getFloat();
+				float y = buffer.getFloat();
+				float z = buffer.getFloat();
+
+				model.setVertice(i, x, y, z);
+			}
 		}
 
-		for (int i = 0; i < vertexCount; i++)
+		if (uvTextureCount > 0)
 		{
-			float x = buffer.getFloat();
-			float y = buffer.getFloat();
+			model.initUVTextures(uvTextureCount);
 
-			model.setTexture(i, x, y);
+			for (int i = 0; i < uvTextureCount; i++)
+			{
+				float x = buffer.getFloat();
+				float y = buffer.getFloat();
+
+				model.setUVTexture(i, x, y);
+			}
 		}
 
-		for (int i = 0; i < normalCount; i++)
+		if (normalCount > 0)
 		{
-			float x = buffer.getFloat();
-			float y = buffer.getFloat();
-			float z = buffer.getFloat();
+			model.initNormals(normalCount);
 
-			model.setNormal(i, x, y, z);
+			for (int i = 0; i < normalCount; i++)
+			{
+				float x = buffer.getFloat();
+				float y = buffer.getFloat();
+				float z = buffer.getFloat();
+
+				model.setNormal(i, x, y, z);
+			}
 		}
 
-		for (int i = 0; i < indexCount; i++)
+		if (indexCount > 0)
 		{
-			int vertex = buffer.getInt();
+			model.initIndexes(indexCount);
 
-			model.setIndice(i, vertex);
+			for (int i = 0; i < indexCount; i++)
+			{
+				int vertex = buffer.getInt();
+
+				model.setIndice(i, vertex);
+			}
 		}
 
 		return model;

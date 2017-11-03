@@ -263,14 +263,14 @@ public class VAO implements GLBind
 	{
 		unbind();
 
-		glDeleteVertexArrays(id);
-
 		for (VBO vbo : vbos)
 			if (vbo != null)
 				vbo.release();
 
 		if (indices != null)
 			indices.release();
+
+		glDeleteVertexArrays(id);
 
 		indices = null;
 		vbos = null;

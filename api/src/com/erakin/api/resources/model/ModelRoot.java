@@ -91,6 +91,14 @@ public class ModelRoot extends ResourceRoot<Model>
 	}
 
 	@Override
+	public void release()
+	{
+		super.release();
+
+		vao.release();
+	}
+
+	@Override
 	public void toString(ObjectDescription description)
 	{
 		description.append("vao", vao == null ? null : vao.getID());

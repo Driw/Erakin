@@ -108,7 +108,7 @@ public class RawTerrainModel implements ModelRender
 		String path = format("%s/terrain_%d_%d", terrain.world.getPrefix(), terrain.getX(), terrain.getZ());
 
 		ModelData data = createModelData();
-		model = ModelLoader.getIntance().createModel(path, data);
+		model = ModelLoader.getInstance().createModel(path, data);
 	}
 
 	/**
@@ -213,10 +213,10 @@ public class RawTerrainModel implements ModelRender
 		for (int z = 0; z < terrain.getLength(); z++)
 			for (int x = 0; x < terrain.getWidth(); x++)
 			{
-				data.setTexture(offset++, 1f, 1f);
-				data.setTexture(offset++, 0f, 1f);
-				data.setTexture(offset++, 0f, 0f);
-				data.setTexture(offset++, 1f, 0f);
+				data.setUVTexture(offset++, 1f, 1f);
+				data.setUVTexture(offset++, 0f, 1f);
+				data.setUVTexture(offset++, 0f, 0f);
+				data.setUVTexture(offset++, 1f, 0f);
 			}
 	}
 

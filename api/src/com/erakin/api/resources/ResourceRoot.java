@@ -179,7 +179,7 @@ public abstract class ResourceRoot<T extends Resource<?>> extends ResourceFile i
 
 	public boolean isAlive()
 	{
-		return last < RESOURCE_LIVE_TIME;
+		return getReferenceCount() == 0 && last < RESOURCE_LIVE_TIME;
 	}
 
 	/**

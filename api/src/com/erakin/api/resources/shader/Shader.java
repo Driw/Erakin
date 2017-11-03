@@ -1,7 +1,5 @@
 package com.erakin.api.resources.shader;
 
-import static org.lwjgl.opengl.GL20.glDeleteShader;
-import static org.lwjgl.opengl.GL20.glDetachShader;
 import static org.lwjgl.opengl.GL20.glIsProgram;
 import static org.lwjgl.opengl.GL20.glIsShader;
 import static org.lwjgl.opengl.GL20.glUseProgram;
@@ -82,19 +80,9 @@ public class Shader extends Resource<ShaderRoot> implements ResourceFileLocation
 	@Override
 	public void release()
 	{
-		unbind();
+		super.release();
 
-		glDetachShader(getID(), getVertexID());
-		glDetachShader(getID(), getFragmentID());
-		glDeleteShader(getID());
-		glDeleteShader(getVertexID());
-		glDeleteShader(getFragmentID());
-
-		if (root != null)
-		{
-			root.delReference(this);
-			root = null;
-		}
+		root.delReference(this);
 	}
 
 	@Override

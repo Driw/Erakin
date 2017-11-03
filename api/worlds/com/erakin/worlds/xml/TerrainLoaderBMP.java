@@ -78,7 +78,7 @@ public class TerrainLoaderBMP implements TerrainLoader
 
 		try {
 
-			Texture texture = TextureLoader.getIntance().getTexture("dirt");
+			Texture texture = TextureLoader.getInstance().getTexture("dirt");
 			terrain = new Terrain(xTerrain, zTerrain, width, length);
 
 			Model model = createModel(world, terrainPath);
@@ -161,7 +161,7 @@ public class TerrainLoaderBMP implements TerrainLoader
 		generateTextures(world, data);
 		generateIndices(world, data);
 
-		return ModelLoader.getIntance().createModel(path, data);
+		return ModelLoader.getInstance().createModel(path, data);
 	}
 
 	/**
@@ -233,7 +233,7 @@ public class TerrainLoaderBMP implements TerrainLoader
 				float x = (float) wx / ((float) world.getTerrainWidth());
 				float y = (float) wz / ((float) world.getTerrainLength());
 
-				data.setTexture(offset++, x, y);
+				data.setUVTexture(offset++, x, y);
 			}
 	}
 

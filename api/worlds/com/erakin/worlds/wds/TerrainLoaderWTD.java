@@ -100,7 +100,7 @@ public class TerrainLoaderWTD implements TerrainLoader
 			data.setVertice(vertexCount, vertices[offset], vertices[offset + 1], vertices[offset + 2]);
 
 		for (int vertex = 0, offset = 0; vertex < textureCount; vertex++, offset+= 2)
-			data.setTexture(vertex, textures[offset], textures[offset + 1]);
+			data.setUVTexture(vertex, textures[offset], textures[offset + 1]);
 
 		for (int vertex = 0, offset = 0; vertex < normalCount; vertex++, offset+= 3)
 			data.setNormal(vertexCount, normals[offset], normals[offset + 1], normals[offset + 2]);
@@ -108,7 +108,7 @@ public class TerrainLoaderWTD implements TerrainLoader
 		for (int index = 0; index < faceCount; index++)
 			data.setIndice(index, faces[index]);
 
-		ModelLoader modelLoader = ModelLoader.getIntance();
+		ModelLoader modelLoader = ModelLoader.getInstance();
 		Model model = modelLoader.createModel(terrainPath, data);
 
 		return model;

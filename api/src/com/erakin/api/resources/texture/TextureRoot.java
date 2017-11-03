@@ -1,5 +1,7 @@
 package com.erakin.api.resources.texture;
 
+import static org.lwjgl.opengl.GL11.glDeleteTextures;
+
 import org.diverproject.util.ObjectDescription;
 
 import com.erakin.api.resources.ResourceRoot;
@@ -69,6 +71,14 @@ public class TextureRoot extends ResourceRoot<Texture>
 	public int getGLTextureID()
 	{
 		return id;
+	}
+
+	@Override
+	public void release()
+	{
+		super.release();
+
+		glDeleteTextures(id);
 	}
 
 	@Override

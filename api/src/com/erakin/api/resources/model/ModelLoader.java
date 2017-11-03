@@ -161,7 +161,7 @@ public final class ModelLoader extends DefaultLoader<Model>
 	 * @return aquisição da instância para utilização do carregador de modelagem.
 	 */
 
-	public static ModelLoader getIntance()
+	public static ModelLoader getInstance()
 	{
 		return instance;
 	}

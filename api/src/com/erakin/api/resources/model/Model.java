@@ -195,6 +195,8 @@ public class Model extends Resource<ModelRoot> implements ModelRender, ResourceF
 			texture.release();
 			texture = null;
 		}
+
+		root.delReference(this);
 	}
 
 	@Override
@@ -234,7 +236,7 @@ public class Model extends Resource<ModelRoot> implements ModelRender, ResourceF
 	}
 
 	@Override
-	protected Model clone()
+	public Model clone()
 	{
 		return root.genResource();
 	}

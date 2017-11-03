@@ -11,7 +11,8 @@ import com.erakin.api.render.WorldRender;
  * Podendo ainda melhorar a performance conforme o desenvolvedor deseja ou conforme a aplicação funcione.</p>
  *
  * <p>Possui funcionalidades bem básicas relacionadas sempre a mundos, somente mundos serão trabalhados.
- * Permitindo inserir um mundo no mesmo de modo que seja possível renderizar este na tela se visualizada.</p>
+ * Permite definir um único mundo por vez para que possa ser renderizado na tela como também a posição central
+ * em relação ao espaço do mundo e a distância de visão que vai determinar quais terrenos poderão ser vistos.</p>
  *
  * @see RendererManager
  * @see WorldRender

@@ -226,7 +226,7 @@ public class ModelReaderOBJ extends ModelReaderDefault
 			try {
 
 				data.setIndice(i, vertexIndex);
-				data.setTexture(vertexIndex, texture.x, 1 - texture.y);
+				data.setUVTexture(vertexIndex, texture.x, 1 - texture.y);
 				data.setNormal(vertexIndex, normal.x, normal.y, normal.z);
 
 			} catch (Exception e) {
