@@ -26,6 +26,15 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+03.11.2016 - 0.0.2.29
+- Adicionado métodos de setIndices() e setAttribute() passando IntBuffer e FlaotBuffer.
+- Removido chamado de bind() internamente de VBO, já que é só usado no VAO que seja feito nele.
+- Removido chamado de bind() internamente de VAO, quando for usá-lo que seja feito fora.
+
+03.11.2016 - 0.0.2.28
+- Documentação de algumas classes que não estavam completamente documentadas.
+- Algumas texturas não eram carregadas corretamente pois TextureReaderDefault não dava flip() no buffer.
+
 02.11.2016 - 0.0.2.27
 - Realizado algumas documentações de classes presentes em api.resources.*.
 - Movimentação das classes relacionadas a Model, Shader, Texture e World para seus respectivos pacotes.

@@ -141,8 +141,6 @@ public class VBO implements GLBind
 
 	void bufferData(IntBuffer buffer)
 	{
-		bind();
-
 		glBufferData(getMode(), buffer, GL_STATIC_DRAW);
 	}
 
@@ -153,8 +151,6 @@ public class VBO implements GLBind
 
 	void bufferData(FloatBuffer buffer)
 	{
-		bind();
-
 		glBufferData(getMode(), buffer, GL_STATIC_DRAW);
 	}
 
@@ -167,8 +163,6 @@ public class VBO implements GLBind
 
 	void attribPointerInt(int index, int size)
 	{
-		bind();
-
 		glVertexAttribPointer(index, size, GL_INT, false, 0, 0);
 	}
 
@@ -181,8 +175,6 @@ public class VBO implements GLBind
 
 	void attribPointerFloat(int index, int size)
 	{
-		bind();
-
 		glVertexAttribPointer(index, size, GL_FLOAT, false, 0, 0);
 	}
 

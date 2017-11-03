@@ -125,17 +125,27 @@ public class VAO implements GLBind
 
 	public int setIndices(int data[])
 	{
-		bind();
+		return setIndices(glStore(data));
+	}
 
+	/**
+	 * Deve adicionar uma lista contendo o índice para identificar dados.
+	 * Irá determinar quantos dados de cada VBO em sequência forma um conjunto.
+	 * Por exemplo, um vetor de inteiros definido como VBO [0, 1, 2, 3, 4, 6].
+	 * @param buffer buffer contendo a indexação que será usada nos VBOs.
+	 * @return aquisição da identificação do VBO dos índices.
+	 */
+
+	public int setIndices(IntBuffer buffer)
+	{
 		if (indices != null)
 			indices.release();
 
-		IntBuffer buffer = glStore(data);
-
 		indices = new VBO(ELEMENT_ARRAY_BUFFER);
+		indices.bind();
 		indices.bufferData(buffer);
 
-		vertexCount = data.length;
+		vertexCount = buffer.capacity();
 
 		return indices.getID();
 	}
@@ -152,14 +162,26 @@ public class VAO implements GLBind
 
 	public int setAttribute(int index, int size, int data[])
 	{
-		bind();
+		return setAttribute(index, size, glStore(data));
+	}
 
+	/**
+	 * Deve adicionar uma nova quantidade de dados para um atributo do VAO.
+	 * O atributo que será usado será decidido automaticamente pelo OpenGL.
+	 * Para esse caso, os dados definidos será do tipo vetor de inteiros.
+	 * @param index em qual índice será posicionado os dados (0 a 15).
+	 * @param size quantas unidades cada índice definido no VAO terá.
+	 * @param buffer referência do buffer contendo os dados para armazenar.
+	 * @return identificação do VBO no VAO, número do atributo usado.
+	 */
+
+	public int setAttribute(int index, int size, IntBuffer buffer)
+	{
 		if (vbos.isFull())
 			return 0;
 
-		IntBuffer buffer = glStore(data);
-
 		VBO vbo = new VBO(ARRAY_BUFFER);
+		vbo.bind();
 		vbo.bufferData(buffer);
 		vbo.attribPointerInt(index, size);
 		vbo.unbind();
@@ -181,14 +203,26 @@ public class VAO implements GLBind
 
 	public int setAttribute(int index, int size, float data[])
 	{
-		bind();
+		return setAttribute(index, size, glStore(data));
+	}
 
+	/**
+	 * Deve adicionar uma nova quantidade de dados para um atributo do VAO.
+	 * O atributo que será usado será decidido automaticamente pelo OpenGL.
+	 * Para esse caso, os dados definidos será do tipo vetor de flutuantes.
+	 * @param index em qual índice será posicionado os dados (0 a 15).
+	 * @param size quantas unidades cada índice definido no VAO terá.
+	 * @param buffer referência do buffer contendo os dados para armazenar.
+	 * @return identificação do VBO no VAO, número do atributo usado.
+	 */
+
+	public int setAttribute(int index, int size, FloatBuffer buffer)
+	{
 		if (vbos.isFull())
 			return 0;
 
-		FloatBuffer buffer = glStore(data);
-
 		VBO vbo = new VBO(ARRAY_BUFFER);
+		vbo.bind();
 		vbo.bufferData(buffer);
 		vbo.attribPointerFloat(index, size);
 		vbo.unbind();

@@ -252,10 +252,12 @@ public class RawTerrainModel implements ModelRender
 		ModelData data = createModelData();
 
 		VAO vao = new VAO(model.getID());
+		vao.bind();
 		vao.setIndices(data.getIndices());
 		vao.setAttribute(ATTRIB_VERTICES, 3, data.getVertices());
 		vao.setAttribute(ATTRIB_TEXTURE_COORDS, 2, data.getTextureCoords());
 		vao.setAttribute(ATTRIB_NORMALS, 3, data.getNormals());
+		vao.unbind();
 	}
 
 	/**
