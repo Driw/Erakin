@@ -144,7 +144,7 @@ public class VAO implements GLBind
 		indices = new VBO(ELEMENT_ARRAY_BUFFER);
 		indices.bind();
 		indices.bufferData(buffer);
-		indices.unbind();
+		// Por algum motivo esse VBO não deve dar unbind() igual aos atributos
 
 		vertexCount = buffer.capacity();
 

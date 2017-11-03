@@ -26,6 +26,9 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+03.11.2016 - 0.0.3.31
+- Desvincular o VBO de índices durante a sua definição causa um erro no OpenGL ao tentar renderizar um modelo.
+
 03.11.2016 - 0.0.3.30
 - Modificando o formato de ModelData para que seja mais dinâmico, tornando possível definir atributos ao modelo.
 	- Agora é possível incrementar atributos a um modelo sem precisar alterar ModelData ou ModelLoader.
