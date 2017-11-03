@@ -253,10 +253,14 @@ public class RawTerrainModel implements ModelRender
 		ModelData data = createModelData();
 
 		VAO vao = new VAO(model.getID());
-		data.getIndices().storeInVAO(vao);
+		vao.bind();
+		{
+			data.getIndices().storeInVAO(vao);
 
-		for (ModelAttribute attribute : data.getAttributes())
-			attribute.storeInVAO(vao);
+			for (ModelAttribute attribute : data.getAttributes())
+				attribute.storeInVAO(vao);
+		}
+		vao.unbind();
 	}
 
 	/**

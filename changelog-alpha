@@ -26,6 +26,9 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+03.11.2016 - 0.0.3.32
+- O vinculo de um VAO deve ser feito antes de storeInVao ser chamado, ModelAttribute.
+
 03.11.2016 - 0.0.3.31
 - Desvincular o VBO de índices durante a sua definição causa um erro no OpenGL ao tentar renderizar um modelo.
 

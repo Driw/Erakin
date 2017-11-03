@@ -95,9 +95,7 @@ public class ModelIndiceAttribute implements ModelAttribute
 	@Override
 	public void storeInVAO(VAO vao)
 	{
-		vao.bind();
 		vao.setIndices(buffer);
-		vao.unbind();
 	}
 
 	@Override

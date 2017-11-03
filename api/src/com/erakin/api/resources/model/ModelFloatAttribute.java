@@ -102,9 +102,7 @@ public class ModelFloatAttribute implements ModelAttribute
 	@Override
 	public void storeInVAO(VAO vao)
 	{
-		vao.bind();
 		vao.setAttribute(getIndex(), size(), buffer);
-		vao.unbind();
 	}
 
 	@Override

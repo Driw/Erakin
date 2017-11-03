@@ -123,17 +123,21 @@ public final class ModelLoader extends DefaultLoader<Model>
 
 		ModelRoot root = new ModelRoot(path);
 		root.vao = new VAO();
-		root.attributes = new int[data.getAttributes().length];
-
-		if (data.getIndices() != null)
-			data.getIndices().storeInVAO(root.vao);
-
-		for (int i = 0; i < data.getAttributes().length; i++)
+		root.vao.bind();
 		{
-			ModelAttribute attribute = data.getAttributes()[i];
-			attribute.storeInVAO(root.vao);
-			root.attributes[i] = attribute.getIndex();
+			root.attributes = new int[data.getAttributes().length];
+
+			if (data.getIndices() != null)
+				data.getIndices().storeInVAO(root.vao);
+
+			for (int i = 0; i < data.getAttributes().length; i++)
+			{
+				ModelAttribute attribute = data.getAttributes()[i];
+				attribute.storeInVAO(root.vao);
+				root.attributes[i] = attribute.getIndex();
+			}
 		}
+		root.vao.unbind();
 
 		logDebug("modelagem '%s' lida com êxito (%s).\n", root.getFileName(), data.toStringDetails());
 
