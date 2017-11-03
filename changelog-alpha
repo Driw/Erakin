@@ -26,6 +26,12 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+03.11.2016 - 0.0.3.33
+- VAO estava funcionando somente através de indices, agora pode funcionar sem.
+	- Para isso foi adicionado setVertexCount para definir os vértices e glDrawArrays se não tiver indices.
+- Implementado criação de texturas cúbicas através de getCubeTexture() ou createCubeTexture(), TextureLoader.
+- Toda textura deve possuir um target definido, as comuns será TT_TEXTURE_2D e cubicas TT_TEXTURE_CUBE_MAP.
+
 03.11.2016 - 0.0.3.32
 - O vinculo de um VAO deve ser feito antes de storeInVao ser chamado, ModelAttribute.
 

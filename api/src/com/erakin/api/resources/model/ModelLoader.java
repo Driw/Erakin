@@ -1,5 +1,6 @@
 package com.erakin.api.resources.model;
 
+import static com.erakin.api.resources.model.ModelAttribute.ATTRIB_VERTEX;
 import static org.diverproject.log.LogSystem.logDebug;
 import static org.diverproject.log.LogSystem.logWarning;
 
@@ -129,6 +130,13 @@ public final class ModelLoader extends DefaultLoader<Model>
 
 			if (data.getIndices() != null)
 				data.getIndices().storeInVAO(root.vao);
+			else
+				for (ModelAttribute attribute : data.getAttributes())
+					if (attribute.getIndex() == ATTRIB_VERTEX)
+					{
+						root.vao.setVertexCount(attribute.length());
+						break;
+					}
 
 			for (int i = 0; i < data.getAttributes().length; i++)
 			{

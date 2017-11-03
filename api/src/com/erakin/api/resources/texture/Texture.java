@@ -1,6 +1,5 @@
 package com.erakin.api.resources.texture;
 
-import static org.lwjgl.opengl.GL11.GL_TEXTURE_2D;
 import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11.glDeleteTextures;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
@@ -97,13 +96,13 @@ public class Texture extends Resource<TextureRoot> implements ResourceFileLocati
 	@Override
 	public void bind()
 	{
-		glBindTexture(GL_TEXTURE_2D, getID());
+		glBindTexture(root.target.GL_CODE, getID());
 	}
 
 	@Override
 	public void unbind()
 	{
-		glBindTexture(GL_TEXTURE_2D, 0);
+		glBindTexture(root.target.GL_CODE, 0);
 	}
 
 	@Override

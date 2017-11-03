@@ -44,6 +44,12 @@ public class TextureRoot extends ResourceRoot<Texture>
 	boolean alpha;
 
 	/**
+	 * Qual o tipo de textura que está sendo usado:
+	 * 
+	 */
+	TextureTarget target;
+
+	/**
 	 * Construtor em package para permitir apenas que TextureLoader construa um.
 	 * Isso irá garantir que uma Textura Raíz inválida possa ser criada na engine.
 	 * @param filepath caminho do arquivo em disco com os dados da textura carregado.
@@ -82,5 +88,6 @@ public class TextureRoot extends ResourceRoot<Texture>
 		description.append("height", height);
 		description.append("depth", depth);
 		description.append("alpha", alpha);
+		description.append("target", target);
 	}
 }

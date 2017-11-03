@@ -5,6 +5,7 @@ import static com.erakin.api.lwjgl.GLUtil.glStore;
 import static com.erakin.api.lwjgl.VBO.ARRAY_BUFFER;
 import static com.erakin.api.lwjgl.VBO.ELEMENT_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL11.glDrawArrays;
 import static org.lwjgl.opengl.GL11.glDrawElements;
 import static org.lwjgl.opengl.GL11.glGetInteger;
 import static org.lwjgl.opengl.GL20.GL_MAX_VERTEX_ATTRIBS;
@@ -236,15 +237,25 @@ public class VAO implements GLBind
 	}
 
 	/**
-	 * A contagem de vértices permite a utilização dos dados de um VAO.
-	 * O OpenGL não identifica quantos vértices foram determinados no
-	 * índice desse VAO, desse modo é necessário um atributo para tal.
-	 * @return aquisição do número de vértices no índice.
+	 * A contagem de vértices permite que um VAO seja usado para ser desenhado na tela na renderização.
+	 * O OpenGL não identifica quantos vértices existem nos índices ou qual atributo é dos vértices.
+	 * @return aquisição da quantidade de vértices necessários para compor esse VAO.
 	 */
 
 	public int getVertexCount()
 	{
 		return vertexCount;
+	}
+
+	/**
+	 * A contagem de vértices permite que um VAO seja usado para ser desenhado na tela na renderização.
+	 * O OpenGL não identifica quantos vértices existem nos índices ou qual atributo é dos vértices.
+	 * @param vertexCount quantidade de vértices necessários para compor esse VAO.
+	 */
+
+	public void setVertexCount(int vertexCount)
+	{
+		this.vertexCount = vertexCount;
 	}
 
 	@Override
@@ -314,7 +325,10 @@ public class VAO implements GLBind
 
 	public void draw(DrawElement mode)
 	{
-		glDrawElements(mode.getValue(), getVertexCount(), GL_UNSIGNED_INT, 0);
+		if (indices != null)
+			glDrawElements(mode.getValue(), getVertexCount(), GL_UNSIGNED_INT, 0);
+		else
+			glDrawArrays(mode.getValue(), 0, getVertexCount());
 	}
 
 	@Override
