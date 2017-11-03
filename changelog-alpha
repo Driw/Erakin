@@ -26,6 +26,11 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+03.11.2016 - 0.0.3.34
+- Removido a necessidade do tamanho e depth de texturas cúbicas sempre sempre os mesmos.
+	- Cada uma das faces será processada com as informações que lhes pertencem.
+- CUBE_LEFT_FACE de 1 para 0; CUBE_RIGHT_FACE de 0 para 1 (ordem correta conforme OpenGL).
+
 03.11.2016 - 0.0.3.33
 - VAO estava funcionando somente através de indices, agora pode funcionar sem.
 	- Para isso foi adicionado setVertexCount para definir os vértices e glDrawArrays se não tiver indices.

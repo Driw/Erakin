@@ -22,12 +22,7 @@ import static org.lwjgl.opengl.GL11.glTexImage2D;
 import static org.lwjgl.opengl.GL11.glTexParameterf;
 import static org.lwjgl.opengl.GL11.glTexParameteri;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE_CUBE_MAP_NEGATIVE_X;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE_CUBE_MAP_NEGATIVE_Y;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE_CUBE_MAP_NEGATIVE_Z;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE_CUBE_MAP_POSITIVE_X;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE_CUBE_MAP_POSITIVE_Y;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE_CUBE_MAP_POSITIVE_Z;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 import static org.lwjgl.opengl.GL14.GL_TEXTURE_LOD_BIAS;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
@@ -80,15 +75,14 @@ public final class TextureLoader extends DefaultLoader<Texture>
 	public static final String DEFAULT_PATH = "textures";
 
 	/**
-	 * Índice da imagem para a face direita do cubo.
-	 */
-	public static final int CUBE_RIGHT_FACE = 0;
-
-	/**
 	 * Índice da imagem para a face esquerda do cubo.
 	 */
-	public static final int CUBE_LEFT_FACE = 1;
+	public static final int CUBE_LEFT_FACE = 0;
 
+	/**
+	 * Índice da imagem para a face direita do cubo.
+	 */
+	public static final int CUBE_RIGHT_FACE = 1;
 	/**
 	 * Índice da imagem para a face superior do cubo.
 	 */
@@ -277,14 +271,6 @@ public final class TextureLoader extends DefaultLoader<Texture>
 			data[CUBE_BACK_FACE] = reader.readTexture(new FileInputStream(format("%s_back.%s", filepath, extension)), FORMAT_RGBA);
 			data[CUBE_FRONT_FACE] = reader.readTexture(new FileInputStream(format("%s_front.%s", filepath, extension)), FORMAT_RGBA);
 
-			int depth = data[0].getDepth();
-			int width = data[0].getWidth();
-			int height = data[0].getHeight();
-
-			for (int i = 1; i < data.length; i++)
-				if (data[i].getDepth() != depth || data[i].getWidth() != width || data[i].getHeight() != height)
-					throw new TextureException("nem todas as texturas são iguais (depth: %d, width: %d, height: %d)", depth, width, height);
-
 			Texture texture = createCubeTexture(path, data);
 
 			return texture;
@@ -343,18 +329,18 @@ public final class TextureLoader extends DefaultLoader<Texture>
 
 		validateLimits(root);
 
-		int format = textureData.getDepth() == 32 ? GL_RGBA : GL_RGB;
-		int width = fold(textureData.getTexWidth());
-		int height = fold(textureData.getTexHeight());
-
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(root.target.GL_CODE, root.id);
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, data[CUBE_LEFT_FACE].getPixels());
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, data[CUBE_RIGHT_FACE].getPixels());
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, data[CUBE_TOP_FACE].getPixels());
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, data[CUBE_BOTTOM_FACE].getPixels());
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, data[CUBE_BACK_FACE].getPixels());
-		glTexImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, data[CUBE_FRONT_FACE].getPixels());
+		{
+			for (int i = 0; i < data.length; i++)
+			{
+				int format = data[i].getDepth() == 32 ? GL_RGBA : GL_RGB;
+				int width = fold(data[i].getTexWidth());
+				int height = fold(data[i].getTexHeight());
+
+				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA, width, height, 0, format, GL_UNSIGNED_BYTE, data[i].getPixels());
+			}
+		}
 		glTexParameteri(root.target.GL_CODE, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(root.target.GL_CODE, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
