@@ -7,6 +7,17 @@ import com.erakin.engine.camera.Camera;
 
 public class EngineUtil
 {
+	/**
+	 * Aquisição da instância da engine.
+	 */
+	public static final Engine ENGINE = Engine.getInstance();
+
+	/**
+	 * Verifica se está sendo processado o primeiro quadro do segundo em questão.
+	 * Pode ser usado para que determinadas informações sejam atualizadas uma vez por segundo.
+	 * @return true se for o primeiro quadro ou false caso contrário.
+	 */
+
 	public static boolean isFirstFrame()
 	{
 		return DisplayManager.getInstance().getFrameCount() == 0;

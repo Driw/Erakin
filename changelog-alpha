@@ -26,6 +26,10 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+12.11.2016 - 0.0.4.39
+- Implementação da classe que realiza a localização da projeção do mouse em relação a um mundo.
+- Mais alguns pequenos ajustes relacionados a documentações.
+
 12.11.2016 - 0.0.4.38
 - Correção na documentação de diversas classes e métodos.
 

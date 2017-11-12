@@ -14,7 +14,7 @@ import org.lwjgl.util.vector.Vector4f;
 import com.erakin.engine.camera.Camera;
 
 /**
- * <h1>Seletor de Mouse</h1>
+ * <h1>Seletor da Projeção do Mouse</h1>
  *
  * <p>Através dessa classe é possível calcular a direção de uma projeção no espaço conforme a posição do mouse na tela.
  * O cálculo é feito internamente quando for o objeto for chamado para atualizar, necessário a cada quadro processado.
