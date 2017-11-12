@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Erakin API"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Util Stream"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LWJGL 2.9.3"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Util Primitive"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Util Log"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

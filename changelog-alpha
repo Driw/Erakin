@@ -26,6 +26,9 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+12.11.2016 - 0.0.4.41
+- Movido implementação dos leitures de recursos padrões do Erakin para um novo projeto: api-readers.
+
 12.11.2016 - 0.0.4.40
 - Movido todo o projeto raiz para o projeto da API, a API deve possuir o necessário para o jogo funcionar.
 - Será adicionado o projeto SDK que vai conter o necessário para construir o jogo através de ferramentas.
