@@ -121,7 +121,7 @@ public class Texture extends Resource<TextureRoot> implements ResourceFileLocati
 	/**
 	 * Seleciona essa unidade de textura será afetada pelos efeitos de texturas chamados na sequência.
 	 * O número de unidades de textura que uma implementação suporte depende da sua implementação, mas deve ser menor que 80.
-	 * @param qual unidade de textura será ativada por esta textura, a textura deve ser um GL_TEXTURE{i},
+	 * @param index qual unidade de textura será ativada por esta textura, a textura deve ser um GL_TEXTURE{i},
 	 * onde <b>i</b> varia entre zero e o valor de <code>GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS</code> menos um. O valor inicial é GL_TEXTURE0.
 	 */
 

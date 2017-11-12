@@ -1,7 +1,7 @@
 package com.erakin.api;
 
 /**
- * <h1>Constantes</h1></p>
+ * <h1>Constantes</h1>
  *
  * <p>Constante é algo que não muda, na programação funciona da mesma forma, são variáveis
  * que não podem ter o seu valor mudado, assuma apenas o valor que lhes foi dado na criação.

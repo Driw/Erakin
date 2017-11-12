@@ -17,7 +17,7 @@ import com.erakin.api.resources.shader.ShaderReader;
  * <p>O programa para vértices ficará dentro de <code>START_VERTEX_PROGRAM</code> até <code>END_VERTEX_PROGRAM</code>.
  * O programa para fragmentos ficará dentro de <code>START_FRAGMENT_PROGRAM</code> até <code>END_FRAGMENT_PROGRAM</code>.</p>
  *
- * <p><b>Exemplo de Vertex/Fragment Program:<br>
+ * <p><b>Exemplo de Vertex/Fragment Program:</b><br>
  * <code>START_VERTEX_PROGRAM</code><br>
  * { ... codificação do programa para computação gráfica ... }<br>
  * <code>END_VERTEX_PROGRAM</code><br>

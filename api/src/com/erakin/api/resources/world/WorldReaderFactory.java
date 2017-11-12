@@ -4,8 +4,6 @@ import org.diverproject.util.FileUtil;
 import org.diverproject.util.collection.Map;
 import org.diverproject.util.collection.abstraction.StringSimpleMap;
 
-import com.erakin.worlds.wds.WorldReaderWDS;
-
 /**
  * <h1>Fábrica para Leitor de Mapas</h1>
  *
@@ -19,7 +17,6 @@ import com.erakin.worlds.wds.WorldReaderWDS;
  *
  * @see Map
  * @see WorldReader
- * @see WorldReaderWDS
  *
  * @author Andrew
  */

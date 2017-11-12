@@ -14,13 +14,13 @@ import com.erakin.api.resources.world.TerrainRuntimeException;
 /**
  * <h1>Terreno Bruto</h1>
  *
- * <h1>Um terreno bruto possui informações de um terreno e pode ser renderizado quando o modelo for gerado.
+ * <p>Um terreno bruto possui informações de um terreno e pode ser renderizado quando o modelo for gerado.
  * Diferente de outros terrenos, esse terreno não precisa de dados de um arquivo para ser criado.
- * Ele pode ser criado pela Engine a partir das configurações especificadas em um mundo bruto.</h1>
+ * Ele pode ser criado pela Engine a partir das configurações especificadas em um mundo bruto.</p>
  *
- * </p>A ideia desta classe é permitir a criação de um editor de mundos/terrenos na Engine.
+ * <p>A ideia desta classe é permitir a criação de um editor de mundos/terrenos na Engine.
  * Outras formas de leitura de mundos foram feitas para testar a renderização dos mundos.
- * Através desse objeto será possível criar do zero e modificar as informações de um mundo.</h1>
+ * Através desse objeto será possível criar do zero e modificar as informações de um mundo.</p>
  *
  * @see TerrainRender
  * @see WorldRender

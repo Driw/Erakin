@@ -4,7 +4,7 @@ import org.diverproject.jni.input.KeyEvent;
 import org.diverproject.jni.input.KeyListener;
 
 /**
- * <p><h1>Adaptador de Tecla</h1>
+ * <h1>Adaptador de Tecla</h1>
  *
  * <p>Classe usada para facilitar a codificação durante a utilização de um KeyListener.
  * Tendo como finalidade apenas a redução de código durante o desenvolvimento da aplicação.

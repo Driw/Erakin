@@ -291,7 +291,7 @@ public final class TextureLoader extends DefaultLoader<Texture>
 	 * @return aquisição de uma textura cúbica de uso temporário.
 	 */
 
-	public Texture createCubeTexture(String path, TextureData[] data) throws TextureException
+	public Texture createCubeTexture(String path, TextureData[] data)
 	{
 		if (path == null)
 			throw new TextureRuntimeException("caminho não definido");

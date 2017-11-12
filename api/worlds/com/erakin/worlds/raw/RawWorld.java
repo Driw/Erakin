@@ -301,9 +301,9 @@ public class RawWorld implements WorldRender
 	}
 
 	/**
-	 * Permite definir o tamanho de cada unidade de terreno no espaço.
+	 * A unidade de terreno determina a dimensão de cada unidade de terreno para formar o mesmo.
 	 * <b>Necessário</b> usar <code>genFlatTerrain()</code> ou <code>updateUnitSize()</code>.
-	 * @param unitSize
+	 * @param unitSize tamanho de cada unidade de terreno no espaço.
 	 */
 
 	public void setUnitSize(float unitSize)

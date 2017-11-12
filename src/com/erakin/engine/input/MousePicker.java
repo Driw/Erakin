@@ -16,9 +16,9 @@ import com.erakin.engine.camera.Camera;
 /**
  * <h1>Seletor de Mouse</h1>
  *
- * <p>Através dessa classe é possível calcular e projetar um raio (linha/direção) no espaço conforme a posição do mouse.
- * Para isso será necessário a especificação da câmera que vai ser utilizada como também a matriz de projeção.
- * O cálculo é feito internamente quando for o objeto for chamado para atualizar, necessário a cada quadro processado.</p>
+ * <p>Através dessa classe é possível calcular a direção de uma projeção no espaço conforme a posição do mouse na tela.
+ * O cálculo é feito internamente quando for o objeto for chamado para atualizar, necessário a cada quadro processado.
+ * Essa projeção pode ser utilizada para diferentes funcionalidades seja para edição (SDK) ou para o jogo em si.</p>
  *
  * @see Camera
  * @see Vector3f
@@ -93,7 +93,7 @@ public class MousePicker
 	}
 
 	/**
-	 * @return aquisição do posicionamento do raio projetado na tela.
+	 * @return aquisição da direção da projeção do cursor do mouse em relação ao espaço.
 	 */
 
 	public Vector3f getRay()

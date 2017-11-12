@@ -12,7 +12,13 @@ import com.erakin.api.resources.ResourceFileLocation;
 /**
  * <h1>Computação Gráfica</h1>
  *
- * <p></p>
+ * <p>Computações gráficas são linhas de códigos que recebem informações para proporcionar efeitos.
+ * Os efeitos proporcionados são diversos e se limite a criatividade e lógica do desenvolvedor.
+ * O básico é para definir a texturização, iluminação, refletividade da luz e afins.</p>
+ *
+ * <p>Essa computação gráfica funciona em dois momentos distintos, sendo a de vértices e a de fragmentos.
+ * A de vértices recebe informações do modelo como input e seu principal objeto a posição no espaço.
+ * Já a de fragmentos tem esse output como input e processada cada pixel renderizado na tela.</p>
  *
  * @see Resource
  * @see ShaderRender

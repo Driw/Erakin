@@ -75,11 +75,6 @@ public class MovementMath
 	 * <i>OBS: aqui é usado os pontos X e Y, mas deve ser levado em consideração a orientação no espaço usado.</i>
 	 * @param distance parâmetro de distância que determina quanto o objeto deve se movimentar.
 	 * @param yaw posicionamento relativo de guinada da orientação de visão do objeto.
-	 * @param forward determina se o objeto está ou não se movimentado para frente.
-	 * @param behind determina se o objeto está ou não se movimentado para trás.
-	 * @param left determina se o objeto está ou não se movimentado para esquerda.
-	 * @param right determina se o objeto está ou não se movimentado para direita.
-	 * @return aquisição de um vetor com a distância percorrida em dois pontos (X: longitude e Y: latitude).
 	 */
 
 	public void calcMovement(float distance, float yaw)

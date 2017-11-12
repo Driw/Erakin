@@ -131,7 +131,7 @@ public enum DrawElement
 	 * Converte um valor numérico do tipo inteiro em um DrawElement baseado em seu valor.
 	 * @param code número referente ao código do tipo de DrawElement do qual deseja.
 	 * @return aquisição do DrawElement que corresponde ao código especificado.
-	 * @throws ParseException apenas se o código for inválido (não existe).
+	 * @throws ErakinParseException apenas se o código for inválido (não existe).
 	 */
 
 	public static DrawElement parse(int code) throws ErakinParseException
@@ -147,7 +147,7 @@ public enum DrawElement
 	 * Converte uma string para um DrawElement baseado no seu nome de identificação.
 	 * @param value nome de identificação do DrawElement do qual deseja.
 	 * @return aquisição do DrawElement que corresponde ao nome de identificação.
-	 * @throws ParseException apenas o nome for inválido (não existe).
+	 * @throws ErakinParseException apenas o nome for inválido (não existe).
 	 */
 
 	public static DrawElement parse(String value) throws ErakinParseException

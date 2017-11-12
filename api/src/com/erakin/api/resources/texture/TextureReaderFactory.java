@@ -17,9 +17,6 @@ import org.diverproject.util.collection.abstraction.StringSimpleMap;
  *
  * @see Map
  * @see TextureReader
- * @see ShaderReaderGLSL
- * @see TextureReaderJPG
- * @see TextureReaderPNG
  *
  * @author Andrew
  */

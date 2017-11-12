@@ -65,7 +65,7 @@ public class ModelIndiceAttribute implements ModelAttribute
 	/**
 	 * Define valores para serem alocados no buffer interno como dados do atributo.
 	 * @param index índice do vértice do qual os valores serão alocados no buffer.
-	 * @param values valor numérico inteiro que será alocado ao índice especificado.
+	 * @param value valor numérico inteiro que será alocado ao índice especificado.
 	 */
 
 	public void setValue(int index, int value)

@@ -26,6 +26,9 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+12.11.2016 - 0.0.4.38
+- Correção na documentação de diversas classes e métodos.
+
 12.11.2016 - 0.0.4.37
 - Novo método para se saber quantos quadros já foram processados no último segundo em DisplayManager.
 - Renomeado getProjectMatrix() para getProjectionMatrix(), o nome do método estava incorreto.

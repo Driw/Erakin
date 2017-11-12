@@ -9,8 +9,6 @@ import org.diverproject.util.ObjectDescription;
  * Protege a visibilidade de alguns objetos de forma a manter melhor a segurança de seu uso.
  * Possui como responsabilidade um mapeamento dos recursos carregados e o caminho a carregar.</p>
  *
- * @see PreferencesSettings
- *
  * @author Andre Mello
  *
  * @param <T> tipo de recurso que poderá ser carregado.
@@ -125,7 +123,7 @@ public class DefaultLoader<T extends Resource<?>>
 	 * Itera cada um dos recursos raízes salvos no carregador para que seja atualizado o seu tempo de vida útil.
 	 * Caso seu tempo de vida útil tenha acabo o seu conteúdo será liberado completamente do carregador.
 	 * <i>Um recurso raíz removido não terá mais utilidade pra nenhum recurso referente a ele, porém pode ser recarregado.</i>.
-	 * @param delay
+	 * @param delay quantos milissegundos se passou desde a última atualização.
 	 */
 
 	public void update(long delay)
