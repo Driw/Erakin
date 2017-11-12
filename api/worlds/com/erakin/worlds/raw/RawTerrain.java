@@ -321,6 +321,12 @@ public class RawTerrain implements TerrainRender
 		return heightTexture;
 	}
 
+	@Override
+	public float getHeightOfTerrain(float x, float z)
+	{
+		return 0; // FIXME tem que por altura do terreno
+	}
+
 	/**
 	 * Essa textura só será utilizado quando o terreno estiver no modo de visualização da elevação do terreno.
 	 * @param texture referência da textura carregada na Engine para elevação do terreno.

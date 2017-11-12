@@ -145,6 +145,12 @@ public class Terrain implements TerrainRender
 		return null; // FIXME será necessário listar a textura dos terrenos
 	}
 
+	@Override
+	public float getHeightOfTerrain(float x, float z)
+	{
+		return heights[(int) x][(int) z];
+	}
+
 	/**
 	 * Permite definir qual o tamanho que o terreno irá possuir em células.
 	 * @param width quantidade de células que irá compor o terreno na largura.

@@ -96,7 +96,7 @@ public class ColorVector
 
 	public void setRed(int red)
 	{
-		this.red = IntUtil.limit(red, MIN_INT_COLOR, MAX_INT_COLOR) / MAX_INT_COLOR;
+		this.red = (float) IntUtil.limit(red, MIN_INT_COLOR, MAX_INT_COLOR) / (float) MAX_INT_COLOR;
 	}
 
 	public int getGreeni()
@@ -106,7 +106,7 @@ public class ColorVector
 
 	public void setGreen(int green)
 	{
-		this.green = IntUtil.limit(green, MIN_INT_COLOR, MAX_INT_COLOR) / MAX_INT_COLOR;
+		this.green = (float) IntUtil.limit(green, MIN_INT_COLOR, MAX_INT_COLOR) / (float) MAX_INT_COLOR;
 	}
 
 	public int getBluei()
@@ -116,7 +116,7 @@ public class ColorVector
 
 	public void setBlue(int blue)
 	{
-		this.blue = IntUtil.limit(blue, MIN_INT_COLOR, MAX_INT_COLOR) / MAX_INT_COLOR;
+		this.blue = (float) IntUtil.limit(blue, MIN_INT_COLOR, MAX_INT_COLOR) / (float) MAX_INT_COLOR;
 	}
 
 	public int getAlphai()
@@ -126,7 +126,7 @@ public class ColorVector
 
 	public void setAlpha(int alpha)
 	{
-		this.alpha = IntUtil.limit(alpha, MIN_INT_COLOR, MAX_INT_COLOR) / MAX_INT_COLOR;
+		this.alpha = (float) IntUtil.limit(alpha, MIN_INT_COLOR, MAX_INT_COLOR) / (float) MAX_INT_COLOR;
 	}
 
 	public Vector3f toVector3f()
@@ -137,6 +137,28 @@ public class ColorVector
 	public Vector4f toVector4f()
 	{
 		return new Vector4f(getRed(), getGreen(), getBlue(), getAlpha());
+	}
+
+	@Override
+	public ColorVector clone()
+	{
+		return new ColorVector(red, green, blue, alpha);
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof ColorVector)
+		{
+			ColorVector color = (ColorVector) obj;
+
+			return	color.red == red &&
+					color.green == green &&
+					color.blue == blue &&
+					color.alpha == alpha;
+		}
+
+		return false;
 	}
 
 	@Override

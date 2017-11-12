@@ -57,6 +57,16 @@ public interface TerrainRender
 	int getLength();
 
 	/**
+	 * Procedimento que permite obter o valor de altura do relevo em uma determinada posição do terreno.
+	 * As coordenadas são especificadas em float caso o terreno possua relevos dinâmicos e não por unidade.
+	 * @param x coordenada em relação ao terreno no eixo da longitude.
+	 * @param z coordenada em relação ao terreno no eixo da latitude.
+	 * @return aquisição da altura de relevo do terreno nas coordenadas especificadas.
+	 */
+
+	float getHeightOfTerrain(float x, float z);
+
+	/**
 	 * Um terreno pode ser renderizado por múltiplas texturas e para isso é necessário saber quais usar.
 	 * @return aquisição da lista com todas as texturas disponíveis para texturização do terreno.
 	 */
