@@ -1,12 +1,15 @@
 package com.erakin.engine;
 
 import org.lwjgl.util.vector.Matrix4f;
+import org.lwjgl.util.vector.Vector3f;
+
+import com.erakin.engine.camera.Camera;
 
 public class EngineUtil
 {
-	private EngineUtil()
+	public static boolean isFirstFrame()
 	{
-		
+		return DisplayManager.getInstance().getFrameCount() == 0;
 	}
 
 	/**
@@ -14,7 +17,7 @@ public class EngineUtil
 	 * @return aquisição da matriz de projeção global usada pelo engine.
 	 */
 
-	public static Matrix4f getProjectMatrix()
+	public static Matrix4f getProjectionMatrix()
 	{
 		ProjectionMatrix projectionMatrix = ProjectionMatrix.getInstance();
 		Matrix4f matrix = projectionMatrix.getMatrix();
@@ -33,5 +36,22 @@ public class EngineUtil
 	{
 		ProjectionMatrix projectionMatrix = ProjectionMatrix.getInstance();
 		projectionMatrix.updateWith(fieldOfView, nearPlane, farPlane);
+	}
+
+	/**
+	 * Uma câmera não possui método para se criar/obter um vetor com suas coordenadas no espaço.
+	 * Através desse método se cria esse vetor internamente e definine a posição da câmera.
+	 * @param camera referência da câmera para se obter as coordenadas X, Y e Z.
+	 * @return aquisição de um novo vetor contendo a posição da câmera.
+	 */
+
+	public static Vector3f newVector3f(Camera camera)
+	{
+		return new Vector3f(camera.getPositionX(), camera.getPositionY(), camera.getPositionZ());
+	}
+
+	private EngineUtil()
+	{
+		
 	}
 }

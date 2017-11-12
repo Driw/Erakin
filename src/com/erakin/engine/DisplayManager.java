@@ -276,6 +276,18 @@ public class DisplayManager
 	}
 
 	/**
+	 * A renderização da tela é feita por diversos quadros, onde cada quadro é uma "imagem".
+	 * Quando essas imagens são sobrescritas em um intervalo de tempo muito curto cria o efeito da animação.
+	 * Através desse método é possível saber quantos quatros já foram processados no último segundo.
+	 * @return aquisição da quantidade de quadros que já foram contabilizados.
+	 */
+
+	public int getFrameCount()
+	{
+		return frameCount;
+	}
+
+	/**
 	 * Procedimento que permite obter a única instância do gerenciador de exibição.
 	 * Utiliza o padrão Singleton para evitar a existência de mais instâncias.
 	 * @return aquisição da instância para utilização do gerenciador de exibição.

@@ -26,6 +26,16 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+12.11.2016 - 0.0.4.37
+- Novo método para se saber quantos quadros já foram processados no último segundo em DisplayManager.
+- Renomeado getProjectMatrix() para getProjectionMatrix(), o nome do método estava incorreto.
+- Implementação da projeção de raio relativo ao posicionamento do mouse na tela, MousePicker.
+
+12.11.2016 - 0.0.4.36
+- ColorVector não funcionava corretamente com valores int e implementado clone() e equals().
+- TerrainRender agora deve possuir um método getHeightOfTerrain() para se saber o relevo do terreno.
+	- Será necessário para as próximas atualizações.
+
 03.11.2016 - 0.0.4.35
 - ModelReaderMDL não estava funcionando corretamente conforme esperado e sempre haveria dados para atribuir ao modelo.
 - Movido parte da lógica de createTransformationMatrix() para updateTransformationMatrix() afim de deixar mais dinâmico.
