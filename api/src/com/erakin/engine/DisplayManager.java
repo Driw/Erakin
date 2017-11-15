@@ -4,6 +4,7 @@ import static com.erakin.api.Constants.NANOSECOND;
 import static org.diverproject.log.LogSystem.logNotice;
 import static org.lwjgl.opengl.GL11.glViewport;
 
+import java.awt.Canvas;
 import java.awt.Toolkit;
 
 import org.diverproject.util.lang.IntUtil;
@@ -91,6 +92,8 @@ public class DisplayManager
 	 */
 	private long lastFrame;
 
+	private Canvas canvas;
+
 	/**
 	 * Construtor privado para evitar múltiplas instâncias do gerenciador de exibição.
 	 */
@@ -164,6 +167,9 @@ public class DisplayManager
 		if (settings == null)
 			throw new ErakinException("configurações nula");
 
+		if (canvas != null || (canvas != null && canvas != Display.getParent()))
+			Display.setParent(canvas);
+
 		int width = IntUtil.limit(settings.getWidth(), MIN_WIDTH, MAX_WIDTH);
 		int height = IntUtil.limit(settings.getHeight(), MIN_HEIGHT, MAX_HEIGHT);
 		boolean fullscreen = settings.isFullscreen();
@@ -204,6 +210,9 @@ public class DisplayManager
 		}
 
 		setFPS(settings.getFPS());
+
+		if (canvas != null && canvas instanceof DisplayListener)
+			((DisplayListener) canvas).setDisplayMode(displayMode);
 
 		Display.setDisplayMode(displayMode);
 		Display.setFullscreen(fullscreen);
@@ -285,6 +294,11 @@ public class DisplayManager
 	public int getFrameCount()
 	{
 		return frameCount;
+	}
+
+	public void useCanvas(Canvas canvas)
+	{
+		this.canvas = canvas;
 	}
 
 	/**

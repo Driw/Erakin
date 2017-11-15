@@ -26,6 +26,10 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+15.11.2016 - 0.0.4.42
+- Implementando a possibilidade da Engine funcionar dentro de um Canvas.
+	- Será necessário para que criemos um Editor e que as coisas sejam renderizadas no mesmo.
+
 12.11.2016 - 0.0.4.41
 - Movido implementação dos leitures de recursos padrões do Erakin para um novo projeto: api-readers.
 
