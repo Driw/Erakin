@@ -26,6 +26,11 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+15.11.2016 - 0.0.4.45
+- DisplaySettings.getPreferences não estava funcionando corretamente, faltou especificar as key.
+- PreferencesDefault atualizado conforme mudança no JavaUtil de encapsulamento de Map.Option.
+	- Também foi adicionado novo método que permite contabilizar a quantidade de preferências.
+
 15.11.2016 - 0.0.4.44
 - Incluido nova dependência (lib): Fast JSON 1.2.9.
 - Opção de carregar e salvar preferências em arquivos JSON.

@@ -77,7 +77,7 @@ public abstract class RendererEntitiesDefault implements RendererEntities
 	public final void update(long delay)
 	{
 		for (MapItem<Model, Queue<Entity>> item : entities.iterateItems())
-			for (Entity entity : item.value)
+			for (Entity entity : item.getValue())
 				entity.update(delay);
 	}
 
@@ -122,8 +122,8 @@ public abstract class RendererEntitiesDefault implements RendererEntities
 	{
 		for (MapItem<Model, Queue<Entity>> item : entities.iterateItems())
 		{
-			Model model = item.key;
-			Queue<Entity> queue = item.value;
+			Model model = item.getKey();
+			Queue<Entity> queue = item.getValue();
 
 			beforeRenderEntity(model);
 

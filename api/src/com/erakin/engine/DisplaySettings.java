@@ -197,11 +197,11 @@ public class DisplaySettings
 		if (preferences == null)
 			return;
 
-		preferences.setOptionInt("", fps);
-		preferences.setOptionInt("", width);
-		preferences.setOptionInt("", height);
-		preferences.setOptionBoolean("", fullscreen);
-		preferences.setOptionBoolean("", vsync);
+		preferences.setOptionInt("fps", fps);
+		preferences.setOptionInt("width", width);
+		preferences.setOptionInt("height", height);
+		preferences.setOptionBoolean("fullscreen", fullscreen);
+		preferences.setOptionBoolean("vsync", vsync);
 	}
 
 	@Override

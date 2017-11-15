@@ -52,8 +52,8 @@ public class PreferencesDefault implements Preferences
 
 		for (Option option : getOptions())
 			if (option != null)
-				if (!options.add(option.key, option.value))
-					logWarning("falha ao carregar opação (key: %s, value: %s)", option.key, option.value);
+				if (!options.add(option.getKey(), option.getValue()))
+					logWarning("falha ao carregar opação (key: %s, value: %s)", option.getKey(), option.getValue());
 	}
 
 	/**
@@ -170,17 +170,17 @@ public class PreferencesDefault implements Preferences
 		{
 			MapItem<String, Object> item = iterator.next();
 
-			if (item.value instanceof Integer && ini.contains(item.key))
-				options.update(item.key, ini.getInt(item.key));
+			if (item.getValue() instanceof Integer && ini.contains(item.getKey()))
+				options.update(item.getKey(), ini.getInt(item.getKey()));
 
-			else if (item.value instanceof Float && ini.contains(item.key))
-				options.update(item.key, ini.getFloat(item.key));
+			else if (item.getValue() instanceof Float && ini.contains(item.getKey()))
+				options.update(item.getKey(), ini.getFloat(item.getKey()));
 
-			else if (item.value instanceof Boolean && ini.contains(item.key))
-				options.update(item.key, ini.getBoolean(item.key));
+			else if (item.getValue() instanceof Boolean && ini.contains(item.getKey()))
+				options.update(item.getKey(), ini.getBoolean(item.getKey()));
 
-			else if (item.value instanceof String && ini.contains(item.key))
-				options.update(item.key, ini.getString(item.key));
+			else if (item.getValue() instanceof String && ini.contains(item.getKey()))
+				options.update(item.getKey(), ini.getString(item.getKey()));
 		}
 	}
 
@@ -199,17 +199,17 @@ public class PreferencesDefault implements Preferences
 		{
 			MapItem<String, Object> item = iterator.next();
 
-			if (item.value instanceof Integer && json.containsKey(item.key))
-				options.update(item.key, json.getIntValue(item.key));
+			if (item.getValue() instanceof Integer && json.containsKey(item.getKey()))
+				options.update(item.getKey(), json.getIntValue(item.getKey()));
 
-			else if (item.value instanceof Float && json.containsKey(item.key))
-				options.update(item.key, json.getFloatValue(item.key));
+			else if (item.getValue() instanceof Float && json.containsKey(item.getKey()))
+				options.update(item.getKey(), json.getFloatValue(item.getKey()));
 
-			else if (item.value instanceof Boolean && json.containsKey(item.key))
-				options.update(item.key, json.getBooleanValue(item.key));
+			else if (item.getValue() instanceof Boolean && json.containsKey(item.getKey()))
+				options.update(item.getKey(), json.getBooleanValue(item.getKey()));
 
-			else if (item.value instanceof String && json.containsKey(item.key))
-				options.update(item.key, json.getString(item.key));
+			else if (item.getValue() instanceof String && json.containsKey(item.getKey()))
+				options.update(item.getKey(), json.getString(item.getKey()));
 		}
 	}
 
@@ -376,9 +376,18 @@ public class PreferencesDefault implements Preferences
 	 * @return vetor contendo as opções do qual serão usadas como iniciais.
 	 */
 
-	protected Option[] getOptions()
+	public Option[] getOptions()
 	{
 		return new Option[] {};
+	}
+
+	/**
+	 * @return aquisição da quantidade de opções de preferências definidas.
+	 */
+
+	public int count()
+	{
+		return options.size();
 	}
 
 	@Override
@@ -401,7 +410,7 @@ public class PreferencesDefault implements Preferences
 	 * @author Andrew Mello
 	 */
 
-	protected class Option extends MapItem<String, Object>
+	public class Option extends MapItem<String, Object>
 	{
 		/**
 		 * Constrói uma nova opção sendo necessário determinar o seu valor e chave.
