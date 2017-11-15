@@ -4,6 +4,7 @@ import static org.diverproject.log.LogSystem.logException;
 import static org.diverproject.log.LogSystem.logWarning;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 
 import org.diverproject.ini.JIni;
@@ -12,6 +13,14 @@ import org.diverproject.util.FileUtil;
 import org.diverproject.util.collection.Map;
 import org.diverproject.util.collection.Map.MapItem;
 import org.diverproject.util.collection.abstraction.DynamicMap;
+import org.diverproject.util.stream.Input;
+import org.diverproject.util.stream.Output;
+import org.diverproject.util.stream.StreamRuntimeException;
+import org.diverproject.util.stream.implementation.input.InputByteArray;
+import org.diverproject.util.stream.implementation.output.OutputStream;
+
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 
 /**
  * <h1>Padrão de Preferências</h1>
@@ -73,6 +82,28 @@ public class PreferencesDefault implements Preferences
 						logException(e);
 					}
 					break;
+
+				case "json":
+					try {
+
+						Input input = new InputByteArray(file);
+						{
+							byte buffer[] = input.getBytes(input.space());
+							String text = new String(buffer);
+							JSONObject jsonObject = JSONObject.parseObject(text);
+							{
+								load(jsonObject);
+							}
+							text = null;
+							buffer = null;
+						}
+						input.close();
+
+					} catch (StreamRuntimeException e) {
+						logWarning("falha ao inicializar preferências (arquivo: %s)", file.getPath());
+						logException(e);
+					}
+					break;
 			}
 		}
 	}
@@ -99,6 +130,23 @@ public class PreferencesDefault implements Preferences
 						ini.save();
 
 					} catch (JIniException e) {
+						logWarning("falha ao inicializar preferências (arquivo: %s)", file.getPath());
+						logException(e);
+					}
+					break;
+
+				case "json":
+					try {
+
+						JSONObject jsonObject = new JSONObject();
+						save(jsonObject);
+
+						Output output = new OutputStream(file);
+						output.putBytes(JSONObject.toJSONString(jsonObject, SerializerFeature.PrettyFormat).getBytes());
+						output.flush();
+						output.close();
+
+					} catch (FileNotFoundException | StreamRuntimeException e) {
 						logWarning("falha ao inicializar preferências (arquivo: %s)", file.getPath());
 						logException(e);
 					}
@@ -133,6 +181,35 @@ public class PreferencesDefault implements Preferences
 
 			else if (item.value instanceof String && ini.contains(item.key))
 				options.update(item.key, ini.getString(item.key));
+		}
+	}
+
+	/**
+	 * Carrega as preferências existentes lidas de um arquivo em formato JSON.
+	 * Irá iterar todas as preferências existentes e atualizar seu valor se carregado.
+	 * Caso o a preferência não exista irá manter o valor anterior a leitura do JSON.
+	 * @param json referência do objecto que carrega as configurações JSON carregadas.
+	 */
+
+	protected void load(JSONObject json)
+	{
+		Iterator<MapItem<String, Object>> iterator = options.iteratorItems();
+
+		while (iterator.hasNext())
+		{
+			MapItem<String, Object> item = iterator.next();
+
+			if (item.value instanceof Integer && json.containsKey(item.key))
+				options.update(item.key, json.getIntValue(item.key));
+
+			else if (item.value instanceof Float && json.containsKey(item.key))
+				options.update(item.key, json.getFloatValue(item.key));
+
+			else if (item.value instanceof Boolean && json.containsKey(item.key))
+				options.update(item.key, json.getBooleanValue(item.key));
+
+			else if (item.value instanceof String && json.containsKey(item.key))
+				options.update(item.key, json.getString(item.key));
 		}
 	}
 
@@ -172,6 +249,45 @@ public class PreferencesDefault implements Preferences
 
 			else if (value instanceof String)
 				ini.putString(key, (String) value);
+		}
+	}
+
+	/**
+	 * Salva as preferências aqui existentes em um arquivo JSON através do seguinte objeto:
+	 * @param json referência do objeto que permite escrever em formato de arquivo JSON.
+	 */
+
+	protected void save(JSONObject json)
+	{
+		int i = 0;
+		int size = options.size();
+		String keys[] = new String[size];
+		Object values[] = new Object[size];
+
+		for (Object object : options)
+			values[i++] = object;
+
+		Iterator<String> iterator = options.iteratorKey();
+
+		for (i = 0; iterator.hasNext(); i++)
+			keys[i] = iterator.next();
+
+		for (i = 0; i < size; i++)
+		{
+			String key = keys[i];
+			Object value = values[i];
+
+			if (value instanceof Integer)
+				json.put(key, (Integer) value);
+
+			else if (value instanceof Float)
+				json.put(key, (Float) value);
+
+			else if (value instanceof Boolean)
+				json.put(key, (Boolean) value);
+
+			else if (value instanceof String)
+				json.put(key, (String) value);
 		}
 	}
 

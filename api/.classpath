@@ -11,5 +11,6 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/JNI Input"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/LWJGL 2.9.3"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/JIni"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Fast JSON 1.2.9"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
