@@ -1,8 +1,8 @@
 package com.erakin.engine;
 
-import static com.erakin.api.ErakinAPIUtil.sizeOfCollection;
 import static com.erakin.api.lwjgl.math.Maths.createProjectionMatrix;
 import static org.diverproject.log.LogSystem.logDebug;
+import static org.diverproject.util.Util.size;
 
 import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.collection.List;
@@ -235,7 +235,7 @@ public class ProjectionMatrix
 		description.append("near", nearPlane);
 		description.append("far", farPlane);
 		description.append("updated", updated);
-		description.append("listeners", sizeOfCollection(listeners));
+		description.append("listeners", size(listeners));
 
 		return description.toString();
 	}

@@ -18,7 +18,7 @@ import java.io.File;
 
 import org.diverproject.util.stream.implementation.input.InputByteArray;
 
-import com.erakin.api.resources.DefaultLoader;
+import com.erakin.api.resources.ResourceLoaderDefault;
 import com.erakin.api.resources.ResourceMap;
 import com.erakin.api.resources.ResourceRoot;
 
@@ -42,7 +42,7 @@ import com.erakin.api.resources.ResourceRoot;
  * @author Andrew Mello
  */
 
-public class ShaderLoader extends DefaultLoader<Shader>
+public class ShaderLoader extends ResourceLoaderDefault<Shader>
 {
 	/**
 	 * Instância para carregador de programas no padrão de projetos Singleton.

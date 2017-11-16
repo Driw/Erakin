@@ -32,7 +32,7 @@ import java.io.FileInputStream;
 import org.diverproject.util.FileUtil;
 import org.diverproject.util.lang.IntUtil;
 
-import com.erakin.api.resources.DefaultLoader;
+import com.erakin.api.resources.ResourceLoaderDefault;
 import com.erakin.api.resources.ResourceMap;
 import com.erakin.api.resources.ResourceRoot;
 
@@ -57,7 +57,7 @@ import com.erakin.api.resources.ResourceRoot;
  * @author Andrew Mello
  */
 
-public final class TextureLoader extends DefaultLoader<Texture>
+public final class TextureLoader extends ResourceLoaderDefault<Texture>
 {
 	/**
 	 * Tamanho mínimo que uma textura terá.

@@ -1,5 +1,6 @@
 package com.erakin.engine.render;
 
+import com.erakin.engine.Engine;
 import com.erakin.engine.Tickable;
 
 /**
@@ -44,4 +45,23 @@ public interface RendererManager extends Tickable
 	 */
 
 	boolean isInitiate();
+
+	/**
+	 * Quando o renderizador estiver parado ele não será chamado para renderizar pela {@link Engine}.
+	 * @return true se estiver parado e não deve renderizar ou false caso contrário e deve renderizar.
+	 */
+
+	boolean isStoped();
+
+	/**
+	 * Ao parar o renderizador, não será chamado pela {@link Engine} para efetuar a sua renderização.
+	 */
+
+	void pause();
+
+	/**
+	 * Ao resumir o renderizador, volta a ser chamado pela {@link Engine} para efetuar sua renderização.
+	 */
+
+	void resume();
 }

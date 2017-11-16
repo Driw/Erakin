@@ -1,9 +1,9 @@
 package com.erakin.api.lwjgl;
 
-import static com.erakin.api.ErakinAPIUtil.sizeOfCollection;
 import static com.erakin.api.lwjgl.GLUtil.glStore;
 import static com.erakin.api.lwjgl.VBO.ARRAY_BUFFER;
 import static com.erakin.api.lwjgl.VBO.ELEMENT_ARRAY_BUFFER;
+import static org.diverproject.util.Util.size;
 import static org.lwjgl.opengl.GL11.GL_UNSIGNED_INT;
 import static org.lwjgl.opengl.GL11.glDrawArrays;
 import static org.lwjgl.opengl.GL11.glDrawElements;
@@ -337,7 +337,7 @@ public class VAO implements GLBind
 		ObjectDescription description = new ObjectDescription(getClass());
 
 		description.append("id", id);
-		description.append("vbos", sizeOfCollection(vbos));
+		description.append("vbos", size(vbos));
 		description.append("vertexCount", vertexCount);
 
 		return description.toString();

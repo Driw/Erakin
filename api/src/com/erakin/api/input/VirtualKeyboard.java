@@ -7,7 +7,6 @@ import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.collection.List;
 import org.diverproject.util.collection.abstraction.DynamicList;
 import org.diverproject.util.lang.IntUtil;
-import org.diverproject.util.service.ServiceException;
 import org.lwjgl.opengl.Display;
 
 /**
@@ -50,6 +49,12 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	 * Instância para teclado virtual no padrão de projetos Singleton.
 	 */
 	private static final VirtualKeyboard INSTANCE = new VirtualKeyboard();
+
+
+	/**
+	 * Listener para habilitar e desabilitar o teclado virtual.
+	 */
+	private VirtualKeyBoardActiveListener activeListener;
 
 	/**
 	 * Código do estado de serviço que o teclado se encontrada.
@@ -96,7 +101,7 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	}
 
 	@Override
-	public void start() throws ServiceException
+	public void start()
 	{
 		state = SERVICE_STARTED;
 
@@ -110,7 +115,7 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	}
 
 	@Override
-	public void terminate() throws ServiceException
+	public void terminate()
 	{
 		typedListeners.clear();
 		pressedListeners.clear();
@@ -120,7 +125,7 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	}
 
 	@Override
-	public void interrupted() throws ServiceException
+	public void interrupted()
 	{
 		state = SERVICE_STOPED;
 	}
@@ -140,10 +145,15 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 	@Override
 	public void dispatch(KeyEvent event)
 	{
-		if (!Display.isCreated() || !Display.isActive())
+		if (getState() != SERVICE_RUNNING)
 			return;
 
-		if (getState() != SERVICE_RUNNING)
+		if (activeListener == null)
+		{
+			if (!Display.isCreated() || !Display.isActive())
+				return;
+		}
+		else if (!activeListener.canDispatch())
 			return;
 
 		switch (event.getType())
@@ -310,6 +320,17 @@ public class VirtualKeyboard extends Keyboard implements Input, KeyboardDispatch
 			return;
 
 		releasedListeners.remove(listener);
+	}
+
+	/**
+	 * Esse listener é usado para determinar se o {@link VirtualKeyboard} deve ou não despachar eventos engatilhados.
+	 * Quando o serviço for desativado nenhum evento será despachado, seja de pressed, released ou typed.
+	 * @param activeListener referência do objeto que implementa o listener de teclado ativo.
+	 */
+
+	public void setActiveListener(VirtualKeyBoardActiveListener activeListener)
+	{
+		this.activeListener = activeListener;
 	}
 
 	@Override

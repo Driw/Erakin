@@ -1,6 +1,6 @@
 package com.erakin.engine.render;
 
-import static com.erakin.api.ErakinAPIUtil.nameOf;
+import static org.diverproject.util.Util.nameOf;
 
 import org.diverproject.util.ObjectDescription;
 
@@ -26,7 +26,7 @@ import com.erakin.engine.entity.Entity;
  * @author Andrew Mello
  */
 
-public abstract class RendererManagerDefault implements RendererManager
+public abstract class RendererManagerDefault extends RendererDefault implements RendererManager
 {
 	/**
 	 * Define se o gerenciador de renderização já foi iniciado.
@@ -47,6 +47,36 @@ public abstract class RendererManagerDefault implements RendererManager
 	 * Renderizador de Céus que está sendo usado.
 	 */
 	private RendererSkybox rendererSkybox;
+
+	@Override
+	public void pause()
+	{
+		super.pause();
+
+		if (rendererWorlds != null)
+			rendererWorlds.pause();
+
+		if (rendererEntities != null)
+			rendererEntities.pause();
+
+		if (rendererSkybox != null)
+			rendererSkybox.pause();
+	}
+
+	@Override
+	public void resume()
+	{
+		super.resume();
+
+		if (rendererWorlds != null)
+			rendererWorlds.resume();
+
+		if (rendererEntities != null)
+			rendererEntities.resume();
+
+		if (rendererSkybox != null)
+			rendererSkybox.resume();
+	}
 
 	@Override
 	public void update(long delay)
@@ -88,21 +118,11 @@ public abstract class RendererManagerDefault implements RendererManager
 	}
 
 	@Override
-	public void initiate()
+	protected void subInitiate()
 	{
-		subInitiate();
-
-		initiate = true;
-
 		rendererWorlds.initiate();
 		rendererEntities.initiate();
 		rendererSkybox.initiate();
-	}
-
-	@Override
-	public boolean isInitiate()
-	{
-		return initiate;
 	}
 
 	/**
@@ -189,13 +209,6 @@ public abstract class RendererManagerDefault implements RendererManager
 		}
 	}
 
-	/**
-	 * Chamado internamente quando for dito ao gerenciador de renderização para ser iniciado.
-	 * Irá definir um atributo como inicializado de modo a facilitar a implementação do mesmo.
-	 */
-
-	protected abstract void subInitiate();
-
 	@Override
 	public String toString()
 	{
@@ -207,5 +220,13 @@ public abstract class RendererManagerDefault implements RendererManager
 		description.append("skybox", nameOf(rendererSkybox));
 
 		return description.toString();
+	}
+
+	@Override
+	protected void toString(ObjectDescription description)
+	{
+		description.append("rendererSkybox", nameOf(rendererSkybox));
+		description.append("rendererWorlds", nameOf(rendererWorlds));
+		description.append("rendererEntities", nameOf(rendererEntities));
 	}
 }

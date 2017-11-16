@@ -7,7 +7,7 @@ import static org.diverproject.log.LogSystem.logWarning;
 import java.io.FileInputStream;
 
 import com.erakin.api.lwjgl.VAO;
-import com.erakin.api.resources.DefaultLoader;
+import com.erakin.api.resources.ResourceLoaderDefault;
 import com.erakin.api.resources.ResourceMap;
 import com.erakin.api.resources.ResourceRoot;
 
@@ -32,7 +32,7 @@ import com.erakin.api.resources.ResourceRoot;
  * @author Andrew Mello
  */
 
-public final class ModelLoader extends DefaultLoader<Model>
+public final class ModelLoader extends ResourceLoaderDefault<Model>
 {
 	/**
 	 * Instância para carregador de modelagem no padrão de projetos Singleton.

@@ -1,17 +1,16 @@
 package com.erakin.engine.render;
 
-import static com.erakin.api.ErakinAPIUtil.nameOf;
+import static org.diverproject.util.Util.nameOf;
 
 import org.diverproject.util.ObjectDescription;
 
 import com.erakin.api.render.SkyboxRender;
 import com.erakin.engine.camera.Camera;
 
-public abstract class RendererSkyboxDefault implements RendererSkybox
+public abstract class RendererSkyboxDefault extends RendererDefault implements RendererSkybox
 {
 	public static final float DEFAULT_DISTANCE = 500f;
 
-	private boolean initiate;
 	private SkyboxRender skybox;
 	private float distance;
 
@@ -29,20 +28,6 @@ public abstract class RendererSkyboxDefault implements RendererSkybox
 	{
 		skybox.getTexture().release();
 		skybox.getModel().release();
-	}
-
-	@Override
-	public void initiate()
-	{
-		initiate = true;
-
-		subInitiate();
-	}
-
-	@Override
-	public boolean isInitiate()
-	{
-		return initiate;
 	}
 
 	@Override
@@ -86,13 +71,6 @@ public abstract class RendererSkyboxDefault implements RendererSkybox
 	}
 
 	/**
-	 * Chamado internamente quando for dito ao renderizador de céus para ser iniciado.
-	 * Após definir um atributo como inicializado de modo a facilitar a implementação do mesmo.
-	 */
-
-	protected abstract void subInitiate();
-
-	/**
 	 * Procedimento chamado assim que for solicitado ao renderizador para renderizar.
 	 * Espera-se que seja feito todo o preparamento necessário para iniciar a renderização.
 	 * Por exemplo iniciar a programação shader para realizar os efeitos gráficos.
@@ -128,14 +106,9 @@ public abstract class RendererSkyboxDefault implements RendererSkybox
 	public abstract Camera getCamera();
 
 	@Override
-	public String toString()
+	public void toString(ObjectDescription description)
 	{
-		ObjectDescription description = new ObjectDescription(getClass());
-
-		description.append("initiate", initiate);
 		description.append("camera", nameOf(getCamera()));
 		description.append("skybox", nameOf(getSkybox()));
-
-		return description.toString();
 	}
 }

@@ -5,7 +5,6 @@ import static org.diverproject.util.MessageUtil.showError;
 
 import java.util.Random;
 
-import org.diverproject.util.collection.Collection;
 import org.diverproject.util.lang.HexUtil;
 import org.diverproject.util.lang.StringUtil;
 import org.diverproject.util.stream.Input;
@@ -41,35 +40,6 @@ public final class ErakinAPIUtil
 	private ErakinAPIUtil()
 	{
 		
-	}
-
-	/**
-	 * Usado para obter o nome da classe, reduzindo assim o código com chamada da classe e nome simples.
-	 * No caso da classe chamada de núcleo do engine (Engine.java) seria retornado apenas <b>Engine</b>.
-	 * @param object objeto do qual deseja obter o nome da classe.
-	 * @return nome da classe independente de estar sendo visto como uma interface ou como herança.
-	 */
-
-	public static String nameOf(Object object)
-	{
-		if (object == null)
-			return null;
-
-		return object.getClass().getSimpleName();
-	}
-
-	/**
-	 * Faz com que uma thread durma (fique em espera) por um determinado tempo sem necessidade de Try Catch.
-	 * Caso haja uma exception durante essa espera, não será tratado, portanto deve ter bom uso.
-	 * @param millis quantos milissegundos a thread deverá ficar em espera.
-	 */
-
-	public static void sleep(long millis)
-	{
-		try {
-			Thread.sleep(millis);
-		} catch (InterruptedException e) {
-		}
 	}
 
 	/**
@@ -188,18 +158,6 @@ public final class ErakinAPIUtil
 			index += locate.length();
 
 		return source.substring(0, index);
-	}
-
-	/**
-	 * Usado apenas para obter um entendimento mais rápido durante a leitura do código.
-	 * Irá verificar se uma dada coleção é válida (não é null) e retornar seu tamanho.
-	 * @param collection referência da coleção do qual deseja obter o seu tamanho.
-	 * @return tamanho respectivo da coleção passada ou -1 caso seja nulo.
-	 */
-
-	public static int sizeOfCollection(Collection<?> collection)
-	{
-		return collection == null ? -1 : collection.size();
 	}
 
 	/**

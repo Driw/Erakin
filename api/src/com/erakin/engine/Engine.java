@@ -1,10 +1,10 @@
 package com.erakin.engine;
 
-import static com.erakin.api.ErakinAPIUtil.fatalError;
-import static com.erakin.api.ErakinAPIUtil.nameOf;
 import static org.diverproject.log.LogSystem.logException;
 import static org.diverproject.log.LogSystem.logNotice;
 import static org.diverproject.util.MessageUtil.showException;
+import static org.diverproject.util.Util.nameOf;
+import static org.diverproject.util.Util.sleep;
 import static org.diverproject.util.service.SystemBase.PROPERTIE_USE_LOG;
 
 import javax.swing.UIManager;
@@ -16,7 +16,6 @@ import org.diverproject.log.LogSystem;
 import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.TimerTick;
 import org.diverproject.util.UtilException;
-import org.diverproject.util.collection.Node;
 import org.diverproject.util.service.LibrarySystem;
 import org.diverproject.util.service.ServiceSystem;
 import org.lwjgl.opengl.Display;
@@ -62,9 +61,14 @@ public class Engine implements Tickable
 	private String title;
 
 	/**
-	 * Determina se o engine está rodando.
+	 * Determina se o sistema está rodando.
 	 */
 	private boolean running;
+
+	/**
+	 * Determina se o sistema está parada.
+	 */
+	private boolean paused;
 
 	/**
 	 * Usado para obter o intervalo entre cada quadro.
@@ -87,9 +91,9 @@ public class Engine implements Tickable
 	private EngineListener listener;
 
 	/**
-	 * Nó que armazena a primeira tarefa que é nula (apenas para não perder a raíz).
+	 * Tarefas à serem executadas na engine.
 	 */
-	private Node<Task> taskRoot;
+	private EngineTaskList tasks;
 
 	/**
 	 * Construtor privado para atender ao padrão de projetos singleton.
@@ -106,7 +110,7 @@ public class Engine implements Tickable
 			logException(e);
 		}
 
-		taskRoot = new Node<Task>(null);
+		tasks = new EngineTaskList();
 
 		loadLogSystem();
 
@@ -118,8 +122,6 @@ public class Engine implements Tickable
 
 		ServiceSystem serviceSystem = ServiceSystem.getInstance();
 		serviceSystem.setPropertie(PROPERTIE_USE_LOG, true);
-
-		InputManager.setDefaultProperties();
 	}
 
 	/**
@@ -146,12 +148,6 @@ public class Engine implements Tickable
 
 	public void initiate() throws ErakinException
 	{
-		if (sceneManager == null)
-			throw new ErakinException("gerenciador de cenários não definido");
-
-		if (rendererManager == null)
-			throw new ErakinException("gerenciador de renderização não definido");
-
 		logNotice("engine iniciado.\n");
 
 		try {
@@ -197,35 +193,34 @@ public class Engine implements Tickable
 
 	private void initiateLoop()
 	{
+		paused = false;
 		running = true;
 		timerTick = new TimerTick(1);
 		listener.onInitiate();
 
 		DisplayManager display = DisplayManager.getInstance();
 
-		try {
+		while (running && !Display.isCloseRequested())
+		{
+			try {
 
-			while (running && !Display.isCloseRequested())
-			{
+				if (paused)
+					sleep(1000);
+
 				display.waitTick();
 				display.update();
 
 				tick();
+
+			} catch (Exception e) {
+
+				logException(e);
+				showException(e);
 			}
 
-		} catch (Exception e) {
-
-			logException(e);
-			showException(e);
 		}
 
-		try {
-			shutdown();
-		} catch (InputException ie) {
-			showException(ie);
-			System.exit(0);
-		}
-
+		shutdown();
 		listener.onClosed();
 	}
 
@@ -244,99 +239,58 @@ public class Engine implements Tickable
 		update(delay);
 		render(delay);
 
-		Node<Task> node = taskRoot;
-
-		while (node != null)
-		{
-			Task task = node.get();
-
-			if (task == null)
-			{
-				node = node.getNext();
-				continue;
-			}
-
-			if (task.isOver())
-			{
-				if (node.getPrev() != null)
-					node.getPrev().setNext(node.getNext());
-
-				if (node.getNext() != null)
-					node.getNext().setPrev(node.getPrev());
-
-				continue;
-			}
-
-			try {
-
-				task.tick(delay);
-
-			} catch (Exception e) {
-
-				if (node.getPrev() != null)
-					node.getPrev().setNext(node.getNext());
-
-				if (node.getNext() != null)
-					node.getNext().setPrev(node.getPrev());
-
-				fatalError(e, "Falha durante a execução da tarefa '%s'.", nameOf(task));
-			}
-
-			node = node.getNext();
-		}
-
-		ServiceSystem.getInstance().update(delay);
-		TextureLoader.getInstance().update(delay);
-		ModelLoader.getInstance().update(delay);
-		WorldLoader.getInstance().update(delay);
+		tasks.tick(delay);
 	}
 
 	@Override
 	public void update(long delay)
 	{
-		try {
+		ServiceSystem.getInstance().update(delay);
+		TextureLoader.getInstance().update(delay);
+		ModelLoader.getInstance().update(delay);
+		WorldLoader.getInstance().update(delay);
+		ProjectionMatrix.getInstance().update();
 
+		if (sceneManager != null)
+			sceneManager.update(delay);
+
+		if (rendererManager != null && !rendererManager.isStoped())
+		{
 			if (!rendererManager.isInitiate())
 				rendererManager.initiate();
 
-			ProjectionMatrix.getInstance().update();
-			sceneManager.update(delay);
 			rendererManager.update(delay);
-
-		} catch (Exception e) {
-			fatalError(e, "Falha durante a atualização do engine:");
 		}
 	}
 
 	@Override
 	public void render(long delay)
 	{
-		try {
-
+		if (sceneManager != null)
 			sceneManager.render(delay);
-			rendererManager.render(delay);
 
-		} catch (Exception e) {
-			fatalError(e, "Falha durante a renderização do engine:");
-		}
+		if (rendererManager != null && rendererManager.isInitiate() && !rendererManager.isStoped())
+			rendererManager.render(delay);
 	}
 
 	/**
 	 * Uma vez que seja chamado, desencadeia diversos procedimentos seguidos para desligar serviços.
 	 * Além de desligar os serviços, salva os dados necessários e desliga a aplicação como deve ser.
-	 * @throws InputException apenas se houver falha na finalização do serviço de entrada.
 	 */
 
-	public void shutdown() throws InputException
+	public void shutdown()
 	{
 		DisplayManager.getInstance().close();
 		ServiceSystem.getInstance().shutdown();
-		InputSystem.getInstance().shutdown();
+
+		try {
+			InputSystem.getInstance().shutdown();
+		} catch (InputException e) {
+			logException(e);
+		}
 
 		rendererManager.cleanup();
 		listener.onShutdown();
-
-		System.exit(0);
 	}
 
 	/**
@@ -350,26 +304,12 @@ public class Engine implements Tickable
 
 	/**
 	 * Tarefas permitem uma forma extra de manter partes da aplicação funcionando além das necessárias.
-	 * Se a tarefa for inválida, ou seja, nula ou então tiver sido terminada não será adicioanda.
-	 * @param task tarefa do qual deseja enfileirar para ser processado pelo engine.
+	 * @return aquisição do objeto que permite adicionar e remover tarefas da {@link Engine}.
 	 */
 
-	public void addTask(Task task)
+	public EngineTaskList getTaskList()
 	{
-		if (task == null || task.isOver())
-			return;
-
-		synchronized (taskRoot)
-		{
-			taskRoot.set(task);
-
-			Node<Task> node = new Node<Task>(null);
-			Node.attach(node, taskRoot);
-
-			taskRoot = node;
-
-			logNotice("tarefa adicionada ao engine (%s).\n", nameOf(task));
-		}
+		return tasks;
 	}
 
 	/**
@@ -459,6 +399,28 @@ public class Engine implements Tickable
 	public void setRenderManger(RendererManager renderManger)
 	{
 		this.rendererManager = renderManger;
+	}
+
+	/**
+	 * Quando a engine entra em modo de espera (por que está parada) nada será atualizado ou renderizado.
+	 * Isso pode ser utilizado em quanto nenhum tipo de {@link RendererManager} ou {@link SceneManager} foi definido.
+	 * Desta forma, é possível renderizar o sistema de diferentes jeitos sem a necessidade de reiniciar o sistema.
+	 */
+
+	public void pause()
+	{
+		paused = true;
+	}
+
+	/**
+	 * Ao resumir a espera voltando a ser atualizado e renderizado, o delay não terá sido afetado pela pausa.
+	 * Isso pode ser utilizado em quanto nenhum tipo de {@link RendererManager} ou {@link SceneManager} foi definido.
+	 * Desta forma, é possível renderizar o sistema de diferentes jeitos sem a necessidade de reiniciar o sistema.
+	 */
+
+	public void resume()
+	{
+		paused = false;
 	}
 
 	/**

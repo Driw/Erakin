@@ -1,6 +1,6 @@
 package com.erakin.engine.render;
 
-import static com.erakin.api.ErakinAPIUtil.nameOf;
+import static org.diverproject.util.Util.nameOf;
 
 import org.diverproject.util.ObjectDescription;
 import org.diverproject.util.collection.Map;
@@ -30,13 +30,8 @@ import com.erakin.engine.world.light.Light;
  * @author Andrew Mello
  */
 
-public abstract class RendererEntitiesDefault implements RendererEntities
+public abstract class RendererEntitiesDefault extends RendererDefault implements RendererEntities
 {
-	/**
-	 * Define se o renderizador de entidades já foi iniciado.
-	 */
-	private boolean initiate;
-
 	/**
 	 * Fila para armazenar as entidades a serem renderizadas.
 	 */
@@ -57,20 +52,6 @@ public abstract class RendererEntitiesDefault implements RendererEntities
 	public void cleanup()
 	{
 		entities.clear();
-	}
-
-	@Override
-	public final void initiate()
-	{
-		initiate = true;
-
-		subInitiate();
-	}
-
-	@Override
-	public final boolean isInitiate()
-	{
-		return initiate;
 	}
 
 	@Override
@@ -228,14 +209,9 @@ public abstract class RendererEntitiesDefault implements RendererEntities
 	public abstract Light getLight();
 
 	@Override
-	public String toString()
+	public void toString(ObjectDescription description)
 	{
-		ObjectDescription description = new ObjectDescription(getClass());
-
-		description.append("initiate", initiate);
 		description.append("camera", nameOf(getCamera()));
 		description.append("light", nameOf(getLight()));
-
-		return description.toString();
 	}
 }

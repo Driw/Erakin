@@ -1,6 +1,6 @@
 package com.erakin.engine.render;
 
-import static com.erakin.api.ErakinAPIUtil.nameOf;
+import static org.diverproject.util.Util.nameOf;
 import static org.diverproject.log.LogSystem.logWarning;
 
 import org.diverproject.util.ObjectDescription;
@@ -35,17 +35,12 @@ import com.erakin.engine.world.light.Light;
  * @author Andre Mello
  */
 
-public abstract class RendererWorldsDefault implements RendererWorlds
+public abstract class RendererWorldsDefault extends RendererDefault implements RendererWorlds
 {
 	/**
 	 * Quantidade de unidades de terreno padrão do alcance de visão.
 	 */
 	public static final int DEFAULT_RENDER_RANGE = 64;
-
-	/**
-	 * Define se o renderizador de mundos já foi iniciado.
-	 */
-	private boolean initiate;
 
 	/**
 	 * Mundo que será usado para obter as chunks e renderizá-los.
@@ -84,20 +79,6 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	public void cleanup()
 	{
 		terrains.clear();
-	}
-
-	@Override
-	public final void initiate()
-	{
-		initiate = true;
-
-		subInitiate();
-	}
-
-	@Override
-	public final boolean isInitiate()
-	{
-		return initiate;
 	}
 
 	@Override
@@ -236,13 +217,6 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	}
 
 	/**
-	 * Chamado internamente quando for dito ao renderizador de mundos para ser iniciado.
-	 * Após definir um atributo como inicializado de modo a facilitar a implementação do mesmo.
-	 */
-
-	protected abstract void subInitiate();
-
-	/**
 	 * Antes de fazer a renderização do terreno, é necessário habilitar no OpenGL uma modelagem para ser usada.
 	 * Esse procedimento pode ainda usar o shader adequadamente de acordo com as informações da modelagem.
 	 * @param model referência do modelo renderizável do terreno que está sendo renderizado.
@@ -302,14 +276,9 @@ public abstract class RendererWorldsDefault implements RendererWorlds
 	public abstract Light getLight();
 
 	@Override
-	public String toString()
+	public void toString(ObjectDescription description)
 	{
-		ObjectDescription description = new ObjectDescription(getClass());
-
-		description.append("initiate", initiate);
 		description.append("camera", nameOf(getCamera()));
 		description.append("light", nameOf(getLight()));
-
-		return description.toString();
 	}
 }

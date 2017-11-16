@@ -26,6 +26,22 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+16.11.2016 - 0.0.5.46
+- Removido alguns métodos de ErakinAPIUtil pois já existem em Util (JavaUtil).
+	- nameof, sleep e sizeOfCollection (agora está como size).
+- Não há necessidade de ServiceException para start(), terminate() e interruped() para VirtualKeyboard.
+- Nova funcionalidade para que VirtualKeyboard possa ter seus eventos de teclado não despachados.
+- Renomeado DefaultLoader para ResourceLoderDefault assim faz mais sentido e mantém o padrão de nomes.
+- Engine não vai mais usar Node para as tarefas mas sim EngineTaskList e lá terá o Node de tarefas.
+	- Não será mais necessário a existência de um SceneManager ou RendererManager definido para ser inicializado.
+	- Agora a engine pode receber comando para pausar e resumir as operações de atualizar ou renderizar.
+	- Removidos os trycatch de update() e render(), ficará somente em tick() e quando ocorrer não interrompe o loop.
+	- Dar throws no InputException em shutdown() não fazia muito sentido, já que estamos desligando a engine.
+		- O sistema (java) não será desligado forçadamente quando shutdown() for chamado.
+- PreferencesDefault.terminate() salva as preferências em um arquivo temporário primeiro (evitar que seja corrompido).
+- RendererEntitiesDefault, RendererSkyboxDefault, RendererWorldsDefault e RendererManager agora são RendererDefault.
+	- Todos eles agora podem ser pausados e resumidos através de pause() e resume() igual a Engine.
+
 15.11.2016 - 0.0.4.45
 - DisplaySettings.getPreferences não estava funcionando corretamente, faltou especificar as key.
 - PreferencesDefault atualizado conforme mudança no JavaUtil de encapsulamento de Map.Option.

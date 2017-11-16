@@ -1,6 +1,6 @@
 package com.erakin.api.resources.world;
 
-import static com.erakin.api.ErakinAPIUtil.nameOf;
+import static org.diverproject.util.Util.nameOf;
 import static org.diverproject.log.LogSystem.logWarning;
 
 import org.diverproject.util.ObjectDescription;

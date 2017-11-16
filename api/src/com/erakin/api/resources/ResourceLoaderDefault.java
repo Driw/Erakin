@@ -14,7 +14,7 @@ import org.diverproject.util.ObjectDescription;
  * @param <T> tipo de recurso que poderá ser carregado.
  */
 
-public class DefaultLoader<T extends Resource<?>>
+public class ResourceLoaderDefault<T extends Resource<?>>
 {
 	/**
 	 * Caminho parcial ou completo da localização dos arquivos que serão carregados.
@@ -32,7 +32,7 @@ public class DefaultLoader<T extends Resource<?>>
 	 * @param name nome que será dado para esse carregador de recursos e também como pré-fixo.
 	 */
 
-	public DefaultLoader(String name)
+	public ResourceLoaderDefault(String name)
 	{
 		resources = new ResourceMap<T>(name);
 	}
@@ -139,6 +139,11 @@ public class DefaultLoader<T extends Resource<?>>
 			}
 		}
 	}
+
+	/**
+	 * Procedimento interno usado para que possa ser adicionado informações do objeto em toString.
+	 * @param description referência do objeto que vai descrever os dados do carregador.
+	 */
 
 	protected void toString(ObjectDescription description)
 	{

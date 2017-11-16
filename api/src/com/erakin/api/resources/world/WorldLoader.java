@@ -8,7 +8,7 @@ import java.io.File;
 import org.diverproject.util.FileUtil;
 import org.diverproject.util.ObjectDescription;
 
-import com.erakin.api.resources.DefaultLoader;
+import com.erakin.api.resources.ResourceLoaderDefault;
 import com.erakin.api.resources.ResourceMap;
 import com.erakin.api.resources.ResourceRoot;
 
@@ -33,7 +33,7 @@ import com.erakin.api.resources.ResourceRoot;
  * @author Andrew Mello
  */
 
-public class WorldLoader extends DefaultLoader<World>
+public class WorldLoader extends ResourceLoaderDefault<World>
 {
 	/**
 	 * Instância para carregador de mundos no padrão de projetos Singleton.

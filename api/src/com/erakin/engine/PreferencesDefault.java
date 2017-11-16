@@ -116,43 +116,46 @@ public class PreferencesDefault implements Preferences
 
 	public void termiante()
 	{
+		File temp = new File(getPreferencesFilePath()+ ".temp");
 		File file = new File(getPreferencesFilePath());
+		FileUtil.makeDirs(file);
 
-		if (file.exists())
+		switch (FileUtil.getExtension(file.getAbsolutePath()))
 		{
-			switch (FileUtil.getExtension(file.getAbsolutePath()))
-			{
-				case "ini":
-					try {
+			case "ini":
+				try {
 
-						JIni ini = new JIni(file);
-						save(ini);
-						ini.save();
+					JIni ini = new JIni(temp);
+					save(ini);
+					ini.save();
 
-					} catch (JIniException e) {
-						logWarning("falha ao inicializar preferências (arquivo: %s)", file.getPath());
-						logException(e);
-					}
-					break;
+				} catch (JIniException e) {
+					temp.delete();
+					logWarning("falha ao finalizar preferências (arquivo: %s)", file.getPath());
+					logException(e);
+				}
+				break;
 
-				case "json":
-					try {
+			case "json":
+				try {
 
-						JSONObject jsonObject = new JSONObject();
-						save(jsonObject);
+					JSONObject jsonObject = new JSONObject();
+					save(jsonObject);
 
-						Output output = new OutputStream(file);
-						output.putBytes(JSONObject.toJSONString(jsonObject, SerializerFeature.PrettyFormat).getBytes());
-						output.flush();
-						output.close();
+					Output output = new OutputStream(file);
+					output.putBytes(JSONObject.toJSONString(jsonObject, SerializerFeature.PrettyFormat).getBytes());
+					output.flush();
+					output.close();
 
-					} catch (FileNotFoundException | StreamRuntimeException e) {
-						logWarning("falha ao inicializar preferências (arquivo: %s)", file.getPath());
-						logException(e);
-					}
-					break;
-			}
+				} catch (FileNotFoundException | StreamRuntimeException e) {
+					temp.delete();
+					logWarning("falha ao finalizar preferências (arquivo: %s)", file.getPath());
+					logException(e);
+				}
+				break;
 		}
+
+		temp.renameTo(file);
 	}
 
 	/**
