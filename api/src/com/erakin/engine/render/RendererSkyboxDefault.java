@@ -26,8 +26,11 @@ public abstract class RendererSkyboxDefault extends RendererDefault implements R
 	@Override
 	public void cleanup()
 	{
-		skybox.getTexture().release();
-		skybox.getModel().release();
+		if (skybox != null)
+		{
+			skybox.getTexture().release();
+			skybox.getModel().release();
+		}
 	}
 
 	@Override

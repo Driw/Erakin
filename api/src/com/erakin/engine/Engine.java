@@ -205,7 +205,10 @@ public class Engine implements Tickable
 			try {
 
 				if (paused)
+				{
 					sleep(1000);
+					continue;
+				}
 
 				display.waitTick();
 				display.update();
@@ -278,8 +281,11 @@ public class Engine implements Tickable
 	 * Além de desligar os serviços, salva os dados necessários e desliga a aplicação como deve ser.
 	 */
 
-	public void shutdown()
+	private void shutdown()
 	{
+		listener.onShutdown();
+		rendererManager.cleanup();
+
 		DisplayManager.getInstance().close();
 		ServiceSystem.getInstance().shutdown();
 
@@ -288,9 +294,6 @@ public class Engine implements Tickable
 		} catch (InputException e) {
 			logException(e);
 		}
-
-		rendererManager.cleanup();
-		listener.onShutdown();
 	}
 
 	/**
@@ -441,6 +444,7 @@ public class Engine implements Tickable
 		ObjectDescription description = new ObjectDescription(getClass());
 
 		description.append("running", running);
+		description.append("paused", paused);
 		description.append("initialized", isInitialized());
 		description.append("sceneManager", nameOf(sceneManager));
 		description.append("renderManager", nameOf(rendererManager));

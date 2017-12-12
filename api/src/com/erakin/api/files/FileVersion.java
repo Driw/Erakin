@@ -9,6 +9,8 @@ import org.diverproject.util.stream.Output;
 
 public class FileVersion
 {
+	public static final long BYTES = (Byte.BYTES * 2);
+
 	private byte major;
 	private byte minor;
 
@@ -62,6 +64,27 @@ public class FileVersion
 	public short get()
 	{
 		return Bits.makeShort(major, minor);
+	}
+
+	@Override
+	public FileVersion clone()
+	{
+		return new FileVersion(major, minor);
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof FileVersion)
+		{
+			FileVersion version = (FileVersion) obj;
+			return version.major == major && version.minor == minor;
+		}
+
+		else if (obj instanceof Float)
+			return get() == (Float) obj;
+
+		return false;
 	}
 
 	@Override
