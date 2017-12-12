@@ -204,16 +204,11 @@ public class Engine implements Tickable
 		{
 			try {
 
-				if (paused)
-				{
-					sleep(1000);
-					continue;
-				}
-
 				display.waitTick();
 				display.update();
 
-				tick();
+				if (!paused)
+					tick();
 
 			} catch (Exception e) {
 

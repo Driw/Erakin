@@ -26,6 +26,16 @@
 //			- MENSAGEM: Breve parágrafo para explicar as alterações feitas.
 //==================================================================================================
 
+12.12.2016 - 0.0.5.48
+- Mesmo quando a Engine estiver em pausa deve dar waitTick() e update() no DisplayManager.
+
+12.12.2016 - 0.0.5.47
+- Excluído arquivos binários de api-readers/bin e adicionado bin para ser ignorado.
+- Implementado FileVersion.clone() e FileVersion.equals() (considera os valores).
+- Engine.shutdown() não poderá ser chamado de fora e não vai mais dar cleanup.
+	- Existe requestToClose() e cleanup deve ser feito internamente.
+- RenderSkyBoxDefault poderia com NullPointerException em cleanup().
+
 16.11.2016 - 0.0.5.46
 - Removido alguns métodos de ErakinAPIUtil pois já existem em Util (JavaUtil).
 	- nameof, sleep e sizeOfCollection (agora está como size).
