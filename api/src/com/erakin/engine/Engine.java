@@ -209,6 +209,8 @@ public class Engine implements Tickable
 
 				if (!paused)
 					tick();
+				else
+					sleep(100);
 
 			} catch (Exception e) {
 

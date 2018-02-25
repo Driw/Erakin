@@ -10,8 +10,6 @@ import org.lwjgl.BufferUtils;
 
 import com.erakin.api.lwjgl.VAO;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 /**
  * <h1>Atributo de Índice para Modelo</h1>
  *
@@ -77,7 +75,7 @@ public class ModelIndiceAttribute implements ModelAttribute
 	@Deprecated
 	public int getIndex()
 	{
-		throw new NotImplementedException();
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
